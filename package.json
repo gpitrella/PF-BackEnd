@@ -1,0 +1,25 @@
+{
+  "name": "pf-backend",
+  "version": "1.0.0",
+  "description": "Technology Market Final Project Henry",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gpitrella/PF-BackEnd.git"
+  },
+  "author": "Group 25A - Henry",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gpitrella/PF-BackEnd/issues"
+  },
+  "homepage": "https://github.com/gpitrella/PF-BackEnd#readme",
+  "dependencies": {
+    "axios": "^0.27.2",
+    "dotenv": "^8.2.0",
+    "express": "^4.18.1",
+    "sequelize": "^6.3.5"
+  }
+}
