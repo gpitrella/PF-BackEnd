@@ -4,18 +4,12 @@ const fs = require('fs');
 const path = require('path');
 
 const {
-  DATABASE_URL
+  DB_USER, DB_PASSWORD, DB_HOST,
 } = process.env;
 
-const sequelize = new Sequelize(DATABASE_URL , {
+const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/techmarket` , {
   logging: false, // set to console.log to see the raw SQL queries
   native: false, // lets Sequelize know we can use pg-native for ~30% more speed
-  dialectOptions: {
-    ssl: {
-      require: true,
-      rejectUnauthorized: false
-    }
-  }
 });
 
 const basename = path.basename(__filename);
@@ -38,12 +32,12 @@ sequelize.models = Object.fromEntries(capsEntries);
 
 // En sequelize.models están todos los modelos importados como propiedades
 // Para relacionarlos hacemos un destructuring
-const { Videogame, Genre } = sequelize.models;
+const { Product } = sequelize.models;
 
 // Associations
 // Product.hasMany(Reviews);
-Videogame.belongsToMany(Genre, { through: 'videogame_genre'});
-Genre.belongsToMany(Videogame, { through: 'videogame_genre'});
+// Videogame.belongsToMany(Genre, { through: 'videogame_genre'});
+
 
 
 module.exports = {
