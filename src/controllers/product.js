@@ -1,15 +1,29 @@
 const {Product,Categories, Manufacturer, Review} = require('../db')
 
-//No esta funcional...
 async function getAllProduct(){
     try{
         let product = await Product.findAll({
-            include:{
-                Categories,
-                Manufacturer,
-                Review
-            }
+            include:[{
+                model:Categories,
+                attributes: ['name'],
+                through:{
+                    attributes:[],
+                }
+            },{
+                model:Manufacturer,
+                attributes: ['name'],
+                through:{
+                    attributes:[],
+                }
+            }]
         })
+        console.log(product)
+        product= product.map(m=>{
+            return {
+            ...m.dataValues, 
+            categories: m.categories?.map(m=>m.name),
+            manufacturers: m.manufacturers?.map(m=>m.name)
+        }})
         return product
     }catch(error){
         console.log(error)
@@ -43,7 +57,7 @@ async function createProduct(name,price,discount,stock,description,category,manu
                 return newProduct
             }
             else{
-                throw new Error('the product already exist')
+                throw new Error('the product already exists')
             }
         }
         throw new Error('you must enter a name')
