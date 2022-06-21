@@ -2,7 +2,7 @@ const { Router } = require('express');
 const axios = require("axios");
 require('dotenv').config();
 // const { API_KEY } = process.env;
-const { createProduct, getAllProduct, getByName, getById } = require('../controllers/product.js');
+const { createProduct, getAllProduct, getByName, getById, deleteProduct } = require('../controllers/product.js');
 
 const router = Router();
 
@@ -11,7 +11,7 @@ router.get('/', async(req, res)=>{
         let {name} = req.query
         if(!name){
             res.json(await getAllProduct())
-        } res.json(await getByName(name))
+        } else {res.json(await getByName(name))}
     }catch(error){
         res.status(404).json(error.message)
     }
@@ -23,7 +23,7 @@ router.post('/', async (req, res)=>{
             res.status(200).json(newProduct);
         }
     catch(error){
-        res.json(error.message)
+        res.status(404).json(error.message)
     }
 })
 
@@ -33,6 +33,16 @@ router.get('/:id', async(req,res)=>{
         res.json(await getById(id))
     }catch(error){
         res.status(404).json(error.message)
+    }
+})
+
+router.delete('/:id', async(req,res)=>{
+    try{
+        const { id } = req.params;
+        
+        res.json(await deleteProduct(id))
+    }catch(error){
+        res.status(308).json(error.message)
     }
 })
 
