@@ -2,15 +2,18 @@ const { Router } = require('express');
 const axios = require("axios");
 require('dotenv').config();
 // const { API_KEY } = process.env;
-const { createProduct, getAllProduct } = require('../controllers/product.js');
+const { createProduct, getAllProduct, getByName, getById } = require('../controllers/product.js');
 
 const router = Router();
 
 router.get('/', async(req, res)=>{
     try{
-        res.json(await getAllProduct())
+        let {name} = req.query
+        if(!name){
+            res.json(await getAllProduct())
+        } res.json(await getByName(name))
     }catch(error){
-        res.json(error.message)
+        res.status(404).json(error.message)
     }
 })
 router.post('/', async (req, res)=>{
@@ -21,6 +24,15 @@ router.post('/', async (req, res)=>{
         }
     catch(error){
         res.json(error.message)
+    }
+})
+
+router.get('/:id', async(req,res)=>{
+    const { id } = req.params;
+    try{
+        res.json(await getById(id))
+    }catch(error){
+        res.status(404).json(error.message)
     }
 })
 
