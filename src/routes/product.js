@@ -2,11 +2,10 @@ const { Router } = require('express');
 const axios = require("axios");
 require('dotenv').config();
 // const { API_KEY } = process.env;
-const { Product } = require('../../src/db.js');
 const { createProduct, getAllProduct } = require('../controllers/product.js');
 
 const router = Router();
-//No esta funcional...
+
 router.get('/', async(req, res)=>{
     try{
         res.json(await getAllProduct())
