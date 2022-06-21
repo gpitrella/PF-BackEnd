@@ -29,29 +29,13 @@ async function getAllProduct() {
   return product;
 }
 
-async function createProduct(
-  name,
-  price,
-  discount,
-  stock,
-  description,
-  category,
-  manufacturer,
-  image
-) {
+async function createProduct( name, price, discount, stock, description, category, manufacturer, image ) {
   if (name) {
     let findInDb = await Product.findOne({
       where: { name: name.toLowerCase().trim() },
     });
     if (!findInDb) {
-      let newProduct = await Product.create({
-        name: name,
-        price: price,
-        discount: discount,
-        stock: stock,
-        description: description,
-        image: image,
-      });
+      let newProduct = await Product.create({ name, price, discount, stock, description, image });
       let categoryDb = await Categories.findAll({
         where: { name: category },
       });
@@ -89,7 +73,7 @@ async function getByName(name) {
         },
       ],
     });
-    console.log(productInDb);
+    // aca no hace falta hacer un product
     let product = [];
     product.push(productInDb);
     if (!productInDb) throw new Error("the product does not exist");
@@ -100,7 +84,6 @@ async function getByName(name) {
         manufacturers: m.manufacturers?.map((m) => m.name),
       };
     });
-    console.log(product);
     return product;
   } else {
     throw new Error("you must provide a product name");
@@ -127,8 +110,9 @@ async function getById(id) {
         },
       ],
     });
-
+    // aca no hace falta hacer un product
     let product = [];
+   if(!productInDb) throw new Error ("the id does not correspond to an existing product")
     product.push(productInDb);
     product = product.map((m) => {
       return {
@@ -145,13 +129,22 @@ async function getById(id) {
 }
 
 async function deleteProduct(id) {
-    console.log("entre a la funcion", id)
   if (!id) throw new Error("you must provide a product id");
-  let productInDb = await Product.destroy({
+  await Product.destroy({
     where: { id },
   });
-  console.log(productInDb);
   return "the product was removed";
+}
+
+async function changeProduct(id, { name, price, discount, stock, description, image }) {
+  await getById(id)
+  await Product.update(
+    { name, price, discount, stock, description, image },
+    {
+      where: { id },
+    }
+  );
+  return "the name was changed";
 }
 
 module.exports = {
@@ -160,4 +153,5 @@ module.exports = {
   getByName,
   getById,
   deleteProduct,
+  changeProduct
 };

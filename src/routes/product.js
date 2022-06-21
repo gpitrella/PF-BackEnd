@@ -2,7 +2,7 @@ const { Router } = require('express');
 const axios = require("axios");
 require('dotenv').config();
 // const { API_KEY } = process.env;
-const { createProduct, getAllProduct, getByName, getById, deleteProduct } = require('../controllers/product.js');
+const { createProduct, getAllProduct, getByName, getById, deleteProduct, changeProduct } = require('../controllers/product.js');
 
 const router = Router();
 
@@ -39,10 +39,19 @@ router.get('/:id', async(req,res)=>{
 router.delete('/:id', async(req,res)=>{
     try{
         const { id } = req.params;
-        
         res.json(await deleteProduct(id))
     }catch(error){
-        res.status(308).json(error.message)
+        res.status(404).json(error.message)
+    }
+})
+
+router.put('/:id', async(req,res)=>{
+    try{
+        const { id } = req.params
+        const data = req.body;
+        res.json(await changeProduct(id, data))
+    }catch(error){
+        res.status(404).json(error.message);
     }
 })
 
