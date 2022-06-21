@@ -1,7 +1,6 @@
 const {Product,Categories, Manufacturer, Review} = require('../db')
 
 async function getAllProduct(){
-    try{
         let product = await Product.findAll({
             include:[{
                 model:Categories,
@@ -17,7 +16,6 @@ async function getAllProduct(){
                 }
             }]
         })
-        console.log(product)
         product= product.map(m=>{
             return {
             ...m.dataValues, 
@@ -25,18 +23,14 @@ async function getAllProduct(){
             manufacturers: m.manufacturers?.map(m=>m.name)
         }})
         return product
-    }catch(error){
-        console.log(error)
-    }
+
 }
 
 async function createProduct(name,price,discount,stock,description,category,manufacturer, image){
-    try{
         if(name){
             let findInDb = await Product.findOne({
                 where: {name:name.toLowerCase().trim()}
             })
-            console.log(findInDb)
             if(!findInDb){
                 let newProduct = await Product.create({
                     name:name,
@@ -61,9 +55,6 @@ async function createProduct(name,price,discount,stock,description,category,manu
             }
         }
         throw new Error('you must enter a name')
-    }catch(error){
-        console.log(error)
-    }
 }
 
 async function getByName(name){
@@ -143,6 +134,8 @@ async function getById(id){
             }
        
 }
+
+
 
 module.exports = {
     createProduct,
