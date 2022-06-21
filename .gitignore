@@ -108,5 +108,5 @@ package-lock.json
 
 
 probarBack.js
-/.env
+.env
 model.js
