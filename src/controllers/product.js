@@ -145,13 +145,36 @@ async function getById(id) {
 }
 
 async function deleteProduct(id) {
-    console.log("entre a la funcion", id)
   if (!id) throw new Error("you must provide a product id");
-  let productInDb = await Product.destroy({
+  await Product.destroy({
     where: { id },
   });
-  console.log(productInDb);
   return "the product was removed";
+}
+
+async function changeProduct(
+  id,
+  { name, price, discount, stock, description, category, manufacturer, image }
+) {
+    if(!discount) throw new Error("you must provide the discount")
+    if (!id || !name || !discount || !stock || !description || !category || !manufacturer || !image){
+    throw new Error("you must provide all the data")}
+  await Product.update(
+    {
+      name,
+      price,
+      discount,
+      stock,
+      description,
+      category,
+      manufacturer,
+      image,
+    },
+    {
+      where: { id },
+    }
+  );
+  return "the name was changed";
 }
 
 module.exports = {
@@ -160,4 +183,5 @@ module.exports = {
   getByName,
   getById,
   deleteProduct,
+  changeProduct,
 };
