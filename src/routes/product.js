@@ -2,25 +2,37 @@ const { Router } = require('express');
 const axios = require("axios");
 require('dotenv').config();
 // const { API_KEY } = process.env;
-const { Product } = require('../../src/db.js')
+const { createProduct, getAllProduct, getByName, getById } = require('../controllers/product.js');
 
 const router = Router();
 
-router.get('/', async (req, res, next)=>{
+router.get('/', async(req, res)=>{
     try{
-        const { name } = req.body;
-        if(name){ 
-            Product.create({
-                name: name
-            })
-            const dataProduct = await Product.findAll()
-            console.log(dataProduct)
-            res.status(200).json(dataProduct);
-        } else {
-            res.status(200).send('Data should be necesary'); 
-        } 
-    } catch (error){
-        next(error)
+        let {name} = req.query
+        if(!name){
+            res.json(await getAllProduct())
+        } res.json(await getByName(name))
+    }catch(error){
+        res.status(404).json(error.message)
+    }
+})
+router.post('/', async (req, res)=>{
+    let {name,price,discount,stock,description,category,manufacturer,image} = req.body
+    try{
+            let newProduct = await createProduct(name,price,discount,stock,description,category,manufacturer,image) 
+            res.status(200).json(newProduct);
+        }
+    catch(error){
+        res.json(error.message)
+    }
+})
+
+router.get('/:id', async(req,res)=>{
+    const { id } = req.params;
+    try{
+        res.json(await getById(id))
+    }catch(error){
+        res.status(404).json(error.message)
     }
 })
 
