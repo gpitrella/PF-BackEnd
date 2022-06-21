@@ -51,7 +51,7 @@ router.put('/:id', async(req,res)=>{
         const data = req.body;
         res.json(await changeProduct(id, data))
     }catch(error){
-        res.status(405).json(error.message)
+        res.status(404).json(error.message);
     }
 })
 
