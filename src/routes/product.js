@@ -9,12 +9,10 @@ const router = Router();
 
 router.get('/', async(req, res)=>{
     try{
-        let { name } = req.query
+        let {name} = req.query
         if(!name){
-            var products = await getAllProduct()
-        } else {
-            var products = await getByName(name)}
-        res.json(products)
+            res.json(await getAllProduct())
+        } else {res.json(await getByName(name))}
     }catch(error){
         res.status(404).json(error.message)
     }
@@ -32,7 +30,7 @@ router.post('/', async (req, res)=>{
 
 router.get('/:id', async(req,res)=>{
     try{
-        let { id } = req.params
+        let { id } = req.params;
         res.json(await getById(id))
     }catch(error){
         res.status(404).json(error.message)
@@ -41,7 +39,7 @@ router.get('/:id', async(req,res)=>{
 
 router.delete('/:id', async(req,res)=>{
     try{
-        let { id } = req.params
+        let { id } = req.params;
         res.json(await deleteProduct(id))
     }catch(error){
         res.status(404).json(error.message)
