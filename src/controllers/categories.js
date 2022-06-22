@@ -24,8 +24,24 @@ async function createCategory(name){
         console.log(error.message)
     }
 }
+//ME TRAE LOS PRODUCTOS DE ESA CATEGORIA PERO NO SU MANUFACTURER
+async function filterCategories(category){
+    let findInDb = Categories.findAll({where:{name:category},include:[
+        {
+          model: Product,
+          through: {
+            attributes: []
+          },
+        }]
+      })
+    if(findInDb){
+        return findInDb
+    }
+    throw new Error('the category does not exists')
+}
 
 module.exports = {
     createCategory,
-    getAllCategories
+    getAllCategories,
+    filterCategories
 }

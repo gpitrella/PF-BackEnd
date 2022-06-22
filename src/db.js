@@ -46,6 +46,7 @@ Manufacturer.belongsToMany(Product, {through: 'product_manufacturer'})
 
 Product.belongsToMany(Review, {through: 'product_review'})
 Review.belongsToMany(Product, {through: 'product_review'})
+
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
   conn: sequelize,     // para importart la conexión { conn } = require('./db.js');

@@ -32,10 +32,11 @@ async function getAllProduct() {
 async function createProduct( name, price, discount, stock, description, category, manufacturer, image ) {
   if (name) {
     let findInDb = await Product.findOne({
-      where: { name: name.toLowerCase().trim() },
+      where: { name: name },
     });
+    console.log('create',findInDb)
     if (!findInDb) {
-      let newProduct = await Product.create({ name, price, discount, stock, description, image });
+      let newProduct = await Product.create({ name, price, image,discount, stock, description});
       let categoryDb = await Categories.findAll({
         where: { name: category },
       });

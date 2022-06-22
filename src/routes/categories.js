@@ -1,10 +1,13 @@
 const { Router } = require('express');
-const { createCategory, getAllCategories } = require('../controllers/categories');
+const { createCategory, getAllCategories, filterCategories } = require('../controllers/categories');
 const router = Router();
 
 router.get('/', async(req,res)=>{
     try{
-        res.json(await getAllCategories())
+        let {category} = req.body;
+        if(!category) res.status(201).json(await getAllCategories())
+        res.status(201).json(await filterCategories(category))
+        
     }catch(error){
         res.json(error.message)
     }

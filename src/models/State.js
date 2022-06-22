@@ -16,7 +16,7 @@ module.exports = (sequelize) => {
             msg: "El nombre tiene que ser minimamente de dos caracters"
           }
         }
-      },
+      }, 
       country:{
         type: DataTypes.STRING,
         allowNull: false,
