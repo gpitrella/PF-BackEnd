@@ -10,6 +10,7 @@ async function getAllManufacturer(){
 }
 
 async function createManufacturer(name){
+    try{
         if(name){
             let findInDb = await Manufacturer.findOne({where:{name:name}})
             if(!findInDb){
@@ -19,6 +20,9 @@ async function createManufacturer(name){
         }else{
             throw new Error('the category already exists')
         }
+    }catch(error){
+        console.log(error.message)
+    }
 }
 
 module.exports = {
