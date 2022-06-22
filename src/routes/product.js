@@ -17,12 +17,9 @@ router.get('/', async(req, res)=>{
     }
 })
 router.post('/', async (req, res)=>{
-    let {name,price,discount,stock,description,category,manufacturer,image} = req.body
-    console.log('ruta fuera',image)
     try{
-        console.log('ruta dentro',image)
-            let newProduct = await createProduct(name,price,discount,stock,description,category,manufacturer,image) 
-            res.status(200).json(newProduct);
+        let data = req.body
+        res.status(200).json(await createProduct(data))
         }
     catch(error){
         res.status(404).json(error.message)
@@ -30,8 +27,8 @@ router.post('/', async (req, res)=>{
 })
 
 router.get('/:id', async(req,res)=>{
-    const { id } = req.params;
     try{
+        let { id } = req.params;
         res.json(await getById(id))
     }catch(error){
         res.status(404).json(error.message)
@@ -40,7 +37,7 @@ router.get('/:id', async(req,res)=>{
 
 router.delete('/:id', async(req,res)=>{
     try{
-        const { id } = req.params;
+        let { id } = req.params;
         res.json(await deleteProduct(id))
     }catch(error){
         res.status(404).json(error.message)
@@ -49,11 +46,11 @@ router.delete('/:id', async(req,res)=>{
 
 router.put('/:id', async(req,res)=>{
     try{
-        const { id } = req.params
-        const data = req.body;
+        let { id } = req.params
+        let data = req.body
         res.json(await changeProduct(id, data))
     }catch(error){
-        res.status(404).json(error.message);
+        res.status(404).json(error.message)
     }
 })
 

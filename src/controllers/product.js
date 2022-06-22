@@ -29,12 +29,11 @@ async function getAllProduct() {
   return product;
 }
 
-async function createProduct( name, price, discount, stock, description, category, manufacturer, image ) {
+async function createProduct({ name, price, discount, stock, description, category, manufacturer, image }) {
   if (name) {
     let findInDb = await Product.findOne({
       where: { name: name },
     });
-    console.log('create',findInDb)
     if (!findInDb) {
       let newProduct = await Product.create({ name, price, image,discount, stock, description});
       let categoryDb = await Categories.findAll({
@@ -55,7 +54,7 @@ async function createProduct( name, price, discount, stock, description, categor
 
 async function getByName(name) {
   if (name) {
-    let productInDb = await Product.findOne({
+    let productInDb =[ await Product.findOne({
       where: { name: name },
       include: [
         {
@@ -73,19 +72,16 @@ async function getByName(name) {
           },
         },
       ],
-    });
-    // aca no hace falta hacer un product
-    let product = [];
-    product.push(productInDb);
+    })]
     if (!productInDb) throw new Error("the product does not exist");
-    product = product.map((m) => {
+    productInDb = productInDb.map((m) => {
       return {
         ...m.dataValues,
         categories: m.categories?.map((m) => m.name),
         manufacturers: m.manufacturers?.map((m) => m.name),
       };
     });
-    return product;
+    return productInDb;
   } else {
     throw new Error("you must provide a product name");
   }
@@ -93,7 +89,7 @@ async function getByName(name) {
 
 async function getById(id) {
   if (id) {
-    let productInDb = await Product.findByPk(id, {
+    let productInDb = [await Product.findByPk(id, {
       include: [
         {
           model: Categories,
@@ -110,12 +106,9 @@ async function getById(id) {
           },
         },
       ],
-    });
-    // aca no hace falta hacer un product
-    let product = [];
+    })]
    if(!productInDb) throw new Error ("the id does not correspond to an existing product")
-    product.push(productInDb);
-    product = product.map((m) => {
+   productInDb = productInDb.map((m) => {
       return {
         ...m.dataValues,
         categories: m.categories?.map((m) => m.name),
@@ -123,14 +116,14 @@ async function getById(id) {
       };
     });
 
-    return product;
+    return productInDb;
   } else {
     throw new Error("you must provide a product id");
   }
 }
 
 async function deleteProduct(id) {
-  if (!id) throw new Error("you must provide a product id");
+  await getById(id);
   await Product.destroy({
     where: { id },
   });
