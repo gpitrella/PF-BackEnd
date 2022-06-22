@@ -18,7 +18,9 @@ router.get('/', async(req, res)=>{
 })
 router.post('/', async (req, res)=>{
     let {name,price,discount,stock,description,category,manufacturer,image} = req.body
+    console.log('ruta fuera',image)
     try{
+        console.log('ruta dentro',image)
             let newProduct = await createProduct(name,price,discount,stock,description,category,manufacturer,image) 
             res.status(200).json(newProduct);
         }
