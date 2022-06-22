@@ -4,15 +4,17 @@ const { Router } = require('express');
 const productRoutes = require('./product.js')
 const categoriesRoutes = require('./categories.js')
 const manufacturerRoutes = require('./manufacturer')
+const paginatedRoutes = require('./paginated.js')
 
 const router = Router();
 
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
 
-router.use('/api/product/page/', productRoutes)
 router.use('/api/product', productRoutes)
 router.use('/api/categories', categoriesRoutes)
 router.use('/api/manufacturer', manufacturerRoutes)
+router.use('/api/paginated', paginatedRoutes)
+
 
 module.exports = router;
