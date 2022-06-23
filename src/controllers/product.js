@@ -38,11 +38,11 @@ async function getByName(name) {
 async function getById(id) {
   if (!id) throw new Error("you must provide a product id")
 
-  let productInDb = [await Product.findByPk(id, searchConditions())]
-  
-  if(!productInDb[0]) throw new Error ("the id does not correspond to an existing product")
+  let productInDb = await Product.findByPk(id, searchConditions())
 
-  return finishProducts(productInDb)
+  if(!productInDb) throw new Error ("the id does not correspond to an existing product")
+
+  return finishProducts([productInDb])
 }
 
 async function deleteProduct(id) {
@@ -66,7 +66,9 @@ async function getAllPaginatedProduct(pageAsNumber, sizeAsNumber, name, category
   if(min) min = Number.parseInt(min)
   if(max) max = Number.parseInt(max)
     
-  return filterCategories(page, size, name, category, manufacturer, min, max, order)
+  let cosas = await filterCategories(page, size, name, category, manufacturer, min, max, order)
+  console.log(cosas)
+  return cosas
 }
 
 module.exports = {

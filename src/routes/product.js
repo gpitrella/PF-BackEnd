@@ -10,13 +10,15 @@ const router = Router();
 router.get('/', async(req, res)=>{
     try{
         const {all , name} = req.query
-        res.json( all ? 
-        name ? await getByName(name) :
-        await getAllProduct() : async() => {
+        var productos
+        if(all) {
+        if(name){ productos = await getByName(name)} else
+        {productos = await getAllProduct()}} else {
         const pageAsNumber = Number.parseInt(req.query.page);
         const sizeAsNumber = Number.parseInt(req.query.size);
         const {category, manufacturer, min, max, order} = req.query
-        await getAllPaginatedProduct(pageAsNumber,sizeAsNumber, name, category, manufacturer, min, max, order)})
+        productos =await getAllPaginatedProduct(pageAsNumber,sizeAsNumber, name, category, manufacturer, min, max, order)}
+        res.json(productos)
     }catch(error){
         res.status(404).json(error.message)
     }
