@@ -10,11 +10,14 @@ async function getAllProduct() {
 
 async function createProduct({ name, price, discount, stock, description, category, manufacturer, image }) {
   if (!name) throw new Error("you must enter a name")
-
+  name = name.toUpperCase()
+  category = cayegory.toUpperCase()
+  manufacturer = manufacturer.toUpperCase()
+  
   let findInDb = await Product.findOne({where: { name: name }})
-  if (findInDb.length) throw new Error("the product already exists")
+  if (findInDb) throw new Error("the product already exists")
 
-  let newProduct = await Product.create({ name: name.toUpperCase(), price, image,discount, stock, description})
+  let newProduct = await Product.create({ name: name, price, image,discount, stock, description})
 
   let categoryDb = await Categories.findAll({ where: { name: category }})
   await newProduct.addCategories(categoryDb)
@@ -66,9 +69,11 @@ async function getAllPaginatedProduct(pageAsNumber, sizeAsNumber, name, category
   if(min) min = Number.parseInt(min)
   if(max) max = Number.parseInt(max)
   if(name) name = name.toUpperCase()
-  let cosas = await filterCategories(page, size, name, category, manufacturer, min, max, order)
-  console.log(cosas)
-  return cosas
+
+  let productos = await filterCategories(page, size, name, category, manufacturer, min, max, order)
+  if(!productos.content.length) throw new Error ("there are no products whit thats filters")
+
+  return productos
 }
 
 module.exports = {
