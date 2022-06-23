@@ -14,7 +14,8 @@ router.get('/', async(req, res)=>{
         // if (order === "desc") products = products.reverse()
         // if(!products) throw new Error ("a filter or sort is required")
         // res.json(products)
-        res.json(await filterCategories())
+        let data = req.query
+        res.json(await filterCategories(data))
     }catch(error){
         res.status(404).json(error.message)
     }
