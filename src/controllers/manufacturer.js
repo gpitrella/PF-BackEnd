@@ -9,20 +9,15 @@ async function getAllManufacturer(){
     }
 }
 
-async function createManufacturer(name){
-    try{
-        if(name){
-            let findInDb = await Manufacturer.findOne({where:{name:name}})
-            if(!findInDb){
-                let newManufacturer = await Manufacturer.create({name:name})
-                return `category ${newManufacturer.name} created successfully`
-            }
-        }else{
-            throw new Error('the category already exists')
-        }
-    }catch(error){
-        console.log(error.message)
-    }
+async function createManufacturer(name, image){
+    if(!name) throw new Error('must enter a name')
+    name = name.toUpperCase()
+    
+    let findInDb = await Manufacturer.findOne({where:{name:name}})
+    if(findInDb) throw new Error('the category already exists')
+
+    let newManufacturer = await Manufacturer.create({name:name, image: image})
+    return `category ${newManufacturer.name} created successfully` 
 }
 
 module.exports = {
