@@ -5,8 +5,8 @@ const router = Router();
 router.get('/', async(req,res)=>{
     try{
         let {category} = req.body;
-        if(!category) res.status(201).json(await getAllCategories())
-        res.status(201).json(await filterCategories(category))
+        if(!category) {res.status(201).json(await getAllCategories())}
+        else {res.status(201).json(await filterCategories(category))}
         
     }catch(error){
         res.json(error.message)

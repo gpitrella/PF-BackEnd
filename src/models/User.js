@@ -9,11 +9,11 @@ module.exports = (sequelize) => {
         allowNull: false,
         validate: {
           isAlpha: {
-            msg: "El nombre solo puede contener letras"
+            msg: "The name can only contain letters"
           },
           len: {
             args: [2, 255],
-            msg: "El nombre tiene que ser minimamente de dos caracters"
+            msg: "The name must be at least two characters"
           }
         }
       },
@@ -23,9 +23,13 @@ module.exports = (sequelize) => {
         unique: true,
         validate: {
           isEmail: {
-            msg: "El email tiene que ser un correo valido"
+            msg: "The email must be a valid email"
           }
         }
+      },
+      admin:{
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
       },
       password:{
         type: DataTypes.STRING,
@@ -33,13 +37,9 @@ module.exports = (sequelize) => {
         validate: {
           len: {
             args: [6, 255],
-            msg: "La contraseña tiene que tener minimamente 6 caracteres"
+            msg: "The password must have at least 6 characters"
           }
         }
       },
-      admin:{
-        type: DataTypes.BOOLEAN,
-        defaultValue: false,
-      }
     });
 };

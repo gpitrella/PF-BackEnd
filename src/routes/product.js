@@ -4,6 +4,7 @@ require('dotenv').config();
 // const { API_KEY } = process.env;
 const { createProduct, getAllProduct, getByName, getById, deleteProduct, changeProduct } = require('../controllers/product.js');
 
+
 const router = Router();
 
 router.get('/', async(req, res)=>{
@@ -16,6 +17,7 @@ router.get('/', async(req, res)=>{
         res.status(404).json(error.message)
     }
 })
+
 router.post('/', async (req, res)=>{
     try{
         let data = req.body
