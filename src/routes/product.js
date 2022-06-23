@@ -2,25 +2,55 @@ const { Router } = require('express');
 const axios = require("axios");
 require('dotenv').config();
 // const { API_KEY } = process.env;
-const { Product } = require('../../src/db.js')
+const { createProduct, getAllProduct, getByName, getById, deleteProduct, changeProduct } = require('../controllers/product.js');
 
 const router = Router();
 
-router.get('/', async (req, res, next)=>{
+router.get('/', async(req, res)=>{
     try{
-        const { name } = req.body;
-        if(name){ 
-            Product.create({
-                name: name
-            })
-            const dataProduct = await Product.findAll()
-            console.log(dataProduct)
-            res.status(200).json(dataProduct);
-        } else {
-            res.status(200).send('Data should be necesary'); 
-        } 
-    } catch (error){
-        next(error)
+        let {name} = req.query
+        if(!name){
+            res.json(await getAllProduct())
+        } else {res.json(await getByName(name))}
+    }catch(error){
+        res.status(404).json(error.message)
+    }
+})
+router.post('/', async (req, res)=>{
+    try{
+        let data = req.body
+        res.status(200).json(await createProduct(data))
+        }
+    catch(error){
+        res.status(404).json(error.message)
+    }
+})
+
+router.get('/:id', async(req,res)=>{
+    try{
+        let { id } = req.params;
+        res.json(await getById(id))
+    }catch(error){
+        res.status(404).json(error.message)
+    }
+})
+
+router.delete('/:id', async(req,res)=>{
+    try{
+        let { id } = req.params;
+        res.json(await deleteProduct(id))
+    }catch(error){
+        res.status(404).json(error.message)
+    }
+})
+
+router.put('/:id', async(req,res)=>{
+    try{
+        let { id } = req.params
+        let data = req.body
+        res.json(await changeProduct(id, data))
+    }catch(error){
+        res.status(404).json(error.message)
     }
 })
 
