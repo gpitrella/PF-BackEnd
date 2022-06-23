@@ -3,7 +3,7 @@ const {Product} = require("../db")
 async function paginatedHome(pageAsNumber, sizeAsNumber){
     let page = 0;
     if(!Number.isNaN(pageAsNumber) && pageAsNumber > 0){
-      page = pageAsNumber;
+      page = pageAsNumber -1;
     }
   
     let size = 10;
