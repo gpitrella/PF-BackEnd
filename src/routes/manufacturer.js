@@ -14,8 +14,7 @@ router.get('/', async(req,res)=>{
 router.post('/', async(req,res)=>{
     try{
         let {name}=req.body;
-        let newManufacturer = await createManufacturer(name) 
-        res.json(newManufacturer)
+        res.json(await createManufacturer(name))
     }catch(error){
         res.json(error.message)
     }
