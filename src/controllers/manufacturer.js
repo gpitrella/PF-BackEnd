@@ -9,7 +9,7 @@ async function getAllManufacturer(){
 
 async function createManufacturer(name, image){
     if(!name) throw new Error('must enter a name')
-    name.toUpperCase()
+    name = name.toUpperCase()
     
     let findInDb = await Manufacturer.findOne({where:{name:name}})
     if(findInDb) throw new Error('the manufacturer already exists')
