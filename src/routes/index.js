@@ -6,6 +6,7 @@ const productRoutes = require("./product.js");
 const categoriesRoutes = require("./categories.js");
 const manufacturerRoutes = require("./manufacturer");
 const paginatedRoutes = require("./paginated.js");
+const filtersRoutes = require("./filters.js");
 // Middlewares
 const auth = require('../middlewares/auth');
 // Controllers
@@ -22,10 +23,12 @@ const router = Router();
 
 // router.post('/api/signin', AuthController.signIn);
 // router.post('/api/signup', AuthController.signUp);
+
 router.use('/api/product', productRoutes)
 router.use('/api/categories', categoriesRoutes)
 router.use('/api/manufacturer', manufacturerRoutes)
 router.use('/api/paginated', paginatedRoutes)
 router.use('/api/search',seachRoutes)
+router.use("/api/filters", filtersRoutes);
 
 module.exports = router;
