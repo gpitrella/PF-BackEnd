@@ -4,7 +4,7 @@ async function searchBar(name){
     const searchProduc = await Product.findAll({
         where: {    
             name: { [Op.like]: `%${name}%`},
-        },
+        },//deberiamos estandarizar los nombres
         include: [
             {
                 model: Categories,
