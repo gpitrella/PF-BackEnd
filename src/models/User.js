@@ -27,6 +27,10 @@ module.exports = (sequelize) => {
           }
         }
       },
+      admin:{
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+      },
       password:{
         type: DataTypes.STRING,
         allowNull: false,
@@ -37,9 +41,5 @@ module.exports = (sequelize) => {
           }
         }
       },
-      admin:{
-        type: DataTypes.BOOLEAN,
-        defaultValue: false,
-      }
     });
 };
