@@ -4,10 +4,7 @@ const router = Router();
 
 router.get('/', async(req,res)=>{
     try{
-        let {category} = req.body;
-        if(!category) {res.status(201).json(await getAllCategories())}
-        else {res.status(201).json(await filterCategories(category))}
-        
+        res.status(201).json(await getAllCategories()) 
     }catch(error){
         res.json(error.message)
     }
@@ -15,9 +12,8 @@ router.get('/', async(req,res)=>{
 
 router.post('/', async(req,res)=>{
     try{
-        let {name}=req.body;
-        let newCategory = await createCategory(name) 
-        res.json(newCategory)
+        let {name}=req.body
+        res.json(await createCategory(name) )
     }catch(error){
         res.json(error.message)
     }
