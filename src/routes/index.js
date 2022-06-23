@@ -23,6 +23,7 @@ const router = Router();
 
 // router.post('/api/signin', AuthController.signIn);
 // router.post('/api/signup', AuthController.signUp);
+
 router.use('/api/product', productRoutes)
 router.use('/api/categories', categoriesRoutes)
 router.use('/api/manufacturer', manufacturerRoutes)
