@@ -1,6 +1,7 @@
 const {Product} = require("../db")
+const {filterCategories} = require ("./filters.js")
 
-async function paginatedHome(pageAsNumber, sizeAsNumber){
+async function paginatedHome(pageAsNumber, sizeAsNumber, name, category, manufacturer, min, max, order){
     let page = 0;
     if(!Number.isNaN(pageAsNumber) && pageAsNumber > 0){
       page = pageAsNumber -1;
@@ -11,16 +12,7 @@ async function paginatedHome(pageAsNumber, sizeAsNumber){
       size = sizeAsNumber;
     }
   
-    const productWithCount = await Product.findAndCountAll({
-      limit: size,
-      offset: page * size
-    });
-
-    return {
-        content: productWithCount.rows,
-        totalPages: Math.ceil(productWithCount.count / Number.parseInt(size)),
-        results: productWithCount.count
-      }
+    return filterCategories(page, size, name, category, manufacturer, min, max, order)
 }
 
 module.exports={
