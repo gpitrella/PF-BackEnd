@@ -6,7 +6,7 @@ router.get('/', async(req,res)=>{
     try{
         res.status(201).json(await getAllCategories()) 
     }catch(error){
-        res.json(error.message)
+        res.status(404).json(error.message)
     }
 })
 
@@ -15,7 +15,7 @@ router.post('/', async(req,res)=>{
         let {name}=req.body
         res.json(await createCategory(name) )
     }catch(error){
-        res.json(error.message)
+        res.status(404).json(error.message)
     }
 })
 

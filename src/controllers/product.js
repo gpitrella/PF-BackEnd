@@ -15,7 +15,7 @@ async function createProduct({ name, price, discount, stock, description, catego
   if(manufacturer) manufacturer = manufacturer.toUpperCase()
 
   let findInDb = await Product.findOne({where: { name: name }})
-  if (findInDb) throw new Error("the product already exists")
+  if (findInDb) throw new Error(`the product ${findInDb.name}  already exists`)
 
   let newProduct = await Product.create({ name: name, price, image,discount, stock, description})
 

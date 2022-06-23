@@ -12,7 +12,7 @@ async function createManufacturer(name, image){
     name = name.toUpperCase()
     
     let findInDb = await Manufacturer.findOne({where:{name:name}})
-    if(findInDb) throw new Error('the manufacturer already exists')
+    if(findInDb) throw new Error(`the manufacturer ${findInDb.name}  already exists`)
 
     let newManufacturer = await Manufacturer.create({name:name, image: image})
     return `manufacturer ${newManufacturer.name} created successfully` 
