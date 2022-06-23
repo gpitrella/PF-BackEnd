@@ -9,9 +9,10 @@ async function getAllCategories(){
 
 async function createCategory(name){
     if(!name) throw new Error ("a name is required for the category")
-
+    name = name.toUpperCase()
+    
     let findInDb = await Categories.findOne({where:{name:name}})
-    if(findInDb.length) throw new Error('the category already exists')
+    if(findInDb) throw new Error('the category already exists')
 
     let newCategory = await Categories.create({name:name})
     return `category ${newCategory.name} created successfully`
