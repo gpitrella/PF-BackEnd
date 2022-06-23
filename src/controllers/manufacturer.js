@@ -1,15 +1,17 @@
 const {Product,Categories, Manufacturer, Review} = require('../db')
 
 async function getAllManufacturer(){
+    try{
         let manufacturer = await Manufacturer.findAll({attributes: ['name']})
-        if(!manufacturer.length) throw new Error ('there are no manufacturers')
         return manufacturer
-    
+    }catch(error){
+        console.log(error)
+    }
 }
 
 async function createManufacturer(name, image){
     if(!name) throw new Error('must enter a name')
-    name.toUpperCase()
+    name = name.toUpperCase()
     
     let findInDb = await Manufacturer.findOne({where:{name:name}})
     if(findInDb) throw new Error('the category already exists')

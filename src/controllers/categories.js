@@ -12,7 +12,11 @@ async function createCategory(name){
     name = name.toUpperCase()
     
     let findInDb = await Categories.findOne({where:{name:name}})
+
     if(findInDb) throw new Error('the category already exists')
+    let newCategory = await Categories.create({name: name})
+    return newCategory
+
 }
 
 module.exports = {
