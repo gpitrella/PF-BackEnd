@@ -20,6 +20,5 @@ async function createCategory(name){
 
 module.exports = {
     createCategory,
-    getAllCategories,
-    // filterCategories
+    getAllCategories
 }

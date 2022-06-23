@@ -1,10 +1,12 @@
 const {Product,Categories, Manufacturer, Review} = require('../db')
 
 async function getAllManufacturer(){
+    try{
         let manufacturer = await Manufacturer.findAll({attributes: ['name']})
-        if(!manufacturer.length) throw new Error ('there are no manufacturers')
         return manufacturer
-    
+    }catch(error){
+        console.log(error)
+    }
 }
 
 async function createManufacturer(name, image){
