@@ -65,7 +65,7 @@ async function getAllPaginatedProduct(pageAsNumber, sizeAsNumber, name, category
   
   if(min) min = Number.parseInt(min)
   if(max) max = Number.parseInt(max)
-    
+  if(name) name = name.toUpperCase()
   let cosas = await filterCategories(page, size, name, category, manufacturer, min, max, order)
   console.log(cosas)
   return cosas
