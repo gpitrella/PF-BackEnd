@@ -9,16 +9,14 @@ const router = Router();
 
 router.get('/', async(req, res)=>{
     try{
-        let {all , name} = req.query
-        if(all) {
-        if(!name){res.json(await getAllProduct())} 
-        else {res.json(await getByName(name))}}
-        else {
-            const pageAsNumber = Number.parseInt(req.query.page);
-            const sizeAsNumber = Number.parseInt(req.query.size);
-            const {name, category, manufacturer, min, max, order} = req.query
-            res.json(await getAllPaginatedProduct(pageAsNumber,sizeAsNumber, name, category, manufacturer, min, max, order));
-        }
+        const {all , name} = req.query
+        res.json( all ? 
+        name ? await getByName(name) :
+        await getAllProduct() : async() => {
+        const pageAsNumber = Number.parseInt(req.query.page);
+        const sizeAsNumber = Number.parseInt(req.query.size);
+        const {category, manufacturer, min, max, order} = req.query
+        await getAllPaginatedProduct(pageAsNumber,sizeAsNumber, name, category, manufacturer, min, max, order)})
     }catch(error){
         res.status(404).json(error.message)
     }
@@ -28,8 +26,7 @@ router.post('/', async (req, res)=>{
     try{
         let data = req.body
         res.status(200).json(await createProduct(data))
-        }
-    catch(error){
+    }catch(error){
         res.status(404).json(error.message)
     }
 })

@@ -39,8 +39,8 @@ async function getById(id) {
   if (!id) throw new Error("you must provide a product id")
 
   let productInDb = [await Product.findByPk(id, searchConditions())]
-
-  if(!productInDb) throw new Error ("the id does not correspond to an existing product")
+  
+  if(!productInDb[0]) throw new Error ("the id does not correspond to an existing product")
 
   return finishProducts(productInDb)
 }
