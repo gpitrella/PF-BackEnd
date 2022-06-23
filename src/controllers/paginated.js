@@ -18,7 +18,8 @@ async function paginatedHome(pageAsNumber, sizeAsNumber){
 
     return {
         content: productWithCount.rows,
-        totalPages: Math.ceil(productWithCount.count / Number.parseInt(size))
+        totalPages: Math.ceil(productWithCount.count / Number.parseInt(size)),
+        results: productWithCount.count
       }
 }
 
