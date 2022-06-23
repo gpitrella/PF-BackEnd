@@ -15,9 +15,9 @@ async function createCategory(name){
             if(!findInDb){
                 let newCategory = await Categories.create({name:name})
                 return `category ${newCategory.name} created successfully`
-            }
+            }throw new Error('the category already exists')
         }else{
-            throw new Error('the category already exists')
+            throw new Error('you must enter a name')
         }
     
 }
