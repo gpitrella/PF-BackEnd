@@ -5,6 +5,7 @@ module.exports = (sequelize) => {
     sequelize.define('categories', {
         name:{
             type:DataTypes.STRING,
-            allowNull: false
+            allowNull: false,
+            unique: true
         }
     },{ timestamps: false })}
