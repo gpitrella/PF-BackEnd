@@ -35,7 +35,7 @@ async function createProduct({ name, price, discount, stock, description, catego
       where: { name: name },
     });
     if (!findInDb) {
-      let newProduct = await Product.create({ name, price, image,discount, stock, description});
+      let newProduct = await Product.create({ name: name.toUpperCase(), price, image,discount, stock, description});
       let categoryDb = await Categories.findAll({
         where: { name: category },
       });

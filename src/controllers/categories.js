@@ -1,16 +1,15 @@
-const {Product,Categories, Manufacturer, Review} = require('../db')
+const { Product,Categories } = require('../db')
 
 async function getAllCategories(){
-    try{
+    
         let categories = await Categories.findAll({attributes: ['name']})
+        if(!categories.length) throw new Error('there are not categories')
         return categories
-    }catch(error){
-        console.log(error)
-    }
+    
 }
 
 async function createCategory(name){
-    try{
+
         if(name){
             let findInDb = await Categories.findOne({where:{name:name}})
             if(!findInDb){
@@ -20,9 +19,7 @@ async function createCategory(name){
         }else{
             throw new Error('the category already exists')
         }
-    }catch(error){
-        console.log(error.message)
-    }
+    
 }
 //ME TRAE LOS PRODUCTOS DE ESA CATEGORIA PERO NO SU MANUFACTURER
 async function filterCategories(category){
