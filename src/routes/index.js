@@ -1,12 +1,9 @@
 const { Router } = require("express");
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
-const seachRoutes = require('./search')
 const productRoutes = require("./product.js");
 const categoriesRoutes = require("./categories.js");
 const manufacturerRoutes = require("./manufacturer");
-const paginatedRoutes = require("./paginated.js");
-const filtersRoutes = require("./filters.js");
 // Middlewares
 const auth = require('../middlewares/auth');
 // Controllers
@@ -27,8 +24,5 @@ const router = Router();
 router.use('/api/product', productRoutes)
 router.use('/api/categories', categoriesRoutes)
 router.use('/api/manufacturer', manufacturerRoutes)
-router.use('/api/paginated', paginatedRoutes)
-router.use('/api/search',seachRoutes)
-router.use("/api/filters", filtersRoutes);
 
 module.exports = router;
