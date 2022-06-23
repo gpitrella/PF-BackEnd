@@ -11,9 +11,9 @@ async function getAllProduct() {
 async function createProduct({ name, price, discount, stock, description, category, manufacturer, image }) {
   if (!name) throw new Error("you must enter a name")
   name = name.toUpperCase()
-  category = cayegory.toUpperCase()
-  manufacturer = manufacturer.toUpperCase()
-  
+  if(category) category = category.toUpperCase()
+  if(manufacturer) manufacturer = manufacturer.toUpperCase()
+
   let findInDb = await Product.findOne({where: { name: name }})
   if (findInDb) throw new Error("the product already exists")
 

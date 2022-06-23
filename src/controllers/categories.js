@@ -13,6 +13,9 @@ async function createCategory(name){
     
     let findInDb = await Categories.findOne({where:{name:name}})
     if(findInDb) throw new Error('the category already exists')
+
+    let newCategory = await Categories.create({name:name})
+    return `category ${newCategory.name} created successfully`
 }
 
 module.exports = {
