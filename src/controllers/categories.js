@@ -1,4 +1,4 @@
-const { Product,Categories } = require('../db')
+const { Categories } = require('../db')
 
 async function getAllCategories(){
     let categories = await Categories.findAll({attributes: ['name']})
