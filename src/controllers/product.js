@@ -1,6 +1,6 @@
 const { Product, Categories, Manufacturer, Review } = require("../db");
 const {searchConditions, finishProducts} = require("../middlewares/searchConditions")
-const {filterCategories} = require ("./filters.js")
+const {filterProducts} = require ("./filters.js")
 
 async function getAllProduct() {
   let products = await Product.findAll(searchConditions())
@@ -11,11 +11,11 @@ async function getAllProduct() {
 async function createProduct({ name, price, discount, stock, description, category, manufacturer, image }) {
   if (!name) throw new Error("you must enter a name")
   name = name.toUpperCase()
-  category = category.toUpperCase()
-  manufacturer = manufacturer.toUpperCase()
-  
+  if(category) category = category.toUpperCase()
+  if(manufacturer) manufacturer = manufacturer.toUpperCase()
+
   let findInDb = await Product.findOne({where: { name: name }})
-  if (findInDb) throw new Error("the product already exists")
+  if (findInDb) throw new Error(`the product ${findInDb.name}  already exists`)
 
   let newProduct = await Product.create({ name: name, price, image,discount, stock, description})
 
@@ -60,7 +60,7 @@ async function changeProduct(id, { name, price, discount, stock, description, im
   return "the product was changed"
 }
 
-async function getAllPaginatedProduct(pageAsNumber, sizeAsNumber, name, category, manufacturer, min, max, order){
+async function getAllPaginatedProduct(pageAsNumber, sizeAsNumber, name, category, manufacturer, min, max, order, discount){
 
   let page = (!Number.isNaN(pageAsNumber) && pageAsNumber > 0)  ?  pageAsNumber -1 : 0
   
@@ -68,9 +68,10 @@ async function getAllPaginatedProduct(pageAsNumber, sizeAsNumber, name, category
   
   if(min) min = Number.parseInt(min)
   if(max) max = Number.parseInt(max)
+  if(discount) discount = Number.parseInt(discount)
   if(name) name = name.toUpperCase()
 
-  let productos = await filterCategories(page, size, name, category, manufacturer, min, max, order)
+  let productos = await filterProducts(page, size, name, category, manufacturer, min, max, order, discount)
   if(!productos.content.length) throw new Error ("there are no products whit thats filters")
 
   return productos
