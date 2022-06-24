@@ -1,4 +1,4 @@
-const { Product, Categories, Manufacturer, Review } = require("../db");
+const { Categories, Manufacturer } = require("../db");
 
 function searchConditions() {
   return {
