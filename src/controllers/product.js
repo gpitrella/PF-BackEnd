@@ -1,9 +1,6 @@
 const { Product, Categories, Manufacturer } = require("../db");
-const {
-  searchConditions,
-  finishProducts,
-} = require("../middlewares/searchConditions");
-const { filterProducts } = require("./filters.js");
+const {searchConditions, finishProducts} = require("../middlewares/searchConditions")
+const {filterProducts} = require ("./filters.js")
 
 async function getAllProduct() {
   let products = await Product.findAll(searchConditions());

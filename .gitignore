@@ -108,6 +108,7 @@ package-lock.json
 
 
 probarBack.js
-.env
+/.env
 model.js
 Api-Store.js
+.gitignore

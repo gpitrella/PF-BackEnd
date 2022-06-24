@@ -1,13 +1,13 @@
-const { Product, Categories, Manufacturer, Review } = require("../db");
+const { Product } = require("../db");
 const { Op } = require("sequelize");
 const {searchConditions} = require("../middlewares/searchConditions")
+const { Sequelize } = require("sequelize");
 
 async function filterProducts(page, size, name, category, manufacturer, min, max, order, discount) {
   var condiciones = searchConditions()
   condiciones.limit= size,
   condiciones.offset= page * size
 
-  console.log(max)
   if( min && max && discount && name ) {condiciones.where = {[Op.and]: [{discount: {[Op.gte]: discount}},{name: {[Op.like]: `%${name}%`}},{price: {[Op.between]: [min, max]}}]}}
   else if( discount && max && name ) {condiciones.where = {[Op.and]: [{discount: {[Op.gte]: discount}},{name: {[Op.like]: `%${name}%`}},{price: {[Op.lte]: max}}]}}
   else if( min && discount && name ) {condiciones.where = {[Op.and]: [{discount: {[Op.gte]: discount}},{name: {[Op.like]: `%${name}%`}},{price: {[Op.gte]: min}}]}}
@@ -25,9 +25,9 @@ async function filterProducts(page, size, name, category, manufacturer, min, max
   else if( min ) {condiciones.where = {price: {[Op.gte]: min}}}
 
 
+  if ( order === "random") {condiciones.order = Sequelize.literal('random()')}
+  else if( order ) {order = order.split(","); condiciones.order = [[order[0], order[1]]];}
 
-  
-  if( order ) {order = order.split(","); condiciones.order = [[order[0], order[1]]];}
   if( category ) condiciones.include[0].where = {name: category}  
   if( manufacturer ) condiciones.include[1].where = {name: manufacturer}
 
