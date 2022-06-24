@@ -12,7 +12,7 @@ module.exports = (sequelize) => {
         validate: {
             len: {
               args: [2, 55],
-              msg: "El numero tiene que ser minimamente de dos caracters"
+              msg: "The number must be at least two characters"
             }
           }
     },
@@ -21,11 +21,11 @@ module.exports = (sequelize) => {
         allowNull: false,
         validate: {
           isAlpha: {
-            msg: "El nombre solo puede contener letras"
+            msg: "The name can only contain letters"
           },
           len: {
             args: [2, 255],
-            msg: "El nombre tiene que ser minimamente de dos caracters"
+            msg: "The name must be at least two characters"
           }
         }
       },
@@ -39,7 +39,7 @@ module.exports = (sequelize) => {
         validate: {
           len: {
             args: [2, 255],
-            msg: "La contraseña tiene que tener minimamente 6 caracteres"
+            msg: "The password must have at least 6 characters"
           }
         }
       },

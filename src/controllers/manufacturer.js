@@ -16,7 +16,12 @@ async function createManufacturer(name, image){
     return `manufacturer ${newManufacturer.name} created successfully` 
 }
 
+async function deleteManufacturer(id){
+    await Manufacturer.destroy({where:{id}})
+    return 'The manufacturer was remove'
+}
 module.exports = {
     getAllManufacturer,
-    createManufacturer
+    createManufacturer,
+    deleteManufacturer
 }

@@ -1,4 +1,5 @@
 const { Categories } = require('../db')
+const { getById } = require('./product')
 
 async function getAllCategories(){
     let categories = await Categories.findAll({attributes: ['name']})
@@ -18,7 +19,15 @@ async function createCategory(name){
     return `category ${newCategory.name} created successfully`
 }
 
+async function deleteCategory(id){
+    await Categories.destroy({where:{id}})
+    return 'The category was remove'
+}
+
+async function updateCategory(){}
+
 module.exports = {
     createCategory,
-    getAllCategories
+    getAllCategories,
+    deleteCategory
 }

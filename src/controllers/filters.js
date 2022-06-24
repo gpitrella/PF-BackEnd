@@ -37,7 +37,7 @@ async function filterProducts(page, size, name, category, manufacturer, min, max
     return {
       ...product.dataValues,
       categories: product.categories?.map((product) => product.name),
-      manufacturers: product.manufacturers?.map((product) => product.name),
+      // manufacturers: product.manufacturers?.map((product) => product.name),
     };
   });
 

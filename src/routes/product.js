@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const axios = require("axios");
 require('dotenv').config();
-// const { API_KEY } = process.env;
+
 const { createProduct, getAllProduct, getByName, getById, deleteProduct, changeProduct , getAllPaginatedProduct} = require('../controllers/product.js');
 
 

@@ -12,7 +12,7 @@ function searchConditions() {
       },
       {
         model: Manufacturer,
-        attributes: ["name"],
+        attributes: ["name","image"],
         through: {
           attributes: [],
         },
@@ -26,9 +26,11 @@ function finishProducts(product){
     return {
       ...m.dataValues,
       categories: m.categories?.map((m) => m.name),
-      manufacturers: m.manufacturers?.map((m) => m.name),
+      //manufacturers: m.manufacturers?.map((m) => m.name),
     }
   })
+  console.log('finishMidle', product);
   return product
+
 }
 module.exports = { searchConditions, finishProducts };

@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { createCategory, getAllCategories } = require('../controllers/categories');
+const { createCategory, getAllCategories, deleteCategory } = require('../controllers/categories');
 const router = Router();
 
 router.get('/', async(req,res)=>{
@@ -16,6 +16,15 @@ router.post('/', async(req,res)=>{
         res.json(await createCategory(name))
     }catch(error){
         res.status(404).json(error.message)
+    }
+})
+
+router.delete('/:id', async(req,res)=>{
+    try {
+        let {id} = req.params;
+        res.json(await deleteCategory(id))
+    } catch (error) {
+        res.json(error)
     }
 })
 
