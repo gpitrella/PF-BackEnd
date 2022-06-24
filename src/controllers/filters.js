@@ -1,13 +1,13 @@
 const { Product } = require("../db");
 const { Op } = require("sequelize");
-const {searchConditions} = require("../middlewares/searchConditions")
+const {searchConditions, finishProducts} = require("../middlewares/searchConditions.js")
 const { Sequelize } = require("sequelize");
 
 async function filterProducts(page, size, name, category, manufacturer, min, max, order, discount) {
   var condiciones = searchConditions()
   condiciones.limit= size,
   condiciones.offset= page * size
-
+  
   if( min && max && discount && name ) {condiciones.where = {[Op.and]: [{discount: {[Op.gte]: discount}},{name: {[Op.like]: `%${name}%`}},{price: {[Op.between]: [min, max]}}]}}
   else if( discount && max && name ) {condiciones.where = {[Op.and]: [{discount: {[Op.gte]: discount}},{name: {[Op.like]: `%${name}%`}},{price: {[Op.lte]: max}}]}}
   else if( min && discount && name ) {condiciones.where = {[Op.and]: [{discount: {[Op.gte]: discount}},{name: {[Op.like]: `%${name}%`}},{price: {[Op.gte]: min}}]}}
@@ -33,16 +33,8 @@ async function filterProducts(page, size, name, category, manufacturer, min, max
 
   let products = await Product.findAndCountAll(condiciones);
 
-  products.rows = products.rows.map((product) => {
-    return {
-      ...product.dataValues,
-      categories: product.categories?.map((product) => product.name),
-      // manufacturers: product.manufacturers?.map((product) => product.name),
-    };
-  });
-
   return {
-    content: products.rows,
+    content: finishProducts(products.rows),
     totalPages: Math.ceil(products.count / Number.parseInt(size)),
     results: products.count
   }
