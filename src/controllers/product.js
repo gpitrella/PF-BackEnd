@@ -107,6 +107,8 @@ async function getAllPaginatedProduct(
   if (max) max = Number.parseInt(max);
   if (discount) discount = Number.parseInt(discount);
   if (name) name = name.toUpperCase();
+  if (manufacturer) manufacturer = manufacturer.toUpperCase()
+  if (category) category = category.toUpperCase()
 
   let productos = await filterProducts(
     page,
