@@ -13,8 +13,8 @@ router.get('/', async(req,res)=>{
 
 router.post('/', async(req,res)=>{
     try{
-        let {name}=req.body;
-        res.json(await createManufacturer(name))
+        let {name, image }=req.body;
+        res.json(await createManufacturer(name, image))
     }catch(error){
         res.json(error.message)
     }

@@ -8,16 +8,17 @@ async function getAllManufacturer(){
     
 }
 
-async function createManufacturer(name){
+async function createManufacturer(name, image){
     
         if(name){
             let findInDb = await Manufacturer.findOne({where:{name:name}})
             if(!findInDb){
-                let newManufacturer = await Manufacturer.create({name:name})
+                let newManufacturer = await Manufacturer.create({name:name, image: image})
                 return `category ${newManufacturer.name} created successfully`
             }
-        }else{
             throw new Error('the category already exists')
+        }else{
+            throw new Error('You must enter a name of manufacturer')
         }
     
 }
