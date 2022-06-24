@@ -1,11 +1,9 @@
 const { Product, Categories, Manufacturer } = require("../db");
-//const {searchConditions, finishProducts} = require("../middlewares/searchConditions")
+const {searchConditions, finishProducts} = require("../middlewares/searchConditions")
 const {filterProducts} = require ("./filters.js")
 
 async function getAllProduct() {
   let products = await Product.findAll(searchConditions());
-  let fproducts = finishProducts(products)
-  console.log('acaaaaaaaaaaaaaaaaaaaaaaaaaaaa',fproducts)
   return finishProducts(products);
 }
 
@@ -121,8 +119,6 @@ async function getAllPaginatedProduct(
     order,
     discount
   );
-  // if (!productos.content.length)
-  //   throw new Error("there are no products whit thats filters");
 
   return productos;
 }

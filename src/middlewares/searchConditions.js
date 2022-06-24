@@ -29,7 +29,6 @@ function finishProducts(product){
       //manufacturers: m.manufacturers?.map((m) => m.name),
     }
   })
-  console.log('finishMidle', product);
   return product
 
 }
