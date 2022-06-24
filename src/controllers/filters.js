@@ -7,7 +7,7 @@ async function filterProducts(page, size, name, category, manufacturer, min, max
   var condiciones = searchConditions()
   condiciones.limit= size,
   condiciones.offset= page * size
-  
+
   if( min && max && discount && name ) {condiciones.where = {[Op.and]: [{discount: {[Op.gte]: discount}},{name: {[Op.like]: `%${name}%`}},{price: {[Op.between]: [min, max]}}]}}
   else if( discount && max && name ) {condiciones.where = {[Op.and]: [{discount: {[Op.gte]: discount}},{name: {[Op.like]: `%${name}%`}},{price: {[Op.lte]: max}}]}}
   else if( min && discount && name ) {condiciones.where = {[Op.and]: [{discount: {[Op.gte]: discount}},{name: {[Op.like]: `%${name}%`}},{price: {[Op.gte]: min}}]}}
@@ -30,7 +30,7 @@ async function filterProducts(page, size, name, category, manufacturer, min, max
 
   if( category ) condiciones.include[0].where = {name: category}  
   if( manufacturer ) condiciones.include[1].where = {name: manufacturer}
-
+  
   let products = await Product.findAndCountAll(condiciones);
 
   return {
