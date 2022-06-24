@@ -1,12 +1,10 @@
-const {Product,Categories, Manufacturer, Review} = require('../db')
+const {Manufacturer} = require('../db')
 
 async function getAllManufacturer(){
-    try{
-        let manufacturer = await Manufacturer.findAll({attributes: ['name']})
+    
+        let manufacturer = await Manufacturer.findAll({attributes: ['name', 'image']})
         return manufacturer
-    }catch(error){
-        console.log(error)
-    }
+    
 }
 
 async function createManufacturer(name, image){
