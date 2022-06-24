@@ -16,8 +16,8 @@ router.get('/', async(req, res)=>{
         {productos = await getAllProduct()}} else {
         const pageAsNumber = Number.parseInt(req.query.page);
         const sizeAsNumber = Number.parseInt(req.query.size);
-        const {category, manufacturer, min, max, order} = req.query
-        productos =await getAllPaginatedProduct(pageAsNumber,sizeAsNumber, name, category, manufacturer, min, max, order)}
+        const {category, manufacturer, min, max, order, discount} = req.query
+        productos =await getAllPaginatedProduct(pageAsNumber,sizeAsNumber, name, category, manufacturer, min, max, order, discount)}
         res.json(productos)
     }catch(error){
         res.status(404).json(error.message)
