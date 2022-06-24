@@ -8,21 +8,17 @@ async function getAllCategories(){
 }
 
 async function createCategory(name){
+    if(!name) throw new Error ("a name is required for the category")
+    name = name.toUpperCase()
+    
+    let findInDb = await Categories.findOne({where:{name:name}})
+    if(findInDb) throw new Error(`the category ${findInDb.name}  already exists`)
 
-    if(name){
-        let findInDb = await Categories.findOne({where:{name:name}})
-        if(!findInDb){
-            let newCategory = await Categories.create({name:name})
-            return `category ${newCategory.name} created successfully`
-        }throw new Error('the category already exists')
-    }else{
-        throw new Error('you must enter a name')
-    }
-
+    let newCategory = await Categories.create({name:name})
+    return `category ${newCategory.name} created successfully`
 }
 
 module.exports = {
     createCategory,
-    getAllCategories,
-    // filterCategories
+    getAllCategories
 }
