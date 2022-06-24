@@ -1,6 +1,6 @@
 const { Product, Categories, Manufacturer, Review } = require("../db");
 const {searchConditions, finishProducts} = require("../middlewares/searchConditions")
-const {filterCategories} = require ("./filters.js")
+const {filterProducts} = require ("./filters.js")
 
 async function getAllProduct() {
   let products = await Product.findAll(searchConditions())
@@ -60,7 +60,7 @@ async function changeProduct(id, { name, price, discount, stock, description, im
   return "the product was changed"
 }
 
-async function getAllPaginatedProduct(pageAsNumber, sizeAsNumber, name, category, manufacturer, min, max, order){
+async function getAllPaginatedProduct(pageAsNumber, sizeAsNumber, name, category, manufacturer, min, max, order, discount){
 
   let page = (!Number.isNaN(pageAsNumber) && pageAsNumber > 0)  ?  pageAsNumber -1 : 0
   
@@ -68,9 +68,10 @@ async function getAllPaginatedProduct(pageAsNumber, sizeAsNumber, name, category
   
   if(min) min = Number.parseInt(min)
   if(max) max = Number.parseInt(max)
+  if(discount) discount = Number.parseInt(discount)
   if(name) name = name.toUpperCase()
 
-  let productos = await filterCategories(page, size, name, category, manufacturer, min, max, order)
+  let productos = await filterProducts(page, size, name, category, manufacturer, min, max, order, discount)
   if(!productos.content.length) throw new Error ("there are no products whit thats filters")
 
   return productos
