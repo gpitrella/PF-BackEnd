@@ -1,3 +1,4 @@
+const { CanceledError } = require('axios')
 const { Categories } = require('../db')
 const { getById } = require('./product')
 
@@ -24,10 +25,14 @@ async function deleteCategory(id){
     return 'The category was remove'
 }
 
-async function updateCategory(){}
+async function updateCategory(id,name){
+    await Categories.update({name:name},{where:{id:id}})
+    return 'the category was successfully updated'
+}
 
 module.exports = {
     createCategory,
     getAllCategories,
-    deleteCategory
+    deleteCategory,
+    updateCategory
 }
