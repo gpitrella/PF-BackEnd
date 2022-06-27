@@ -7,7 +7,7 @@ module.exports = (req, res, next) => {
 
     // Comprobar que existe el token
     if(!req.headers.authorization) {
-        res.status(401).json({ msg: "Acceso no autorizado" });
+        res.status(401).json({ msg: "Access Denied" });
     } else {
 
         // Comrpobar la validez de este token
@@ -17,7 +17,7 @@ module.exports = (req, res, next) => {
         jwt.verify(token, authConfig.secret, (err, decoded) => {
 
             if(err) {
-                res.status(500).json({ msg: "Ha ocurrido un problema al decodificar el token", err });
+                res.status(500).json({ msg: "There was a problem decoding the token", err });
             } else {
                 
                 User.findByPk(decoded.user.id, { include: "roles" }).then(user => {

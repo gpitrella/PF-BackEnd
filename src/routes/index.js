@@ -4,8 +4,13 @@ const { Router } = require("express");
 const productRoutes = require("./product.js");
 const categoriesRoutes = require("./categories.js");
 const manufacturerRoutes = require("./manufacturer");
+
 // Middlewares
 const auth = require('../middlewares/auth');
+
+// Policies
+const AdminPolicy = require('../policies/AdminPolicy');
+
 // Controllers
 const AuthController = require('../controllers/AuthController');
 //const PostController = require('./controllers/PostController');
@@ -18,8 +23,14 @@ const router = Router();
 // Dos rutas: login y registro
 // /api/singin & /api/singup
 
-// router.post('/api/signin', AuthController.signIn);
-// router.post('/api/signup', AuthController.signUp);
+router.post('/api/signin', AuthController.signIn);
+router.post('/api/signup', AuthController.signUp);
+
+//? ruta dashboard Admin protegida con token y usuario admin
+router.get('/api/admin', auth, AdminPolicy.show);
+
+//? ruta protegida con token y usuario admin
+//router.use('/api/product', auth, AdminPolicy.show, productRoutes)
 
 router.use('/api/product', productRoutes)
 router.use('/api/categories', categoriesRoutes)
