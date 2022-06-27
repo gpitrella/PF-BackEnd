@@ -41,5 +41,9 @@ module.exports = (sequelize) => {
           }
         }
       },
+      isactive:{
+        type: DataTypes.BOOLEAN,
+        defaultValue: true,
+      },
     });
 };
