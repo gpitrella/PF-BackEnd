@@ -58,10 +58,9 @@ async function getByName(name) {
 async function getById(id) {
   if (!id) throw new Error("you must provide a product id");
 
-  let productInDb = await Product.findByPk(id, searchConditions());
+  let productInDb = await Product.findByPk(id, searchConditions("whitComments"));
 
-  if (!productInDb)
-    throw new Error("the id does not correspond to an existing product");
+  if (!productInDb) throw new Error("the id does not correspond to an existing product");
 
   return finishProducts([productInDb]);
 }
@@ -110,7 +109,7 @@ async function getAllPaginatedProduct(
   if (manufacturer) manufacturer = manufacturer.toUpperCase()
   if (category) category = category.toUpperCase()
 
-  let productos = await filterProducts(
+  let products = await filterProducts(
     page,
     size,
     name,
@@ -122,7 +121,7 @@ async function getAllPaginatedProduct(
     discount
   );
 
-  return productos;
+  return products;
 }
 
 module.exports = {

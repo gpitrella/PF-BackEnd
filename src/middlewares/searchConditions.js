@@ -1,6 +1,6 @@
 const { Categories, Manufacturer, Comments } = require("../db");
 
-function searchConditions() {
+function searchConditions(condicion) {
   let conditions = {
     include: [
       {
@@ -17,14 +17,15 @@ function searchConditions() {
           attributes: [],
         },
       },
-      {
-        model: Comments,
-        attributes: ["comment"],
-        through: {
-          attributes: [],
-        },
-      },
+      
     ],
+  }
+  if(condicion === "whitComments") conditions.include[2] = {
+    model: Comments,
+    attributes: ["comment"],
+    through: {
+      attributes: [],
+    },
   }
   return conditions;
 }
