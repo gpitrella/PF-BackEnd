@@ -5,7 +5,8 @@ module.exports = (sequelize) => {
     sequelize.define('manufacturer', {
         name:{
             type:DataTypes.STRING,
-            allowNull: false
+            allowNull: false,
+            unique: true
         },
         image:{
             type:DataTypes.STRING,

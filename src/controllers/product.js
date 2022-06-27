@@ -26,7 +26,7 @@ async function createProduct({
   if (findInDb) throw new Error(`the product ${findInDb.name}  already exists`);
 
   let newProduct = await Product.create({
-    name: name,
+    name,
     price,
     image,
     discount,
