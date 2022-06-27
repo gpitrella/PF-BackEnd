@@ -20,8 +20,15 @@ async function deleteManufacturer(id){
     await Manufacturer.destroy({where:{id}})
     return 'The manufacturer was remove'
 }
+
+async function updateManufacturer(id, name, image){
+    await Manufacturer.update({name:name, image:image},{where:{id:id}})
+    return 'the Manufacturer was successfully updated'
+}
+
 module.exports = {
     getAllManufacturer,
     createManufacturer,
-    deleteManufacturer
+    deleteManufacturer,
+    updateManufacturer
 }
