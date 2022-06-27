@@ -1,7 +1,7 @@
-const { Categories, Manufacturer } = require("../db");
+const { Categories, Manufacturer, Comments } = require("../db");
 
 function searchConditions() {
-  return {
+  let conditions = {
     include: [
       {
         model: Categories,
@@ -17,8 +17,16 @@ function searchConditions() {
           attributes: [],
         },
       },
+      {
+        model: Comments,
+        attributes: ["comment"],
+        through: {
+          attributes: [],
+        },
+      },
     ],
-  };
+  }
+  return conditions;
 }
 
 function finishProducts(product){
