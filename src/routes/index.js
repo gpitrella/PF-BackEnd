@@ -4,6 +4,7 @@ const { Router } = require("express");
 const productRoutes = require("./product");
 const categoriesRoutes = require("./categories");
 const manufacturerRoutes = require("./manufacturer");
+const userRoutes = require("./user") 
 const commentsRoutes = require("./comments");
 
 // Middlewares
@@ -36,6 +37,7 @@ router.get('/api/admin', auth, AdminPolicy.show);
 router.use('/api/product', productRoutes)
 router.use('/api/categories', categoriesRoutes)
 router.use('/api/manufacturer', manufacturerRoutes)
+router.use('/api/user', userRoutes)
 router.use('/api/comments', commentsRoutes)
 
 module.exports = router;
