@@ -8,31 +8,16 @@ async function filterProducts(page, size, name, category, manufacturer, min, max
   condiciones.limit= size,
   condiciones.offset= page * size
 
-  if( min && max && discount && name ) {condiciones.where = {[Op.and]: [{discount: {[Op.gte]: discount}},{name: {[Op.like]: `%${name}%`}},{price: {[Op.between]: [min, max]}}]}}
-  else if( discount && max && name ) {condiciones.where = {[Op.and]: [{discount: {[Op.gte]: discount}},{name: {[Op.like]: `%${name}%`}},{price: {[Op.lte]: max}}]}}
-  else if( min && discount && name ) {condiciones.where = {[Op.and]: [{discount: {[Op.gte]: discount}},{name: {[Op.like]: `%${name}%`}},{price: {[Op.gte]: min}}]}}
-  else if( min && max && discount ) {condiciones.where = {[Op.and]: [{discount: {[Op.gte]: discount}},{price: {[Op.between]: [min, max]}}]}}
-  else if( min && max && name ) {condiciones.where = {[Op.and]: [{name: {[Op.like]: `%${name}%`}},{price: {[Op.between]: [min, max]}}]}}
-  else if( name && discount ) {condiciones.where = {[Op.and]: [{name: {[Op.like]: `%${name}%`}},{discount: {[Op.gte]: discount}}]}}
-  else if( max && discount ) {condiciones.where = {[Op.and]: [{discount: {[Op.gte]: discount}},{price: {[Op.lte]: max}}]}}
-  else if( min && discount ) {condiciones.where = {[Op.and]: [{discount: {[Op.gte]: discount}},{price: {[Op.gte]: min}}]}}
-  else if( max && name ) {condiciones.where = {[Op.and]: [{name: {[Op.like]: `%${name}%`}},{price: {[Op.lte]: max}}]}}
-  else if( min && name ) {condiciones.where = {[Op.and]: [{name: {[Op.like]: `%${name}%`}},{price: {[Op.gte]: min}}]}}
-  else if( min && max ) {condiciones.where = {price: {[Op.between]: [min, max]}}}
-  else if( discount ) {condiciones.where = {discount: {[Op.gte]: discount}}}
-  else if( name ) {condiciones.where = {name: {[Op.like]: `%${name}%`}}}
-  else if( max ) {condiciones.where = {price: {[Op.lte]: max}}}
-  else if( min ) {condiciones.where = {price: {[Op.gte]: min}}}
-
+  if((((min || max ) || discount) && name) || ((min || max ) && discount )) {condiciones.where = {[Op.and]: [filtradosDeProducts(min, max, discount, name)]}}
+  else if(min || max || discount || name) {condiciones.where = filtradosDeProducts(min, max, discount, name)}
 
   if ( order === "random") {condiciones.order = Sequelize.literal('random()')}
   else if( order ) {order = order.split(","); condiciones.order = [[order[0], order[1]]];}
 
   if( category ) condiciones.include[0].where = {name: category}  
   if( manufacturer ) condiciones.include[1].where = {name: manufacturer}
-  
   let products = await Product.findAndCountAll(condiciones);
-
+  
   return {
     content: finishProducts(products.rows),
     totalPages: Math.ceil(products.count / Number.parseInt(size)),
@@ -42,3 +27,14 @@ async function filterProducts(page, size, name, category, manufacturer, min, max
 module.exports = {
   filterProducts,
 };
+
+
+function filtradosDeProducts(min, max, discount, name){
+  let objetito = {}
+  if(discount) objetito.discount = {[Op.gte]: discount}
+  if (name) objetito.name = {[Op.like]: `%${name}%`}
+  if( min && max ) {objetito.price = {[Op.between]: [min, max]}}
+  else if( max ) {objetito.price = {[Op.lte]: max}}
+  else if( min ) {objetito.price =  {[Op.gte]: min}}
+  return objetito
+}
