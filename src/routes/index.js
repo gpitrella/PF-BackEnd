@@ -6,6 +6,7 @@ const categoriesRoutes = require("./categories");
 const manufacturerRoutes = require("./manufacturer");
 const userRoutes = require("./user") 
 const commentsRoutes = require("./comments");
+const reviewRoutes = require("./review");
 
 // Middlewares
 const auth = require('../middlewares/auth');
@@ -39,5 +40,6 @@ router.use('/api/categories', categoriesRoutes)
 router.use('/api/manufacturer', manufacturerRoutes)
 router.use('/api/user', userRoutes)
 router.use('/api/comments', commentsRoutes)
+router.use('/api/review', reviewRoutes)
 
 module.exports = router;
