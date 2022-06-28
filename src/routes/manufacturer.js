@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { getAllManufacturer, createManufacturer, deleteManufacturer } = require('../controllers/manufacturer');
+const { getAllManufacturer, createManufacturer, deleteManufacturer, updateManufacturer } = require('../controllers/manufacturer');
 
 const router = Router();
 
@@ -25,7 +25,17 @@ router.delete('/:id', async(req,res)=>{
         let {id} = req.params;
         res.json(await deleteManufacturer(id))
     } catch (error) {
-        res.json(error)
+        res.json(error.message)
+    }
+})
+
+router.put('/:id', async(req,res)=>{
+    try {
+        let {id} = req.params;
+        let {name, image} = req.body;
+        res.json(await updateManufacturer(id, name, image))
+    } catch (error) {
+        res.json(error.message)
     }
 })
 module.exports = router;
