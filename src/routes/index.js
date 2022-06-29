@@ -8,7 +8,7 @@ const userRoutes = require("./user")
 const commentsRoutes = require("./comments");
 const paymentRoutes = require("./payment")
 const reviewRoutes = require("./review");
-
+const useraddressRoutes = require("./useraddress")
 // Middlewares
 const auth = require('../middlewares/auth');
 
@@ -42,7 +42,7 @@ router.use('/api/manufacturer', manufacturerRoutes)
 router.use('/api/user', userRoutes)
 router.use('/api/comments', commentsRoutes)
 router.use('/api/review', reviewRoutes)
-
+router.use('/api/address', useraddressRoutes)
 router.use('/api/payment', paymentRoutes)
 
 module.exports = router;
