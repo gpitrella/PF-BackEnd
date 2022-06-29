@@ -3,6 +3,12 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const routes = require('./routes/index.js');
+const cookieSession = require("cookie-session");
+const cors = require("cors");
+const passportSetup = require("../passport");
+const passport = require("passport");
+const authRoute = require("./routes/auth");
+
 
 require('./db.js');
 
@@ -24,6 +30,24 @@ server.use((req, res, next) => {
 });
 
 server.use('/', routes);
+
+// config session and passport
+server.use(
+  cookieSession({ name: "session", keys: ["123456"], maxAge: 1000 * 60 * 60 * 24 })
+); // session x 24 horas
+
+server.use(passport.initialize());
+server.use(passport.session());
+
+server.use(
+  cors({
+    origin: "http://localhost:3000",
+    methods: "GET,POST,PUT,DELETE",
+    credentials: true,
+  })
+);
+
+server.use("/auth", authRoute);
 
 // Error catching endware.
 server.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
