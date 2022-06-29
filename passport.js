@@ -1,6 +1,7 @@
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const passport = require("passport");
 
+//? cambio de las claves de google para login
 const GOOGLE_CLIENT_ID =
   "621156871536-9kq411htp1tct641p44gkfje2dl0r94s.apps.googleusercontent.com";
 const GOOGLE_CLIENT_SECRET = "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git ";
