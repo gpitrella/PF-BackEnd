@@ -20,13 +20,25 @@ async function createCategory(name){
     return `category ${newCategory.name} created successfully`
 }
 
+async function getById(id) {
+    if (!id) throw new Error("you must provide a product id");
+  
+    let categoryInDb = await Categories.findOne({where:{id}});
+  
+    if (!categoryInDb) throw new Error("the id does not correspond to an existing product");
+  
+    return categoryInDb;
+  }
+
 async function deleteCategory(id){
+    await getById(id)
     await Categories.destroy({where:{id}})
     return 'The category was remove'
 }
 
 async function updateCategory(id,name){
-    await Categories.update({name:name},{where:{id:id}})
+    await getById(id)
+    await Categories.update({name:name},{where:{id}})
     return 'the category was successfully updated'
 }
 
