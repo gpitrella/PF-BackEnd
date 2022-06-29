@@ -58,7 +58,7 @@ async function getByName(name) {
 async function getById(id) {
   if (!id) throw new Error("you must provide a product id");
 
-  let productInDb = await Product.findByPk(id, searchConditions("whitComments"));
+  let productInDb = await Product.findByPk(id, searchConditions("whitComments&Reviews"));
 
   if (!productInDb) throw new Error("the id does not correspond to an existing product");
 
