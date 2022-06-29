@@ -13,7 +13,7 @@ module.exports = (sequelize) => {
             defaultValue:0
         },
         unit_price:{
-            type: DataTypes.NUMBER,
+            type: DataTypes.INTEGER,
             allowNull: false,
             defaultValue: 0
         }
