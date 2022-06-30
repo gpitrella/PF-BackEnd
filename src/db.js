@@ -51,6 +51,7 @@ const {
   Purchase_order,
   Favorites,
   Role,
+  BranchOffice,
 } = sequelize.models;
 
 // Associations
