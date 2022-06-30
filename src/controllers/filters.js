@@ -3,13 +3,14 @@ const { Op } = require("sequelize");
 const {searchConditions, finishProducts} = require("../middlewares/searchConditions.js")
 const { Sequelize } = require("sequelize");
 
-async function filterProducts(page, size, name, category, manufacturer, min, max, order, discount) {
+async function filterProducts(page, size, name, category, manufacturer, min, max, order, discount, isVisible) {
   var condiciones = searchConditions()
   condiciones.limit= size,
   condiciones.offset= page * size
 
-  if((((min || max ) || discount) && name) || ((min || max ) && discount )) {condiciones.where = {[Op.and]: [filtradosDeProducts(min, max, discount, name)]}}
+  if((min || max || discount || name) && isVisible === true) {condiciones.where = {[Op.and]: [filtradosDeProducts(min, max, discount, name, isVisible)]}}
   else if(min || max || discount || name) {condiciones.where = filtradosDeProducts(min, max, discount, name)}
+  else if(isVisible === true) condiciones.where = {isVisible : true}
 
   if ( order === "random") {condiciones.order = Sequelize.literal('random()')}
   else if( order ) {order = order.split(","); condiciones.order = [[order[0], order[1]]];}
@@ -31,6 +32,7 @@ module.exports = {
 
 function filtradosDeProducts(min, max, discount, name){
   let objetito = {}
+  if(isVisible = true) objetito.isVisible = {isVisible : true}
   if(discount) objetito.discount = {[Op.gte]: discount}
   if (name) objetito.name = {[Op.like]: `%${name}%`}
   if( min && max ) {objetito.price = {[Op.between]: [min, max]}}

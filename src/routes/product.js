@@ -16,8 +16,8 @@ router.get('/', async(req, res)=>{
         {productos = await getAllProduct()}} else {
         const pageAsNumber = Number.parseInt(req.query.page);
         const sizeAsNumber = Number.parseInt(req.query.size);
-        const {category, manufacturer, min, max, order, discount} = req.query
-        productos =await getAllPaginatedProduct(pageAsNumber,sizeAsNumber, name, category, manufacturer, min, max, order, discount)}
+        const {category, manufacturer, min, max, order, discount, isVisible} = req.query
+        productos = await getAllPaginatedProduct(pageAsNumber,sizeAsNumber, name, category, manufacturer, min, max, order, discount, isVisible)}
         res.json(productos)
     }catch(error){
         res.status(404).json(error.message)
@@ -27,7 +27,6 @@ router.get('/', async(req, res)=>{
 router.post('/', async (req, res)=>{
     try{
         let data = req.body
-        console.log(data)
         res.status(200).json(await createProduct(data))
     }catch(error){
         res.status(404).json(error.message)
