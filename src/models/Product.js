@@ -23,6 +23,11 @@ module.exports = (sequelize) => {
     },
     description:{
       type: DataTypes.TEXT
-    }
+    },
+    isVisible:{
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: true,
+    },
   });
 };
