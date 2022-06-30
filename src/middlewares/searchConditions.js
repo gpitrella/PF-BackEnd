@@ -17,6 +17,12 @@ function searchConditions(condition) {
           attributes: [],
         },
       },
+      {
+        model: Comments,
+        through: {
+          attributes: [],
+        },
+      }
     ],
   };
   if (condition === "whitComments&Reviews") {
