@@ -67,12 +67,14 @@ Review.belongsToMany(Product, { through: "product_review" });
 User.belongsToMany(Favorites, { through: "user_favorites" });
 Favorites.belongsToMany(User, { through: "user_favorites" });
 
+User.belongsToMany(Comments, {through: "user_comment"})
+Comments.belongsToMany(User,{through:"user_comment"})
+
 Role.belongsToMany(User, { through: "user_role", foreignKey: "role_id" });
 User.belongsToMany(Role, { through: "user_role", foreignKey: "userId" });
 
 Product.belongsToMany(Comments, { through: "product_comment"});
 Comments.belongsToMany(Product, { through: "product_comment"});
-
 
 User.belongsToMany(Useraddress, { through: "user_address" });
 Useraddress.belongsToMany(User, { through: "user_address" });
