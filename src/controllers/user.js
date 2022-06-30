@@ -15,6 +15,16 @@ async function getUsers(){
     }
 }
 
+async function getUserByid(id){
+    let userId = await User.findByPk(id, {include:{
+        model: Useraddress,
+        through: {
+        attributes: [],
+        },
+    }})
+    return userId
+}
+
 async function createUser({name,email,admin,password}){
     let findInDb = await User.findOne({where:{email:email}}) 
     if(!findInDb) {
@@ -46,5 +56,6 @@ module.exports={
     createUser,
     updateUser,
     updateStatus,
-    deleteUser
+    deleteUser,
+    getUserByid
 }
