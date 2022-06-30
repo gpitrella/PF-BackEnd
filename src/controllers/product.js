@@ -74,7 +74,7 @@ async function deleteProduct(id) {
   return "the product was removed";
 }
 
-async function changeProduct(
+async function updateProduct(
   id,
   { name, price, discount, stock, description, image, isVisible }
 ) { //recien me doy cuenta que no tiene Niguna comprobacion de si le estamos mandando lo correcto
@@ -136,6 +136,6 @@ module.exports = {
   getByName,
   getById,
   deleteProduct,
-  changeProduct,
+  updateProduct,
   getAllPaginatedProduct,
 };
