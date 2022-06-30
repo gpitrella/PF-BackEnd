@@ -32,7 +32,7 @@ module.exports = {
 
 function filtradosDeProducts(min, max, discount, name, isVisible){
   let objetito = {}
-  if(isVisible = true) objetito.isVisible = {[Op.eq] : true}
+  if(isVisible === true) objetito.isVisible = {[Op.eq] : true}
   if(discount) objetito.discount = {[Op.gte]: discount}
   if (name) objetito.name = {[Op.like]: `%${name}%`}
   if( min && max ) {objetito.price = {[Op.between]: [min, max]}}
