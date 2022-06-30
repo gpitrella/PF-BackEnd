@@ -9,6 +9,7 @@ const commentsRoutes = require("./comments");
 const paymentRoutes = require("./payment")
 const reviewRoutes = require("./review");
 const branchOfficeRoutes = require("./branchOffice");
+const useraddressRoutes = require("./useraddress")
 // Middlewares
 const auth = require('../middlewares/auth');
 
@@ -44,6 +45,7 @@ router.use('/api/comments', commentsRoutes)
 router.use('/api/review', reviewRoutes)
 router.use('/api/branchOffice', branchOfficeRoutes)
 
+router.use('/api/address', useraddressRoutes)
 router.use('/api/payment', paymentRoutes)
 
 module.exports = router;
