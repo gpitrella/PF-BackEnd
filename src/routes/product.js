@@ -2,7 +2,7 @@ const { Router } = require('express');
 const axios = require("axios");
 require('dotenv').config();
 
-const { createProduct, getAllProduct, getByName, getById, deleteProduct, changeProduct , getAllPaginatedProduct} = require('../controllers/product.js');
+const { createProduct, getAllProduct, getByName, getById, deleteProduct, updateProduct , getAllPaginatedProduct} = require('../controllers/product.js');
 
 
 const router = Router();
@@ -56,7 +56,7 @@ router.put('/:id', async(req,res)=>{
         let { id } = req.params
         let data = req.body
         
-        res.json(await changeProduct(id, data))
+        res.json(await updateProduct(id, data))
     }catch(error){
         res.status(404).json(error.message)
     }
