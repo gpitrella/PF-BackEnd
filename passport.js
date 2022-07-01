@@ -1,6 +1,9 @@
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const passport = require("passport");
 
+if(process.env.NODE_ENV !== 'production'){
+  require('dotenv').config();
+}
 
 passport.use(
   new GoogleStrategy(
