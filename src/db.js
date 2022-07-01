@@ -65,8 +65,14 @@ Manufacturer.belongsToMany(Product, { through: "product_manufacturer" });
 Product.belongsToMany(Review, { through: "product_review" });
 Review.belongsToMany(Product, { through: "product_review" });
 
+User.belongsToMany(Review, {through:"review_user"})
+Review.belongsToMany(User, {through:"review_user"})
+
 User.belongsToMany(Favorites, { through: "user_favorites" });
 Favorites.belongsToMany(User, { through: "user_favorites" });
+
+Favorites.belongsToMany(Product,{through:"favorite_product"})
+Product.belongsToMany(Favorites,{through:"favorite_product"})
 
 User.belongsToMany(Comments, {through: "user_comment"})
 Comments.belongsToMany(User,{through:"user_comment"})

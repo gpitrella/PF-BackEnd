@@ -30,6 +30,7 @@ async function createComment(comment, idProduc, idUser) {
     let userInDb = await getUserByid(idUser)
     if (!productInDb) throw new Error("the product does not exist");
 
+    console.log('aaaaaaaaaaaaaaaaaaaaa',userInDb.dataValues.comments.length)
     let newComment = await Comments.create({comment :comment.toUpperCase()});
     productInDb.addComments(newComment);
     userInDb.addComments(newComment)
