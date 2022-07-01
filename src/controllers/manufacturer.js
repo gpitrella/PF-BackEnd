@@ -43,7 +43,7 @@ async function deleteManufacturer(id){
 }
 
 async function updateManufacturer(id, name, image){
-    name = verifyManufacturerName(name)
+    if(name) name = verifyManufacturerName(name)
     verifyManufacturerId(id)
     await Manufacturer.update({name, image},{where:{id}})
     return 'the Manufacturer was successfully updated'
