@@ -22,9 +22,9 @@ router.get('/',async(req,res)=>{
     }
 })
 
-router.delete('/:id', async(req,res)=>{
+router.delete('/', async(req,res)=>{
     try {
-        let {id} = req.params;
+        let {id} = req.body;
         res.json(await deletAddress(id))
     } catch (error) {
         res.json(error.message)

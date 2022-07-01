@@ -9,10 +9,6 @@ module.exports = (sequelize) => {
         },
         date:{
             type:DataTypes.DATEONLY,
-        },
-        id_comments:{
-            type:DataTypes.INTEGER,
         }
-
     })
 }
