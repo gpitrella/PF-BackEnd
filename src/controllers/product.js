@@ -16,12 +16,12 @@ async function createProduct({
   category,
   manufacturer,
   image,
+  isVisible,
 }) {
   if (!name) throw new Error("you must enter a name");
   name = name.toUpperCase();
-  if (category) category = category.toUpperCase();
-  if (manufacturer) manufacturer = manufacturer.toUpperCase();
 
+  if(isVisible && typeof isVisible != 'boolean') throw new Error("isVisible must be a boolean")
   let findInDb = await Product.findOne({ where: { name: name } });
   if (findInDb) throw new Error(`the product ${findInDb.name}  already exists`);
 
@@ -32,15 +32,18 @@ async function createProduct({
     discount,
     stock,
     description,
+    isVisible,
   });
 
+  if (category) {category = category.toUpperCase();
   let categoryDb = await Categories.findAll({ where: { name: category } });
-  await newProduct.addCategories(categoryDb);
-
+  await newProduct.addCategories(categoryDb);}
+  
+  if (manufacturer) {manufacturer = manufacturer.toUpperCase();
   let manufacturerDb = await Manufacturer.findAll({
     where: { name: manufacturer },
   });
-  await newProduct.addManufacturer(manufacturerDb);
+  await newProduct.addManufacturer(manufacturerDb);}
 
   return newProduct;
 }
@@ -71,13 +74,13 @@ async function deleteProduct(id) {
   return "the product was removed";
 }
 
-async function changeProduct(
+async function updateProduct(
   id,
-  { name, price, discount, stock, description, image }
-) {
+  { name, price, discount, stock, description, image, isVisible }
+) { //recien me doy cuenta que no tiene Niguna comprobacion de si le estamos mandando lo correcto
   await getById(id);
   await Product.update(
-    { name, price, discount, stock, description, image },
+    { name, price, discount, stock, description, image, isVisible },
     { where: { id } }
   );
   return "the product was changed";
@@ -92,7 +95,8 @@ async function getAllPaginatedProduct(
   min,
   max,
   order,
-  discount
+  discount,
+  isVisible
 ) {
   let page =
     !Number.isNaN(pageAsNumber) && pageAsNumber > 0 ? pageAsNumber - 1 : 0;
@@ -108,6 +112,7 @@ async function getAllPaginatedProduct(
   if (name) name = name.toUpperCase();
   if (manufacturer) manufacturer = manufacturer.toUpperCase()
   if (category) category = category.toUpperCase()
+  if(!isVisible || isVisible != "false") isVisible = true
 
   let products = await filterProducts(
     page,
@@ -118,7 +123,8 @@ async function getAllPaginatedProduct(
     min,
     max,
     order,
-    discount
+    discount,
+    isVisible
   );
 
   return products;
@@ -130,6 +136,6 @@ module.exports = {
   getByName,
   getById,
   deleteProduct,
-  changeProduct,
+  updateProduct,
   getAllPaginatedProduct,
 };

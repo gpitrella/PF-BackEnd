@@ -1,18 +1,43 @@
-const {User, Useraddress} = require("../db");
+const {User, Useraddress, Comments} = require("../db");
 
 async function getUsers(){
     let user = await User.findAll({
-        include:{
+        include:[{
             model: Useraddress,
             through: {
             attributes: [],
             },
-        }})
+        },
+        {
+            model: Comments,
+            through: {
+              attributes: [],
+            },
+        }
+    ]})
     if(user.length){
         return user
     }else{
         throw new Error("There are no users")
     }
+}
+
+async function getUserByid(id){
+    let userId = await User.findByPk(id, {include:[
+    {
+        model: Useraddress,
+        through: {
+        attributes: [],
+        },
+    },
+    {
+        model: Comments,
+        through: {
+          attributes: [],
+        },
+    }
+]})
+    return userId
 }
 
 async function createUser({name,email,admin,password}){
@@ -46,5 +71,6 @@ module.exports={
     createUser,
     updateUser,
     updateStatus,
-    deleteUser
+    deleteUser,
+    getUserByid
 }

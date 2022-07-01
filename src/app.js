@@ -5,7 +5,7 @@ const morgan = require('morgan');
 const routes = require('./routes/index.js');
 const cookieSession = require("cookie-session");
 const cors = require("cors");
-const passportSetup = require("../passport");
+const passportSetup = require("../passport")
 const passport = require("passport");
 const authRoute = require("./routes/auth");
 
@@ -41,7 +41,7 @@ server.use(passport.session());
 
 server.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: process.env.CLIENT_URL,
     methods: "GET,POST,PUT,DELETE",
     credentials: true,
   })

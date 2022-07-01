@@ -6,9 +6,9 @@ const { createComment } = require('../controllers/comments.js');
 const router = Router();
 
 router.post('/', async(req, res)=>{
-    try{
-        const {comment, id} = req.body
-        res.status(200).send(await createComment(comment, id))
+    try{ 
+        let {comment, idProduc, idUser} = req.body
+        res.status(200).json(await createComment(comment, idProduc, idUser))
     }catch(error){
         res.status(404).json(error.message)
     }
