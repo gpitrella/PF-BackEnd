@@ -7,10 +7,10 @@ async function createPayment({email,items}) {
       payer_email: email,
       items,
       back_urls: {
-        failure: "/failure",
-        pending: "/pending",
-        success: "/success"
-      }
+        failure: "http://localhost:3000",
+        pending: "http://localhost:3000",
+        success: "http://localhost:3000"
+      }      
     };
 
     const payment = await axios.post(url, body, {
