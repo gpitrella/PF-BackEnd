@@ -1,4 +1,4 @@
-const {User, Useraddress, Comments} = require("../db");
+const {User, Useraddress, Comments, Favorites, Review} = require("../db");
 
 async function getUsers(){
     let user = await User.findAll({
@@ -10,6 +10,18 @@ async function getUsers(){
         },
         {
             model: Comments,
+            through: {
+              attributes: [],
+            },
+        },
+        {
+            model: Favorites,
+            through: {
+              attributes: [],
+            },
+        },
+        {
+            model: Review,
             through: {
               attributes: [],
             },
@@ -32,6 +44,18 @@ async function getUserByid(id){
     },
     {
         model: Comments,
+        through: {
+          attributes: [],
+        },
+    },
+    {
+        model: Favorites,
+        through: {
+          attributes: [],
+        },
+    },
+    {
+        model: Review,
         through: {
           attributes: [],
         },
