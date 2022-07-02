@@ -1,4 +1,4 @@
-const { Categories, Manufacturer, Comments, Review } = require("../db");
+const { Categories, Manufacturer, Comments, Review, Favorites } = require("../db");
 
 function searchConditions(condition) {
   let conditions = {
@@ -19,6 +19,18 @@ function searchConditions(condition) {
       },
       {
         model: Comments,
+        through: {
+          attributes: [],
+        },
+      },
+      {
+        model: Favorites,
+        through: {
+          attributes: [],
+        },
+      },
+      {
+        model: Review,
         through: {
           attributes: [],
         },

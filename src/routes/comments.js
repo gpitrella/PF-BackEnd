@@ -7,8 +7,8 @@ const router = Router();
 
 router.post('/', async(req, res)=>{
     try{ 
-        let {comment, idProduc, idUser} = req.body
-        res.status(200).json(await createComment(comment, idProduc, idUser))
+        let {comment, idProduct, idUser} = req.body
+        res.status(200).json(await createComment(comment, idProduct, idUser))
     }catch(error){
         res.status(404).json(error.message)
     }
