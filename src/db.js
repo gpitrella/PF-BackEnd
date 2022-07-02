@@ -51,6 +51,7 @@ const {
   Purchase_order,
   Favorites,
   Role,
+  Branch_office,
 } = sequelize.models;
 
 // Associations
@@ -64,8 +65,17 @@ Manufacturer.belongsToMany(Product, { through: "product_manufacturer" });
 Product.belongsToMany(Review, { through: "product_review" });
 Review.belongsToMany(Product, { through: "product_review" });
 
+User.belongsToMany(Review, {through:"review_user"})
+Review.belongsToMany(User, {through:"review_user"})
+
 User.belongsToMany(Favorites, { through: "user_favorites" });
 Favorites.belongsToMany(User, { through: "user_favorites" });
+
+Favorites.belongsToMany(Product,{through:"favorite_product"})
+Product.belongsToMany(Favorites,{through:"favorite_product"})
+
+User.belongsToMany(Comments, {through: "user_comment"})
+Comments.belongsToMany(User,{through:"user_comment"})
 
 Role.belongsToMany(User, { through: "user_role", foreignKey: "role_id" });
 User.belongsToMany(Role, { through: "user_role", foreignKey: "userId" });
@@ -73,12 +83,17 @@ User.belongsToMany(Role, { through: "user_role", foreignKey: "userId" });
 Product.belongsToMany(Comments, { through: "product_comment"});
 Comments.belongsToMany(Product, { through: "product_comment"});
 
-
 User.belongsToMany(Useraddress, { through: "user_address" });
 Useraddress.belongsToMany(User, { through: "user_address" });
 
 Useraddress.belongsTo(State);
 State.belongsToMany(Useraddress, { through: "address_state" });
+
+Product.belongsToMany(Purchase_order, {through: "product_order"});
+Purchase_order.belongsToMany(Product, {through: "product_order"})
+
+User.belongsToMany(Purchase_order,{through:"user_order"})
+Purchase_order.belongsToMany(User, {through:"user_order"})
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');

@@ -1,10 +1,16 @@
 const { Router } = require("express");
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
-const productRoutes = require("./product.js");
-const categoriesRoutes = require("./categories.js");
+const productRoutes = require("./product");
+const categoriesRoutes = require("./categories");
 const manufacturerRoutes = require("./manufacturer");
-
+const userRoutes = require("./user") 
+const commentsRoutes = require("./comments");
+const paymentRoutes = require("./payment")
+const reviewRoutes = require("./review");
+const branchOfficeRoutes = require("./branchOffice");
+const useraddressRoutes = require("./useraddress")
+const favoriteRoutes = require("./favorite")
 // Middlewares
 const auth = require('../middlewares/auth');
 
@@ -35,5 +41,12 @@ router.get('/api/admin', auth, AdminPolicy.show);
 router.use('/api/product', productRoutes)
 router.use('/api/categories', categoriesRoutes)
 router.use('/api/manufacturer', manufacturerRoutes)
+router.use('/api/user', userRoutes)
+router.use('/api/comments', commentsRoutes)
+router.use('/api/review', reviewRoutes)
+router.use('/api/branchOffice', branchOfficeRoutes)
+router.use('/api/favorite', favoriteRoutes)
+router.use('/api/address', useraddressRoutes)
+router.use('/api/payment', paymentRoutes)
 
 module.exports = router;
