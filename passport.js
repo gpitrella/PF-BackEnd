@@ -1,17 +1,15 @@
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const passport = require("passport");
 
-//? cambio de las claves de google para login
-const GOOGLE_CLIENT_ID =
-  "621156871536-9kq411htp1tct641p44gkfje2dl0r94s.apps.googleusercontent.com";
-const GOOGLE_CLIENT_SECRET = "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git ";
-
+if(process.env.NODE_ENV !== 'production'){
+  require('dotenv').config();
+}
 
 passport.use(
   new GoogleStrategy(
     {
-      clientID: GOOGLE_CLIENT_ID,
-      clientSecret: GOOGLE_CLIENT_SECRET,
+      clientID: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       callbackURL: "/auth/google/callback",
     },
     function (accessToken, refreshToken, profile, done) {
