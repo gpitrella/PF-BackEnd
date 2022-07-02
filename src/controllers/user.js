@@ -7,7 +7,13 @@ async function getUsers(){
             through: {
             attributes: [],
             },
-        }
+        },
+        {
+            model: Comments,
+            through: {
+              attributes: [],
+            },
+        },
     ]})
     if(user.length){
         return user
