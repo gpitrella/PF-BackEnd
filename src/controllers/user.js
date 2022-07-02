@@ -7,6 +7,22 @@ async function getUsers(){
             through: {
             attributes: [],
             },
+        }
+    ]})
+    if(user.length){
+        return user
+    }else{
+        throw new Error("There are no users")
+    }
+}
+
+async function getUsersFull(){
+    let user = await User.findAll({
+        include:[{
+            model: Useraddress,
+            through: {
+            attributes: [],
+            },
         },
         {
             model: Comments,
@@ -91,6 +107,7 @@ async function deleteUser(id){
 
 
 module.exports={
+    getUsersFull,
     getUsers,
     createUser,
     updateUser,
