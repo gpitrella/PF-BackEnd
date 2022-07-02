@@ -105,7 +105,7 @@ async function deleteUser(id){
     return 'User was remove'
 }
 
-
+//push
 module.exports={
     getUsersFull,
     getUsers,
