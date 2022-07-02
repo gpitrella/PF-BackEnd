@@ -4,13 +4,15 @@ const { Sequelize } = require("sequelize");
 
 const excludeTimeStamps = {attributes: {exclude: ['updatedAt','createdAt']}}
 
-function verifyData(data) {
+function verifybBranchOfficeData(data) {
   let { name, direction, latitude, longitude } = data;
 
   if (!name) throw new Error("you must enter a name");
   if (!direction) throw new Error("you must enter a direction");
   verifyLatAndLong(latitude, longitude);
 
+  data.name = data.name.toUpperCase()
+  data.direction = data.direction.toUpperCase()
   return data;
 }
 
@@ -96,8 +98,7 @@ async function getAllbranchOffices() {
 }
 
 async function createBranchOffice(data) {
-  let { name, direction, latitude, longitude } = verifyData(data);
-
+  let { name, direction, latitude, longitude } = verifybBranchOfficeData(data);
   await verifyDuplicateBranchOffice(name, direction);
 
   var newBranchOffice = await Branch_office.create({
@@ -120,7 +121,7 @@ async function getByIdBranchOffice(id) {
 async function updateBranchOffice(id, data) {
   await verifyBranchOfficeId(id);
 
-  let { name, direction, latitude, longitude } = verifyExistenceOfData(data);
+  let { name, direction, latitude, longitude } = verifybBranchOfficeData(data);
 
   await verifyDuplicateBranchOffice(name, direction);
 

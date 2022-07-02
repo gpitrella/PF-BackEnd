@@ -1,11 +1,11 @@
-const { Product, Comments, User, Categories, Manufacturer, Useraddress } = require("../db");
+const { Product, Comments, User, Categories, Manufacturer, Useraddress, Review } = require("../db");
 const { getById } = require("./product");
 const { getUserByid } = require("./user");
 
-async function createComment(comment, idProduc, idUser) {
-    if (!idProduc) throw new Error("you must provide a product id");
+async function createComment(comment, idProduct, idUser) {
+    if (!idProduct) throw new Error("you must provide a product id");
     if (!comment) throw new Error("you must provide a comment");
-    let productInDb = await Product.findByPk(idProduc, {include: [
+    let productInDb = await Product.findByPk(idProduct, {include: [
       {
         model: Categories,
         attributes: ["name"],
@@ -22,6 +22,12 @@ async function createComment(comment, idProduc, idUser) {
       },
       {
         model: Comments,
+        through: {
+          attributes: [],
+        },
+      },
+      {
+        model: Review,
         through: {
           attributes: [],
         },

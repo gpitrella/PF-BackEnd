@@ -1,39 +1,61 @@
-const { CanceledError } = require("axios");
+// const { CanceledError } = require("axios");
 const { Categories, Product } = require("../db");
-const { getById } = require("./product");
+
+const excludeTimeStamps = {attributes: {exclude: ['updatedAt','createdAt']}}
+
+function verifyCategoryName(name){
+  if (!name) throw new Error("a name is required for the category");
+  return name.toUpperCase();
+}
+
+async function verifyDuplicateCategory(name) {
+  let findInDb = await Categories.findOne({ where: { name } });
+  if (findInDb)
+    throw new Error(`the category ${findInDb.name}  already exists`);
+}
+
+async function verifyCategoryId(id) {
+  if (!id) throw new Error("you must provide a category id");
+  if(!/^[0-9]*$/.test(id)) throw new Error("the id must be a number");
+
+  let categoryInDb = await Categories.findByPk(id, excludeTimeStamps);
+
+  if (!categoryInDb) throw new Error("the id does not correspond to an existing category");
+
+  return categoryInDb;
+}
 
 async function getAllCategories() {
-  let categories = await Categories.findAll({ attributes: ["name"] });
+  let categories = await Categories.findAll(excludeTimeStamps);
   if (!categories.length) throw new Error("there are not categories");
 
   return categories;
 }
 
 async function createCategory(name) {
-  if (!name) throw new Error("a name is required for the category");
-  name = name.toUpperCase();
+  name = verifyCategoryName(name)
 
-  let findInDb = await Categories.findOne({ where: { name: name } });
-  if (findInDb)
-    throw new Error(`the category ${findInDb.name}  already exists`);
+  await verifyDuplicateCategory(name)
 
-  let newCategory = await Categories.create({ name: name });
+  let newCategory = await Categories.create({ name });
   return `category ${newCategory.name} created successfully`;
 }
 
 async function getCategoryById(id) {
-  if (!id) throw new Error("you must provide a product id");
-
-  let categoryInDb = await Categories.findOne({ where: { id: id } });
-
-  if (!categoryInDb)
-    throw new Error("the id does not correspond to an existing product");
-
+  let categoryInDb = await verifyCategoryId(id);
   return categoryInDb;
 }
 
+async function updateCategory(id, name) {
+  await verifyCategoryId(id);
+  name = verifyCategoryName(name)
+  await Categories.update({ name }, { where: { id } });
+  return "the category was successfully updated";
+}
+
 async function deleteCategory(id) {
-  await getCategoryById(id);
+  await verifyCategoryId(id);
+
   let productsWhitCategory = await Product.findAll({
     include: [
       {
@@ -53,15 +75,10 @@ async function deleteCategory(id) {
   return "The category was remove";
 }
 
-async function updateCategory(id, name) {
-  await getCategoryById(id);
-  await Categories.update({ name: name }, { where: { id: id } });
-  return "the category was successfully updated";
-}
-
 module.exports = {
   createCategory,
   getAllCategories,
-  deleteCategory,
+  getCategoryById,
   updateCategory,
+  deleteCategory,
 };
