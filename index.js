@@ -1,5 +1,6 @@
 //? Ecommerce Techmarket *****
 
+const initDb = require('./initDb.js');
 const server = require('./src/app.js');
 const { conn } = require('./src/db.js');
 
@@ -10,5 +11,7 @@ const PORT = process.env.PORT || 3001;
 conn.sync({ force: false }).then(() => {
   server.listen(PORT, () => {
     console.log(`Listening at port:${PORT} ...`); // eslint-disable-line no-console
+    await initDb();
+    console.log('DATABASE COMPLETE MIGRATE...');
   });
 });
