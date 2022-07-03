@@ -1,8 +1,7 @@
 const { Categories, Manufacturer, User, Product } = require("./src/db");
 const bcrypt = require('bcrypt');
 
-module.exports = async function initDb(){
-
+async function initDb(){
 const products = [
   {
     id: 1,
@@ -580,7 +579,7 @@ const catego = [
   {
     name: "GAMERS"
   },
-];
+]
 
 const manu = [
   {
@@ -760,7 +759,7 @@ createManufacturers = async () => {
   for(let i = 0; i < manu.length; i++){
     await Manufacturer.create({
                       name: manu[i].name,
-                      image: namu[i].image
+                      image: manu[i].image
                     })
   }
 };
@@ -782,4 +781,7 @@ createManufacturers = async () => {
     await createProducts(name, price, descrpition, image, category, manufacturer);
   }
     console.log("termine products")
-};
+}
+module.exports={
+  initDb
+}
