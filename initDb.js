@@ -528,7 +528,7 @@ const users = [
   },
   {
       name: "Juan",
-      email: "Juan@gmail.com",
+      email: "juan@gmail.com",
       password: "123456",
       admin: false,
       isactive: true
