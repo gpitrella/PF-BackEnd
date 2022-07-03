@@ -638,23 +638,23 @@ const manu = [
     image: "https://www.vector-logo.net/logo_preview/eps/g/Genius(167).png",
   },
   {
-    name: "asus",
+    name: "ASUS",
     image: "https://www.mastecnologia.com.ar/assets/images/brands/asus.png",
   },
   {
-    name: "sony",
+    name: "SONY",
     image: "https://cdn4.iconfinder.com/data/icons/flat-brand-logo-2/512/sony-256.png",
   },
   {
-    name: "lg",
+    name: "LG",
     image: "https://cdn4.iconfinder.com/data/icons/flat-brand-logo-2/512/lg-256.png",
   },
   {
-    name: "samsung",
+    name: "SAMSUNG",
     image: "https://cdn4.iconfinder.com/data/icons/flat-brand-logo-2/512/samsung-128.png",
   },
   {
-    name: "ibm",
+    name: "IBM",
     image: "https://logodownload.org/wp-content/uploads/2014/04/ibm-logo-0.png",
   },
   {
@@ -662,31 +662,31 @@ const manu = [
     image: "https://www.brandemia.org/wp-content/uploads/2011/04/acer1.jpg",
   },
   {
-    name: "tvr",
+    name: "TVR",
     image: "https://www.mastecnologia.com.ar/assets/images/brands/trv.png",
   },
   {
-    name: "nvidia",
+    name: "NVIDIA",
     image: "https://www.mastecnologia.com.ar/assets/images/brands/nvidia.png",
   },
   {
-    name: "radeon",
+    name: "RADEON",
     image: "https://www.mastecnologia.com.ar/assets/images/brands/radeon.png",
   },
   {
-    name: "gigabyte",
+    name: "GIGABYTE",
     image: "https://www.mastecnologia.com.ar/assets/images/brands/gigabyte.png",
   },
   {
-    name: "lenovo",
+    name: "LENOVO",
     image: "https://www.tecnologia-informatica.com/wp-content/uploads/2019/02/marcas-de-computadoras-3.jpeg",
   },
   {
-    name: "dell",
+    name: "DELL",
     image: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Dell_Logo.svg/300px-Dell_Logo.svg.png",
   },
   {
-    name: "nox",
+    name: "NOX",
     image: "http://www.padelspain.net/userfiles/Entrevista_Angel_Ballve_NOX_La_voz_del_padel_fuera_buena.jpg",
   },
   
@@ -708,6 +708,10 @@ const manu = [
   {
     name: "EPSON",
     image: "https://i.pinimg.com/originals/33/77/64/3377649c5b68ee7ca92d217f9a6040d6.jpg",
+  },
+  {
+    name: "WESTERN DIGITAL",
+    image: "https://giiga.com.ar/wp-content/uploads/2019/03/western-digital-logo-1.jpg",
   },
 ]
 
