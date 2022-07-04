@@ -674,10 +674,6 @@ const manu = [
     image: "https://www.mastecnologia.com.ar/assets/images/brands/radeon.png",
   },
   {
-    name: "GIGABYTE",
-    image: "https://www.mastecnologia.com.ar/assets/images/brands/gigabyte.png",
-  },
-  {
     name: "LENOVO",
     image: "https://www.tecnologia-informatica.com/wp-content/uploads/2019/02/marcas-de-computadoras-3.jpeg",
   },
