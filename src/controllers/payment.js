@@ -9,7 +9,7 @@ async function createPayment({email,items}) {
       back_urls: {
         failure: "/failure",
         pending: "/pending",
-        success: "/success"
+        success: "https://techmarketfront.vercel.app/successbuy"
       }
     };
 
