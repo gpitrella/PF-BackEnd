@@ -9,5 +9,5 @@ module.exports = (sequelize) => {
         },
         comment:{
             type:DataTypes.STRING
-        }
+        },
     })}

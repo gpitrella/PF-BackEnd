@@ -1,4 +1,4 @@
-const {User, Useraddress, Comments} = require("../db");
+const {User, Useraddress, Comments, Favorites, Review} = require("../db");
 
 async function getUsers(){
     let user = await User.findAll({
@@ -10,6 +10,40 @@ async function getUsers(){
         },
         {
             model: Comments,
+            through: {
+              attributes: [],
+            },
+        },
+    ]})
+    if(user.length){
+        return user
+    }else{
+        throw new Error("There are no users")
+    }
+}
+
+async function getUsersFull(){
+    let user = await User.findAll({
+        include:[{
+            model: Useraddress,
+            through: {
+            attributes: [],
+            },
+        },
+        {
+            model: Comments,
+            through: {
+              attributes: [],
+            },
+        },
+        {
+            model: Favorites,
+            through: {
+              attributes: [],
+            },
+        },
+        {
+            model: Review,
             through: {
               attributes: [],
             },
@@ -32,6 +66,18 @@ async function getUserByid(id){
     },
     {
         model: Comments,
+        through: {
+          attributes: [],
+        },
+    },
+    {
+        model: Favorites,
+        through: {
+          attributes: [],
+        },
+    },
+    {
+        model: Review,
         through: {
           attributes: [],
         },
@@ -65,8 +111,9 @@ async function deleteUser(id){
     return 'User was remove'
 }
 
-
+//push
 module.exports={
+    getUsersFull,
     getUsers,
     createUser,
     updateUser,
