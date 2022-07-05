@@ -16,6 +16,12 @@ router.get("/login/success", (req, res) => {
       //   cookies: req.cookies
     });
   }
+  else {
+    res.status(401).json({
+      error: true,
+      message: "Error on authentication"
+    })
+  }
 });
 
 router.get("/login/failed", (req, res) => {
@@ -30,7 +36,7 @@ router.get("/logout", (req, res) => {
   res.redirect(CLIENT_URL);
 });
 
-router.get("/google", passport.authenticate("google", { scope: ["profile"] }));
+router.get("/google", passport.authenticate("google", { scope: ["profile", "email"] }));
 
 router.get(
   "/google/callback",
