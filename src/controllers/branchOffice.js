@@ -1,4 +1,4 @@
-const { Branch_office } = require("../db");
+const { Branch_office, Purchase_order } = require("../db");
 const { Op } = require("sequelize");
 const { Sequelize } = require("sequelize");
 
@@ -21,9 +21,7 @@ function distanceCalculator(userLat ,userLong, branchLat, branchLong) {
   var km = (dd * 111.302);
   var distance = (km * 100)/100;
   return distance
- }
-
-const excludeTimeStamps = {attributes: {exclude: ['updatedAt','createdAt']}}
+}
 
 function verifybBranchOfficeData(data) {
   let { name, direction, latitude, longitude } = data;
@@ -32,8 +30,8 @@ function verifybBranchOfficeData(data) {
   if (!direction) throw new Error("you must enter a direction");
   verifyLatAndLong(latitude, longitude);
 
-  data.name = data.name.toUpperCase()
-  data.direction = data.direction.toUpperCase()
+  data.name = name.toUpperCase()
+  data.direction = direction.toUpperCase()
   return data;
 }
 
@@ -58,7 +56,7 @@ async function verifyBranchOfficeId(id) {
   if (!id) throw new Error("you must provide a branch office id");
   if(!/^[0-9]*$/.test(id)) throw new Error("the id must be a number");
 
-  let BranchOfficeInDb = await Branch_office.findByPk(id, excludeTimeStamps);
+  let BranchOfficeInDb = await Branch_office.findByPk(id);
 
   if (!BranchOfficeInDb)
     throw new Error("the id does not correspond to an existing branch office");
@@ -82,7 +80,7 @@ async function getNearestbranchOffice(lat, long) {
 }
 
 async function getAllbranchOffices() {
-  let branchOffices = await Branch_office.findAll(excludeTimeStamps);
+  let branchOffices = await Branch_office.findAll();
   return branchOffices;
 }
 
@@ -96,9 +94,6 @@ async function createBranchOffice(data) {
     latitude,
     longitude,
   });
-  
-  delete newBranchOffice.dataValues.createdAt;
-  delete newBranchOffice.dataValues.updatedAt;
   return newBranchOffice;
 }
 
@@ -110,20 +105,18 @@ async function getByIdBranchOffice(id) {
 async function updateBranchOffice(id, data) {
   await verifyBranchOfficeId(id);
 
-  let { name, direction, latitude, longitude } = verifybBranchOfficeData(data);
+  let { name, direction } = verifybBranchOfficeData(data);
 
   await verifyDuplicateBranchOffice(name, direction);
 
-  await Branch_office.update(
-    { name, direction, latitude, longitude },
-    { where: { id } }
-  );
+  await Branch_office.update(data,{where: { id }});
   return "the branch office was changed";
 }
 
 async function deleteBranchOffice(id) {
   await verifyBranchOfficeId(id);
-  //cuando se una con las ordendes de pago, habria que verificar que no tuviera ninguna antes de eliminarla
+  let purchase_Orders = await Purchase_order.findOne({where: {branchOfficeId: id }})
+  if(purchase_Orders) throw new Error('this branch has purchase orders, please relocate them to be able to delete the branch')
   await Branch_office.destroy({ where: { id } });
   return "the branch office was removed";
 }
