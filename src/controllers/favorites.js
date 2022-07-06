@@ -44,6 +44,11 @@ async function favoritePost(idUser,idProduct){
     await product.addFavorites(newFav)
     return 'new favorite'
 }
+
+async function deleteFavorite(idUser,idProduct){
+  await Favorites.destroy({ where: { idUser, idProduct } });
+}
 module.exports={
-    favoritePost
+    favoritePost,
+    deleteFavorite
 }
