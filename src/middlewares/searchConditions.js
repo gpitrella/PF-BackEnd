@@ -40,7 +40,7 @@ function searchConditions(condition) {
   if (condition === "whitComments&Reviews") {
     conditions.include[2] = {
       model: Comments,
-      attributes: ["comment"],
+      attributes: ["id","comment","answer","createdAt","updatedAt"],
       through: {
         attributes: [],
       },
