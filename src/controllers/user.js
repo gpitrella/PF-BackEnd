@@ -14,6 +14,7 @@ async function getUsers(){
               attributes: [],
             },
         },
+        
     ]})
     if(user.length){
         return user
