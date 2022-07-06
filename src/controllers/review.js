@@ -42,7 +42,7 @@ async function createReview(comment, score, idProduct, idUser) {
     let userById = await getUserByid(idUser)
     if (!userById) throw new Error("the user does not exist");
     console.log('dolaaaaaaar',productInDb)
-    if(userById.dataValues.reviews.length<1){
+    if(userById.dataValues.reviews.length){
       let newReview = await Review.create({comment :comment.toUpperCase(), score: score});
       //productInDb.addReview(newReview);
       productInDb.addReview(newReview)

@@ -7,8 +7,8 @@ async function createPayment({email,items}) {
       payer_email: email,
       items,
       back_urls: {
-        failure: "http://localhost:3000",
-        pending: "http://localhost:3000",
+        failure: "http://localhost:3000/canceledbuy",
+        pending: "http://localhost:3000/pendingbuy",
         success: "http://localhost:3000/successbuy"
       }      
     };
