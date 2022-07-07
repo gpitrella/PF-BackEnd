@@ -21,7 +21,7 @@ module.exports = {
                 res.status(404).json({ msg: "User with this email not found" });
             } else {
                 if(user.isactive ==  false) {
-                    res.status(404).json({ msg: "The user is BANNED FOR LIFE" })
+                    res.status(405).json({ msg: "The user is BANNED FOR LIFE" })
                 } else {
                 if (bcrypt.compareSync(password, user.password)) {
 
