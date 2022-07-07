@@ -4,7 +4,7 @@ const { DataTypes } = require('sequelize');
 module.exports = (sequelize) => {
   // defino el modelo
   sequelize.define('user', {
-    name: {
+      name: {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
@@ -16,6 +16,18 @@ module.exports = (sequelize) => {
             msg: "The name must be at least two characters"
           }
         }
+      },
+      photo: {
+        type: DataTypes.STRING,
+      },
+      phone_number: {
+        type: DataTypes.STRING,
+        validate: {
+            len: {
+              args: [2, 55],
+              msg: "The number must be at least two characters"
+            }
+          }
       },
       email: {
         type: DataTypes.STRING,
