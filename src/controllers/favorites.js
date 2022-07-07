@@ -1,4 +1,4 @@
-const {User, Favorites, Product, Categories, Manufacturer, Comments, Review} = require("../db");
+const { Favorites, Product } = require("../db");
 const { getUserByid } = require("./user");
 
 async function favoritePost(idUser,idProduct){
