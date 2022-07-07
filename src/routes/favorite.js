@@ -4,7 +4,7 @@ const router = Router();
 
 router.post('/', async(req,res)=>{
     try {
-        let{idUser,idProduct}= req.body;
+        let {idUser,idProduct}= req.body;
         res.json(await favoritePost(idUser,idProduct))
     } catch (error) {
         res.json(error.message)
@@ -12,7 +12,7 @@ router.post('/', async(req,res)=>{
 })
 router.delete('/', async(req,res)=>{
     try {
-        let{idUser,idProduct}= req.body;
+        let {idUser,idProduct}= req.body;
         res.json(await deleteFavorite(idUser,idProduct))
     } catch (error) {
         res.json(error.message)

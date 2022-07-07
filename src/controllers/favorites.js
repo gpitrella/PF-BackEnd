@@ -7,11 +7,12 @@ async function favoritePost(idUser,idProduct){
     let newFav = await Favorites.create({idProduct, idUser})
     await user.addFavorites(newFav)
     await product.addFavorites(newFav)
-    return 'new favorite'
+    return user.dataValues.favorites
 }
 
-async function deleteFavorite(idUser,idProduct){
+async function deleteFavorite({idUser,idProduct}){
   await Favorites.destroy({ where: { idUser, idProduct } });
+  console.log('fav removed!!!!!!!!!!!')
 }
 
 module.exports={
