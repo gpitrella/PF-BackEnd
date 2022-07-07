@@ -55,6 +55,7 @@ const {
   Favorites,
   Role,
   Branch_office,
+  Product_order
 } = sequelize.models;
 
 // Associations
@@ -92,11 +93,14 @@ Useraddress.belongsToMany(User, { through: "user_address" });
 Useraddress.belongsTo(State);
 State.belongsToMany(Useraddress, { through: "address_state" });
 
-Product.belongsToMany(Purchase_order, {through: "product_order"});
-Purchase_order.belongsToMany(Product, {through: "product_order"})
+Product.belongsToMany(Purchase_order, {through: "order_product"});
+Purchase_order.belongsToMany(Product, {through: "order_product"})
 
 User.belongsToMany(Purchase_order,{through:"user_order"})
 Purchase_order.belongsToMany(User, {through:"user_order"})
+
+Product_order.belongsToMany(Purchase_order, {through:"products_InOrder"})
+Purchase_order.belongsToMany(Product_order, {through:"products_InOrder"})
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');

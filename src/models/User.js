@@ -17,6 +17,18 @@ module.exports = (sequelize) => {
           }
         }
       },
+      photo: {
+        type: DataTypes.STRING,
+      },
+      phone_number: {
+        type: DataTypes.STRING,
+        validate: {
+            len: {
+              args: [2, 55],
+              msg: "The number must be at least two characters"
+            }
+          }
+      },
       email: {
         type: DataTypes.STRING,
         allowNull: false,
