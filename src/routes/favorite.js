@@ -12,8 +12,8 @@ router.post('/', async(req,res)=>{
 })
 router.delete('/', async(req,res)=>{
     try {
-        let{idUser,idProduct}= req.body;
-        res.json(await deleteFavorite(idUser,idProduct))
+        let{ id }= req.body;
+        res.json(await deleteFavorite(id))
     } catch (error) {
         res.json(error.message)
     }

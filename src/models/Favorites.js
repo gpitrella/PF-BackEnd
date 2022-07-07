@@ -4,11 +4,11 @@ module.exports = (sequelize) => {
     // defino el modelo
     sequelize.define('favorites', {
         idUser:{
-            type:DataTypes.STRING,
+            type:DataTypes.INTEGER,
             allowNull:false
         },
         idProduct:{
-            type:DataTypes.STRING,
+            type:DataTypes.INTEGER,
             allowNull:false
         }
     })
