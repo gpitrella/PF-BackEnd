@@ -91,13 +91,16 @@ User.belongsToMany(Useraddress, { through: "user_address" });
 Useraddress.belongsToMany(User, { through: "user_address" });
 
 Useraddress.belongsTo(State);
-State.belongsToMany(Useraddress, { through: "address_state" });
+State.belongsToMany(Useraddress, { through: "address_state" }); // tendria que ser "belongsTo"
 
 Product.belongsToMany(Purchase_order, {through: "order_product"});
 Purchase_order.belongsToMany(Product, {through: "order_product"})
 
-User.belongsToMany(Purchase_order,{through:"user_order"})
-Purchase_order.belongsToMany(User, {through:"user_order"})
+User.belongsToMany(Purchase_order,{through:"user_order"});
+Purchase_order.belongsToMany(User, {through:"user_order"});
+
+Branch_office.hasMany(Purchase_order);
+Purchase_order.belongsTo(Branch_office);
 
 Product_order.belongsToMany(Purchase_order, {through:"products_InOrder"})
 Purchase_order.belongsToMany(Product_order, {through:"products_InOrder"})
