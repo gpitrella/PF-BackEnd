@@ -4,7 +4,7 @@
   "description": "Technology Market Final Project Henry",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon -L"
+    "start": "node ."
   },
   "repository": {
     "type": "git",

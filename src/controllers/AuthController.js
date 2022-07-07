@@ -20,7 +20,9 @@ module.exports = {
             if (!user) {
                 res.status(404).json({ msg: "User with this email not found" });
             } else {
-
+                if(user.isactive ==  false) {
+                    res.status(404).json({ msg: "The user is BANNED FOR LIFE" })
+                } else {
                 if (bcrypt.compareSync(password, user.password)) {
 
                     // Creamos el token
@@ -40,7 +42,7 @@ module.exports = {
                 }
 
             }
-
+        }
         }).catch(err => {
             res.status(500).json(err);
         })
