@@ -7,7 +7,7 @@ async function getAddress(){
     return allAddress;
 }
 
-async function createUsAddress(id,{photo, phone_number, street, street_height, city, zipcode}){
+async function createUsAddress(id,{street, street_height, city, zipcode}){
     let userId = await getUserByid(id);
     if(userId.useraddresses.length<3){
         let address = await Useraddress.create({photo, phone_number, street, street_height, city, zipcode})

@@ -1,4 +1,4 @@
-const {User, Favorites, Product, Categories, Manufacturer, Comments, Review} = require("../db");
+const { Favorites, Product, User } = require("../db");
 const { getUserByid } = require("./user");
 
 async function favoritePost(idUser,idProduct){
@@ -7,11 +7,12 @@ async function favoritePost(idUser,idProduct){
     let newFav = await Favorites.create({idProduct, idUser})
     await user.addFavorites(newFav)
     await product.addFavorites(newFav)
-    return 'new favorite'
+    return newFav
 }
 
-async function deleteFavorite(idUser,idProduct){
-  await Favorites.destroy({ where: { idUser, idProduct } });
+async function deleteFavorite(id){
+  await Favorites.destroy({ where: { id } });
+  return 'the favorite was deleted'
 }
 
 module.exports={

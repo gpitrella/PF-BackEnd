@@ -21,7 +21,7 @@ module.exports = {
                 res.status(404).json({ msg: "User with this email not found" });
             } else {
                 if(user.isactive ==  false) {
-                    res.status(404).json({ msg: "The user is BANNED FOR LIFE" })
+                    res.status(405).json({ msg: "The user is BANNED FOR LIFE" })
                 } else {
                 if (bcrypt.compareSync(password, user.password)) {
 
@@ -50,12 +50,18 @@ module.exports = {
     },
 
     //? Registro
-    signUp(req, res) {
+    async signUp(req, res) {
 
         // Encriptamos la contraseña
         let password = bcrypt.hashSync(req.body.password, Number.parseInt(authConfig.rounds));
 
         // Crear un usuario
+        let findUser = await User.findAll({
+            where: {
+                email: req.body.email
+            }
+        })
+        if (findUser.length === 0){
         User.create({
             name: req.body.name,
             email: req.body.email,
@@ -75,7 +81,8 @@ module.exports = {
         }).catch(err => {
             res.status(500).json(err);
         });
-
+        } else {
+            res.status(404).json({ msg: "Email already used" });
+        }
     }
-
 }
