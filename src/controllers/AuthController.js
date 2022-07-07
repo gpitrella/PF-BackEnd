@@ -50,12 +50,18 @@ module.exports = {
     },
 
     //? Registro
-    signUp(req, res) {
+    async signUp(req, res) {
 
         // Encriptamos la contraseña
         let password = bcrypt.hashSync(req.body.password, Number.parseInt(authConfig.rounds));
 
         // Crear un usuario
+        let findUser = await User.findAll({
+            where: {
+                email: req.body.email
+            }
+        })
+        if (findUser.length === 0){
         User.create({
             name: req.body.name,
             email: req.body.email,
@@ -75,7 +81,8 @@ module.exports = {
         }).catch(err => {
             res.status(500).json(err);
         });
-
+        } else {
+            res.status(404).json({ msg: "Email already used" });
+        }
     }
-
 }

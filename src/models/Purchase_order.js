@@ -7,14 +7,15 @@ module.exports = (sequelize) => {
             type:DataTypes.ENUM('pending','cancelled','filled'),
             allowNull: false
         },
-        quantity:{
-            type: DataTypes.INTEGER,
-            allowNull:false,
-            defaultValue:0
-        },
-        unit_price:{
+        total:{
             type: DataTypes.INTEGER,
             allowNull: false,
             defaultValue: 0
+        },
+        sucursal:{
+            type: DataTypes.TEXT
+        },
+        description:{
+            type: DataTypes.TEXT
         },
     })}
