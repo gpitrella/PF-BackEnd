@@ -102,8 +102,8 @@ Purchase_order.belongsToMany(User, {through:"user_order"});
 Branch_office.hasMany(Purchase_order);
 Purchase_order.belongsTo(Branch_office);
 
-Product_order.belongsToMany(Purchase_order, {through:"products_InOrder"})
-Purchase_order.belongsToMany(Product_order, {through:"products_InOrder"})
+Purchase_order.belongsToMany(Useraddress, {through:"addresUser_order"})
+Useraddress.belongsToMany(Purchase_order,{through:"addresUser_order"})
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
