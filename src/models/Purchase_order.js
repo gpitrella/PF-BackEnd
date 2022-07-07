@@ -18,4 +18,10 @@ module.exports = (sequelize) => {
         description:{
             type: DataTypes.TEXT
         },
+        idMP: {
+            type:DataTypes.STRING
+        },
+        items: {
+            type: DataTypes.ARRAY(DataTypes.JSON),
+        }
     })}

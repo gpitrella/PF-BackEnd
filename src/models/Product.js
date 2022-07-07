@@ -29,9 +29,5 @@ module.exports = (sequelize) => {
       allowNull: false,
       defaultValue: true,
     },
-  //   quantity:{
-  //     type: DataTypes.INTEGER,
-  //     defaultValue:0
-  // },
   });
 };

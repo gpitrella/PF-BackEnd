@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { postPurchase_order, getAllOrders } = require('../controllers/purchase_order');
+const { postPurchase_order, getAllOrders, updateStatus } = require('../controllers/purchase_order');
 const router = Router();
 
 router.post('/', async(req,res)=>{
@@ -14,6 +14,15 @@ router.post('/', async(req,res)=>{
 router.get('/', async(req,res)=>{
     try {
         res.json(await getAllOrders())
+    } catch (error) {
+        res.json(error.message)
+    }
+})
+
+router.put('/', async(req, res)=>{
+    try {
+        let {id, status} = req.body
+        res.json(await updateStatus(id, status))
     } catch (error) {
         res.json(error.message)
     }
