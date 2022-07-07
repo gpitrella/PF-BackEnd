@@ -3,8 +3,7 @@ const { getUserByid } = require("./user");
 
 async function createReview(comment, score, idProduct, idUser) {
     if (!comment) throw new Error("you must provide a comment");
-    if (!score) throw new Error("you must provide a score");
-    if(!/^[1-5]?$/.test(score)) throw new Error("the score must be a number between one and five");
+    if(!/^[1-5]$/.test(score)) throw new Error("you must provide a score must be a number between one and five");
     if(!idProduct && !/^[0-9]*$/.test(score)) throw new Error("you must send a valid product id");
 
     let productInDb = await Product.findByPk(idProduct)
