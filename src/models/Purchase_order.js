@@ -5,7 +5,8 @@ module.exports = (sequelize) => {
     sequelize.define('purchase_order', {
         status:{
             type:DataTypes.ENUM('pending','cancelled','filled'),
-            allowNull: false
+            allowNull: false,
+            defaultValue: 'pending'
         },
         total:{
             type: DataTypes.INTEGER,
