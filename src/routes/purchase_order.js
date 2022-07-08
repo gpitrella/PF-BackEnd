@@ -21,7 +21,7 @@ router.get('/', async(req,res)=>{
 
 router.get('/users/:id', async (req, res)=>{
     try{
-        let {id} = req.params
+        let { id } = req.params
         res.json( await usersOrders(id))
     }catch(error){
         res.json(error.message)
@@ -30,9 +30,8 @@ router.get('/users/:id', async (req, res)=>{
 
 router.put('/', async(req, res)=>{
     try {
-        let data = req.body
-        
-        res.json(await updateStatus(data))
+        let { id, status } = req.body
+        res.json(await updateStatus(id, status))
     } catch (error) {
         res.status(404).json(error.message)
     }
