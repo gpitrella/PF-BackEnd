@@ -1,4 +1,7 @@
 const { Product, User, Purchase_order, Product_order, Useraddress, Branch_office } = require("../db");
+const { getUserByid } = require("./user");
+const sgMail = require('@sendgrid/mail');
+sgMail.setApiKey("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");
 
 // async function postPurchase_order({ idProduct, idUser,total, description, idMP, status, idAddress, branchOfficeId, items}){
 //     let newOrder = await Purchase_order.create({ total, status, idMP, description, items})
@@ -15,7 +18,7 @@ const { Product, User, Purchase_order, Product_order, Useraddress, Branch_office
 //     return newOrder
 // }
 
-async function updateStatus(id,status){
+async function updateStatus({id,status}){
     let update = await Purchase_order.update({status},{where:{id}})
     return update
 }

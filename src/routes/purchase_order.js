@@ -30,10 +30,11 @@ router.get('/users/:id', async (req, res)=>{
 
 router.put('/', async(req, res)=>{
     try {
-        let {id, status} = req.body
-        res.json(await updateStatus(id, status))
+        let data = req.body
+        
+        res.json(await updateStatus(data))
     } catch (error) {
-        res.json(error.message)
+        res.status(404).json(error.message)
     }
 })
 
