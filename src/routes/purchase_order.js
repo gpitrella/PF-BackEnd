@@ -33,7 +33,7 @@ router.put('/', async(req, res)=>{
         let { id, status } = req.body
         res.json(await updateStatus(id, status))
     } catch (error) {
-        res.json(error.message)
+        res.status(404).json(error.message)
     }
 })
 

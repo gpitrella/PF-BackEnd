@@ -1,4 +1,5 @@
 const { Product, User, Purchase_order, Product_order, Useraddress, Branch_office } = require("../db");
+const { getUserByid } = require("./user");
 
 // async function postPurchase_order({ idProduct, idUser,total, description, idMP, status, idAddress, branchOfficeId, items}){
 //     let newOrder = await Purchase_order.create({ total, status, idMP, description, items})
