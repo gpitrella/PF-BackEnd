@@ -5,12 +5,12 @@ const excludeTimeStamps = {attributes: {exclude: ['updatedAt','createdAt']}}
 function verifyManufacturerName(name){
     if (!name) throw new Error("a name is required for the manufacturer");
     return name.toUpperCase();
-  }
+}
 
   async function verifyDuplicateManufacturer(name) {
     let findInDb = await Manufacturer.findOne({ where: { name } });
     if (findInDb) throw new Error(`the manufacturer ${findInDb.name}  already exists`);
-  }
+}
 
   async function verifyManufacturerId(id) {
     if (!id) throw new Error("you must provide a manufacturer id");
@@ -21,7 +21,7 @@ function verifyManufacturerName(name){
     if (!manufacturerInDb) throw new Error("the id does not correspond to an existing manufacturer");
   
     return manufacturerInDb;
-  }
+}
 
 async function getAllManufacturer(){
     let manufacturer = await Manufacturer.findAll(excludeTimeStamps)
