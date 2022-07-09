@@ -5,10 +5,16 @@ module.exports = (sequelize) => {
     sequelize.define('comments', {
         comment:{
             type:DataTypes.TEXT,
-            allowNull: false
         },
         date:{
             type:DataTypes.DATEONLY,
+        },
+        answer:{
+            type:DataTypes.TEXT
+        },
+        viewed:{
+            type:DataTypes.BOOLEAN,
+            defaultValue: false,
         }
     })
 }

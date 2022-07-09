@@ -14,6 +14,7 @@ async function getUsers(){
               attributes: [],
             },
         },
+        
     ]})
     if(user.length){
         return user
@@ -86,7 +87,7 @@ async function getUserByid(id){
     return userId
 }
 
-async function createUser({name,email,admin,password}){
+async function createUser({name,email,admin,password,phone_number,photo}){
     let findInDb = await User.findOne({where:{email:email}}) 
     if(!findInDb) {
         await User.create({name,email,admin,password})
@@ -96,7 +97,7 @@ async function createUser({name,email,admin,password}){
     }
 }
 
-async function updateUser(id,{name,email,admin,password}){
+async function updateUser(id,{name,email,admin,password,phone_number,photo}){
         await User.update({name,email,admin,password},{where:{id:id}})
         return 'user update successfully'
 }

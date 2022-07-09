@@ -15,13 +15,14 @@ module.exports = (sequelize) => {
         allowNull: false,
       },
       latitude: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.REAL,
         allowNull: false,
       },
       longitude: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.REAL,
         allowNull: false,
       },
-    }
+    },
+    { timestamps: false }
   );
 };

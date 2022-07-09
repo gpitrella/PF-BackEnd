@@ -16,6 +16,12 @@ router.get("/login/success", (req, res) => {
       //   cookies: req.cookies
     });
   }
+  else {
+    res.status(401).json({
+      error: true,
+      message: "Error on authentication"
+    })
+  }
 });
 
 router.get("/login/failed", (req, res) => {
@@ -26,11 +32,13 @@ router.get("/login/failed", (req, res) => {
 });
 
 router.get("/logout", (req, res) => {
-  req.logout();
-  res.redirect(CLIENT_URL);
+  if (req.logout) req.logout();
+  res.status(201).json({
+    success: true
+  })
 });
 
-router.get("/google", passport.authenticate("google", { scope: ["profile"] }));
+router.get("/google", passport.authenticate("google", { scope: ["profile", "email"] }));
 
 router.get(
   "/google/callback",
