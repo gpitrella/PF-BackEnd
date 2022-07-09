@@ -80,15 +80,11 @@ async function getAllbranchOffices() {
 }
 
 async function createBranchOffice(data) {
-  let { name, direction, latitude, longitude } = verifybBranchOfficeData(data);
+  data = verifybBranchOfficeData(data);
+  let { name, direction } = data
   await verifyDuplicateBranchOffice(name, direction);
 
-  var newBranchOffice = await Branch_office.create({
-    name,
-    direction,
-    latitude,
-    longitude,
-  });
+  var newBranchOffice = await Branch_office.create(data);
   return newBranchOffice;
 }
 
@@ -100,8 +96,8 @@ async function getByIdBranchOffice(id) {
 async function updateBranchOffice(id, data) {
   await verifyBranchOfficeId(id);
 
-  let { name, direction } = verifybBranchOfficeData(data);
-
+  data = verifybBranchOfficeData(data);
+  let { name, direction } = data 
   await verifyDuplicateBranchOffice(name, direction);
 
   await Branch_office.update(data,{where: { id }});
