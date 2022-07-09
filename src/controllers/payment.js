@@ -25,17 +25,6 @@ async function createPayment({email,items, idUser, status, idAddress, branchOffi
     }
   });
 
-<<<<<<< HEAD
-    const body = {
-      payer_email: email,
-      items,
-      back_urls: {
-        failure: "/failure",
-        pending: "/pending",
-        success: "https://techmarketfront.vercel.app/successbuy"
-      }
-    };
-=======
   let idMP = payment.data.init_point.slice(payment.data.init_point.indexOf('=')+1,payment.data.init_point.length)
   console.log("id",idMP)
   let newOrder = await Purchase_order.create({idMP, items})
@@ -46,7 +35,6 @@ async function createPayment({email,items, idUser, status, idAddress, branchOffi
   newOrder.addUser(findUser)
   if(findAddress.length)newOrder.addUseraddress(findAddress)
   if(findSucursal.length)newOrder.addBranch_office(findSucursal)
->>>>>>> 590029453a56ae662156bdd51bf019822d782ce7
 
   try{
     sgMail.setApiKey("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")
