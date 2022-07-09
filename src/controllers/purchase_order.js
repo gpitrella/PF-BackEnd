@@ -1,4 +1,4 @@
-const { Product, User, Purchase_order, Product_order, Useraddress, Branch_office } = require("../db");
+const { User, Purchase_order, Branch_office } = require("../db");
 const { getUserByid } = require("./user");
 
 // async function postPurchase_order({ idProduct, idUser,total, description, idMP, status, idAddress, branchOfficeId, items}){
@@ -29,42 +29,18 @@ async function updateStatus(id,status){
 }
 
 async function getAllOrders(){
-    let orders = await Purchase_order.findAll({include: [
-        {
-          model: Product,
-          attributes: ["id","name"],
-          through: {
-            attributes: [],
-          },
-        },
-        {
-          model: User,
-          attributes: ["id","name"],
-          through: {
-            attributes: [],
-          },
-        },
-        {
-            model: Useraddress,
-            through: {
-            attributes: [],
-           },
-        },
-        {
-            model: Branch_office,
-        }
+    let orders = await Purchase_order.findAll({include:[
+      {association:'products', attributes:["id","name"], through: {attributes:[]}},
+      {association:'users', attributes:["id","name"], through:{attributes:[]}},
+      {association:'useraddresses', through:{attributes:[]}},
+      {model: Branch_office}
     ]})
     return orders
 }
 
 async function usersOrders(id){
     let uOrders = await User.findByPk(id,{include:
-        {
-            model: Purchase_order,
-            through: {
-              attributes: [],
-            },
-          }
+      {association:'purchase_orders', through:{attributes:[]}},
     })
     return uOrders
 }

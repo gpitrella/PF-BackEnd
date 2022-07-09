@@ -1,57 +1,16 @@
-const { Categories, Manufacturer, Comments, Review, Favorites } = require("../db");
-
 function searchConditions(condition) {
   let conditions = {
     include: [
-      {
-        model: Categories,
-        attributes: ["name"],
-        through: {
-          attributes: [],
-        },
-      },
-      {
-        model: Manufacturer,
-        attributes: ["name", "image"],
-        through: {
-          attributes: [],
-        },
-      },
-      {
-        model: Comments,
-        through: {
-          attributes: [],
-        },
-      },
-      {
-        model: Favorites,
-        through: {
-          attributes: [],
-        },
-      },
-      {
-        model: Review,
-        through: {
-          attributes: [],
-        },
-      }
+      {association: 'categories', attributes:['name'], through:{attributes:[]}},
+      {association: 'manufacturers', attributes:["name", "image"], through:{attributes:[]}},
+      {association: 'comments', through:{attributes:[]}},
+      {association: 'favorites', through:{attributes:[]}},
+      {association: 'reviews', through:{attributes:[]}}
     ],
   };
   if (condition === "whitComments&Reviews") {
-    conditions.include[2] = {
-      model: Comments,
-      attributes: ["id","comment","answer","createdAt","updatedAt"],
-      through: {
-        attributes: [],
-      },
-    };
-    conditions.include[3] = {
-      model: Review,
-      attributes: ["comment", "score"],
-      through: {
-        attributes: [],
-      },
-    };
+    conditions.include[2] = {association: 'comments', through:{attributes:[]}};
+    conditions.include[3] = {association: 'reviews', attributes: ["comment", "score"], through:{attributes:[]}}
   }
   return conditions;
 }
