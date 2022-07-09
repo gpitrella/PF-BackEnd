@@ -4,7 +4,7 @@ module.exports = (sequelize) => {
     // defino el modelo
     sequelize.define('purchase_order', {
         status:{
-            type:DataTypes.ENUM('pending','cancelled','filled'),
+            type:DataTypes.ENUM('pending','processing', 'send', 'cancelled','filled'),
             allowNull: false
         },
         quantity:{
