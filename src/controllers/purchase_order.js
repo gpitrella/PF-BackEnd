@@ -1,4 +1,5 @@
 const { Product, User, Purchase_order, Product_order, Useraddress, Branch_office } = require("../db");
+const { getUserByid } = require("./user");
 
 // async function postPurchase_order({ idProduct, idUser,total, description, idMP, status, idAddress, branchOfficeId, items}){
 //     let newOrder = await Purchase_order.create({ total, status, idMP, description, items})
@@ -16,8 +17,15 @@ const { Product, User, Purchase_order, Product_order, Useraddress, Branch_office
 // }
 
 async function updateStatus(id,status){
-    let update = await Purchase_order.update({status},{where:{id}})
-    return update
+  if(!/^[1-9][0-9]*$/.test(id)) throw new Error("you must provide a valid id");
+  if(!['cancelled','filled'].includes(status)) throw new Error("you must provide a valid status");
+
+  let purchase_order = await Purchase_order.findByPk(id,{attributes:["status"],through: {attributes: []}})
+  if(!purchase_order) throw new Error("there no exist a purchase order with that id");
+  if(purchase_order.dataValues.status != 'pending') throw new Error("it is no longer possible to update the purchase order");
+
+  await Purchase_order.update({status}, {where : { id }})
+  return `status was successfully updated to ${status}`
 }
 
 async function getAllOrders(){
@@ -36,18 +44,15 @@ async function getAllOrders(){
             attributes: [],
           },
         },
-        // {
-        //     model: Useraddress,
-        //     through: {
-        //     attributes: [],
-        //     },
-        // },
-        // {
-        //     model: Branch_office,
-        //     through: {
-        //     attributes: [],
-        // },
-        //}
+        {
+            model: Useraddress,
+            through: {
+            attributes: [],
+           },
+        },
+        {
+            model: Branch_office,
+        }
     ]})
     return orders
 }
@@ -68,5 +73,5 @@ module.exports={
     // postPurchase_order,
     getAllOrders,
     updateStatus,
-    usersOrders
+    usersOrders,
 }
