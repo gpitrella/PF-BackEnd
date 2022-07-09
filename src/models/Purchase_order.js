@@ -10,7 +10,7 @@ module.exports = (sequelize) => {
         total:{
             type: DataTypes.INTEGER,
             allowNull: false,
-            defaultValue: 'pending'
+            defaultValue: 1
         },
         idMP: {
             type:DataTypes.STRING
