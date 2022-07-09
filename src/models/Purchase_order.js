@@ -10,13 +10,7 @@ module.exports = (sequelize) => {
         total:{
             type: DataTypes.INTEGER,
             allowNull: false,
-            defaultValue: 0
-        },
-        sucursal:{
-            type: DataTypes.TEXT
-        },
-        description:{
-            type: DataTypes.TEXT
+            defaultValue: 'pending'
         },
         idMP: {
             type:DataTypes.STRING
