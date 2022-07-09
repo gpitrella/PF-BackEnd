@@ -7,11 +7,11 @@ async function getAddress(){
     return allAddress;
 }
 
-async function createUsAddress(id,{direction, latutide, longitude}){
+async function createUsAddress(id,{direction, latitude, longitude}){
     let userId = await getUserByid(id);
     if(userId.useraddresses.length >= 3) throw new Error('you have exceeded the address limit');
 
-    let address = await Useraddress.create({direction, latutide, longitude})
+    let address = await Useraddress.create({direction, latitude, longitude})
     userId.addUseraddress(address);
 
     return 'address added successfully';
