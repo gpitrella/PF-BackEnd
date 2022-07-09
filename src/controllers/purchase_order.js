@@ -18,11 +18,11 @@ const { getUserByid } = require("./user");
 
 async function updateStatus(id,status){
   if(!/^[1-9][0-9]*$/.test(id)) throw new Error("you must provide a valid id");
-  if(!['cancelled','filled'].includes(status)) throw new Error("you must provide a valid status");
+  if(!['processing','cancelled','sending','filled'].includes(status)) throw new Error("you must provide a valid status");
 
   let purchase_order = await Purchase_order.findByPk(id,{attributes:["status"],through: {attributes: []}})
   if(!purchase_order) throw new Error("there no exist a purchase order with that id");
-  if(purchase_order.dataValues.status != 'pending') throw new Error("it is no longer possible to update the purchase order");
+  if(['pending','processing','sending'].includes(purchase_order.dataValues.status)) throw new Error("it is no longer possible to update the purchase order");
 
   await Purchase_order.update({status}, {where : { id }})
   return `status was successfully updated to ${status}`
