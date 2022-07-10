@@ -1,4 +1,4 @@
-const { Favorites, Product, User } = require("../db");
+const { Favorites, Product } = require("../db");
 const { getUserByid } = require("./user");
 
 async function favoritePost(idUser,idProduct){

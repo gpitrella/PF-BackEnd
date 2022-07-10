@@ -1,38 +1,10 @@
-const { Product, Comments, User, Categories, Manufacturer, Useraddress, Review } = require("../db");
-const { getById } = require("./product");
+const { Product, Comments } = require("../db");
 const { getUserByid } = require("./user");
 
 async function createComment(comment, idProduct, idUser) {
     if (!idProduct) throw new Error("you must provide a product id");
     if (!comment) throw new Error("you must provide a comment");
-    const productInDb = await Product.findByPk(idProduct, {include: [
-      {
-        model: Categories,
-        attributes: ["name"],
-        through: {
-          attributes: [],
-        },
-      },
-      {
-        model: Manufacturer,
-        attributes: ["name", "image"],
-        through: {
-          attributes: [],
-        },
-      },
-      {
-        model: Comments,
-        through: {
-          attributes: [],
-        },
-      },
-      {
-        model: Review,
-        through: {
-          attributes: [],
-        },
-      }
-    ]})
+    let productInDb = await Product.findByPk(idProduct)
     let userInDb = await getUserByid(idUser)
     if (!productInDb) throw new Error("the product does not exist");
 
@@ -44,27 +16,14 @@ async function createComment(comment, idProduct, idUser) {
   
   async function getAllComments(){
     let comments = await Comments.findAll({include: [
-      {
-        model: Product,
-        attributes: ["id","name"],
-        through: {
-          attributes: [],
-        },
-      },
-      {
-        model: User,
-        attributes: ["id","name"],
-        through: {
-          attributes: [],
-        },
-      }]});
+      {association: 'products', attributes:['id','name'], through:{attributes:[]}},
+      {association: 'users', attributes:['id','name'], through:{attributes:[]}}]});
     if(comments.length) return comments
     else "there are no comments"
   }
 
   async function createAnswer(idComment,answer){
     let rescomment = await Comments.update({answer}, {where:{ id: idComment }})
-    console.log(rescomment)
     return rescomment
   }
 module.exports = {
