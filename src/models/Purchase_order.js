@@ -13,5 +13,10 @@ module.exports = (sequelize) => {
         },
         items: {
             type: DataTypes.ARRAY(DataTypes.JSON),
+        },
+        totalpurchase: {
+            type:DataTypes.INTEGER,
+            allowNull: false,
+            defaultValue: 0
         }
     })}

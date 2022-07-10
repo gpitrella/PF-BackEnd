@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { postPurchase_order, getAllOrders, updateStatus, usersOrders } = require('../controllers/purchase_order');
+const { postPurchase_order, getAllOrders, updateStatus, usersOrders, countAllOrders, sumAllOrders, sumAllToday, sumLastWeek, sumLastMonth, sumBeforeLastMonth, sumLastThreeMonth } = require('../controllers/purchase_order');
 const router = Router();
 
 // router.post('/', async(req,res)=>{
@@ -34,6 +34,62 @@ router.put('/', async(req, res)=>{
         res.json(await updateStatus(id, status))
     } catch (error) {
         res.status(404).json(error.message)
+    }
+})
+
+router.get('/count', async(req,res)=>{
+    try {
+        res.json(await countAllOrders())
+    } catch (error) {
+        res.json(error.message)
+    }
+})
+
+router.get('/sum', async(req,res)=>{
+    try {
+        res.json(await sumAllOrders())
+    } catch (error) {
+        res.json(error.message)
+    }
+})
+
+router.get('/sumtoday', async(req,res)=>{
+    try {
+        res.json(await sumAllToday())
+    } catch (error) {
+        res.json(error.message)
+    }
+})
+
+router.get('/sumlastweek', async(req,res)=>{
+    try {
+        res.json(await sumLastWeek())
+    } catch (error) {
+        res.json(error.message)
+    }
+})
+
+router.get('/sumlastmonth', async(req,res)=>{
+    try {
+        res.json(await sumLastMonth())
+    } catch (error) {
+        res.json(error.message)
+    }
+})
+
+router.get('/sumbeforelastmonth', async(req,res)=>{
+    try {
+        res.json(await sumBeforeLastMonth())
+    } catch (error) {
+        res.json(error.message)
+    }
+})
+
+router.get('/sumlastthreemonth', async(req,res)=>{
+    try {
+        res.json(await sumLastThreeMonth())
+    } catch (error) {
+        res.json(error.message)
     }
 })
 
