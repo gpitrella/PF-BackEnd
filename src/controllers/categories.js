@@ -1,6 +1,6 @@
 // const { CanceledError } = require("axios");
 const { Categories, Product } = require("../db");
-
+const { Op } = require("sequelize");
 const excludeTimeStamps = {attributes: {exclude: ['updatedAt','createdAt']}}
 
 function verifyCategoryName(name){
@@ -55,24 +55,15 @@ async function updateCategory(id, name) {
 
 async function deleteCategory(id) {
   await verifyCategoryId(id);
+  let productsInDb = await Product.findAll({include:[{association: 'categories', where: { id }}]});
 
-  let productsWhitCategory = await Product.findAll({
-    include: [
-      {
-        model: Categories,
-        attributes: ["name"],
-        through: {
-          attributes: [],
-        },
-        where: { id: id },
-      },
-    ],
-  });
-  productsWhitCategory.map((product)=> {
-    if(product.categories.length <= 1) throw new Error ("there is at least one product that only has this category, so it cannot be eliminated")
-  })
-    await Categories.destroy({ where: { id : id} });
-  return "The category was remove";
+  for(product of productsInDb){
+    let quantityOfCategories = await product.countCategories()
+    if(quantityOfCategories == 1) throw new Error ("there is at least one product that only has this category, so it cannot be eliminated")
+  }
+
+  await Categories.destroy({where: { id }});
+  return `The category ${productsInDb[0].dataValues.categories[0].dataValues.name} was remove`;
 }
 
 module.exports = {

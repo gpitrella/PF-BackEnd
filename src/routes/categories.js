@@ -33,7 +33,7 @@ router.delete('/:id', async(req,res)=>{
         let {id} = req.params;
         res.json(await deleteCategory(id))
     } catch (error) {
-        res.json(error.message)
+        res.status(404).json(error.message)
     }
 })
 
@@ -43,7 +43,7 @@ router.put('/:id', async(req,res)=>{
         let {name} = req.body;
         res.json(await updateCategory(id, name))
     } catch (error) {
-        res.json(error.message)
+        res.status(404).json(error.message)
     }
 })
 module.exports = router;

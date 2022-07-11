@@ -32,9 +32,10 @@ async function createPayment({email,items, idUser, status, idAddress, branchOffi
   let findAddress= await Useraddress.findAll({where:{id:idAddress}})
   let findSucursal = await Branch_office.findAll({where:{id:branchOfficeId}})
   
-  newOrder.addUser(findUser)
-  if(findAddress.length)newOrder.addUseraddress(findAddress)
-  if(findSucursal.length)newOrder.addBranch_office(findSucursal)
+  await newOrder.addUser(findUser)
+  if(findAddress.length) await newOrder.addUseraddress(findAddress)
+  if(findSucursal.length) await newOrder.addBranch_office(findSucursal)
+  for(product of items) await newOrder.addProduct(product.id)
 
   try{
     sgMail.setApiKey("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")
