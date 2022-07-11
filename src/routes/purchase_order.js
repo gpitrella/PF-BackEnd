@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { postPurchase_order, getAllOrders, updateStatus, usersOrders, countAllOrders, sumAllOrders, sumAllToday, sumLastWeek, sumLastMonth, sumBeforeLastMonth, sumLastThreeMonth } = require('../controllers/purchase_order');
+const { postPurchase_order, getAllOrders, updateStatus, usersOrders, countAllOrders, sumAllOrders, sumAllToday, sumLastWeek, sumLastMonth, sumBeforeLastMonth, sumLastThreeMonth, getOrdersToday } = require('../controllers/purchase_order');
 const router = Router();
 
 // router.post('/', async(req,res)=>{
@@ -88,6 +88,14 @@ router.get('/sumbeforelastmonth', async(req,res)=>{
 router.get('/sumlastthreemonth', async(req,res)=>{
     try {
         res.json(await sumLastThreeMonth())
+    } catch (error) {
+        res.json(error.message)
+    }
+})
+
+router.get('/today', async(req,res)=>{
+    try {
+        res.json(await getOrdersToday())
     } catch (error) {
         res.json(error.message)
     }
