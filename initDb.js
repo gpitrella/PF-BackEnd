@@ -452,7 +452,7 @@ const products = [
     description:
       "KIT ALARMA MARSHALL GO PLUS PANEL MARSHALL GO+ 1 SENSOR INALAMBRICO + 1 SENSOR MAGNETICO + CONTROL + BATERIA + SIRENA + ROTULA95",
     
-    image: "https://www.mastecnologia.com.ar/images/productos/97756.png?1653275811",
+    image: "https://www.mastecnologia.com.ar/images/productos/91279.png?1653275757",
     category: "MODEM ROUTER",
     manufacturer: "MARSHALL"
   },
