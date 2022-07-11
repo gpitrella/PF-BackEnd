@@ -1,6 +1,7 @@
 const { Branch_office, Purchase_order } = require("../db");
 const { Op } = require("sequelize");
 const { Sequelize } = require("sequelize");
+const { API_TOKEN } = process.env;
 
 function distanceCalculator(userLat ,userLong, branchLat, branchLong) {
   var degtorad = 0.01745329;
@@ -127,6 +128,9 @@ async function deleteBranchOffice(id) {
   return "the branch office was removed";
 }
 
+async function getTokenMaps(){
+  return API_TOKEN
+}
 module.exports = {
   getNearestbranchOffice,
   getAllbranchOffices,
@@ -134,4 +138,5 @@ module.exports = {
   getByIdBranchOffice,
   updateBranchOffice,
   deleteBranchOffice,
+  getTokenMaps
 };

@@ -354,7 +354,7 @@ const products = [
       "MSI H510M-A PRO (1200) MOTHER95",
     
     image: "https://www.mastecnologia.com.ar/images/productos/11718.png?1654036644",
-    category:"PC COMPONENTS",
+    category:"MOTHERBOARD",
     manufacturer:"MSI"
   },
   {
@@ -452,7 +452,7 @@ const products = [
     description:
       "KIT ALARMA MARSHALL GO PLUS PANEL MARSHALL GO+ 1 SENSOR INALAMBRICO + 1 SENSOR MAGNETICO + CONTROL + BATERIA + SIRENA + ROTULA95",
     
-    image: "https://www.mastecnologia.com.ar/images/productos/97756.png?1653275811",
+    image: "https://www.mastecnologia.com.ar/images/productos/91279.png?1653275757",
     category: "MODEM ROUTER",
     manufacturer: "MARSHALL"
   },
@@ -466,6 +466,135 @@ const products = [
     image: "https://www.mastecnologia.com.ar/images/productos/15734.png?1655225629",
     category: "PC COMPONENTS",
     manufacturer: "KINGSTON"
+  },
+  {
+    name:
+      "DDR4 4GB 2666 KINGSTON95",
+    price: 37,
+    description:
+      "DDR4 4GB 2666 KINGSTON95",
+    
+    image: "https://www.mastecnologia.com.ar/images/productos/13550.png?1653275029",
+    category: "MEMORY RAM",
+    manufacturer: "KINGSTON"
+  },
+  {
+    name:
+      "DDR4 16GB 3200 KINGSTON HYPERX FURY BEAST RGB95",
+    price: 132,
+    description:
+      "DDR4 16GB 3200 KINGSTON HYPERX FURY BEAST RGB95",
+    
+    image: "https://www.mastecnologia.com.ar/images/productos/13554.png?1653275030",
+    category: "MEMORY RAM",
+    manufacturer: "KINGSTON"
+  },
+  {
+    name:
+      "DDR4 32GB 3600 KINGSTON FURY RENEGADE RGB95",
+    price: 294,
+    description:
+      "DDR4 32GB 3600 KINGSTON FURY RENEGADE RGB95",
+    
+    image: "https://www.mastecnologia.com.ar/images/productos/13413.png?1653275012",
+    category: "MEMORY RAM",
+    manufacturer: "KINGSTON"
+  },
+  {
+    name:
+      "ASUS PRIME A520M-K (AM4) MOTHER95",
+    price: 97,
+    description:
+      "ASUS PRIME A520M-K (AM4) MOTHER95",
+    
+    image: "https://www.mastecnologia.com.ar/images/productos/11197.png?1653274893",
+    category: "MOTHERBOARD",
+    manufacturer: "ASUS"
+  },
+  {
+    name:
+      "GIGABYTE B550M DS3H 1.2 (AM4) MOTHER95",
+    price: 150,
+    description:
+      "GIGABYTE B550M DS3H 1.2 (AM4) MOTHER95",
+    
+    image: "https://www.mastecnologia.com.ar/images/productos/11143.png?1652450012",
+    category: "MOTHERBOARD",
+    manufacturer: "GIGABYTE"
+  },
+  {
+    name:
+      "GIGABYTE B660M DS3H DDR4 (1700) MOTHER95",
+    price: 236,
+    description:
+      "GIGABYTE B660M DS3H DDR4 (1700) MOTHER95",
+    
+    image: "https://www.mastecnologia.com.ar/images/productos/11153.png?1653274886",
+    category: "MOTHERBOARD",
+    manufacturer: "GIGABYTE"
+  },
+  {
+    name:
+      "GABINETE SENTEY Z20 4295-SF2 RGB95",
+    price: 188,
+    description:
+      "GABINETE SENTEY Z20 4295-SF2 RGB95",
+    
+    image: "https://www.mastecnologia.com.ar/images/productos/91025.png?1653275743",
+    category: "COMPUTER CASES",
+    manufacturer: "SENTEY"
+  },
+  {
+    name:
+      "GABINETE GAMER XFX GC-09HE - 2 COOLER 200MM + 1 120MM RGB95",
+    price: 195,
+    description:
+      "GABINETE GAMER XFX GC-09HE - 2 COOLER 200MM + 1 120MM RGB95",
+    
+    image: "https://www.mastecnologia.com.ar/images/productos/91107.png?1653275750",
+    category: "COMPUTER CASES",
+    manufacturer: "XFX"
+  },
+  {
+    name:
+      "GABINETE SENTEY K20 FULL 4297-SF RGB 95",
+    price: 165,
+    description:
+      "GABINETE SENTEY K20 FULL 4297-SF RGB 95",
+    
+    image: "https://www.mastecnologia.com.ar/images/productos/91024.png?1653275743",
+    category: "COMPUTER CASES",
+    manufacturer: "SENTEY"
+  },
+  {
+    name: "INTEL CORE I9 12900 (LGA 1700)95",
+    price: 776,
+    description:
+      "INTEL CORE I9 12900 (LGA 1700)95",
+    
+    image: "https://www.mastecnologia.com.ar/images/productos/10908.png?1654827704",
+    category: "CPU PROCESSORS",
+    manufacturer: "INTEL"
+  },
+  {
+    name: "GIGABYTE AMD RADEON RX6650 XT 8GB DDR6 GAMING OC 3X FANS GV-R665XTGAMING OC-8GD95",
+    price: 925,
+    description:
+      "GIGABYTE AMD RADEON RX6650 XT 8GB DDR6 GAMING OC 3X FANS GV-R665XTGAMING OC-8GD95",
+    
+    image: "https://www.mastecnologia.com.ar/images/productos/12504.png?1653748857",
+    category: "GRAPHICS CARDS",
+    manufacturer: "GIGABYTE"
+  },
+  {
+    name: "AMD ASROCK RX6500XT 4GB DDR6 OC PHANTON GAMING 90-GA3DZZ-00UANH95",
+    price: 463,
+    description:
+      "AMD ASROCK RX6500XT 4GB DDR6 OC PHANTON GAMING 90-GA3DZZ-00UANH95",
+    
+    image: "https://www.mastecnologia.com.ar/images/productos/12572.png?1653274971",
+    category: "GRAPHICS CARDS",
+    manufacturer: "AMD"
   },
 ];
 
@@ -528,7 +657,7 @@ const users = [
   },
   {
       name: "Juan",
-      email: "Juan@gmail.com",
+      email: "juan@gmail.com",
       password: "123456",
       admin: false,
       isactive: true
@@ -578,6 +707,15 @@ const catego = [
   },
   {
     name: "GAMERS"
+  },
+  {
+    name: "MEMORY RAM"
+  },
+  {
+    name: "MOTHERBOARD"
+  },
+  {
+    name: "COMPUTER CASES"
   },
 ]
 
@@ -708,6 +846,10 @@ const manu = [
   {
     name: "WESTERN DIGITAL",
     image: "https://i.pinimg.com/originals/33/77/64/3377649c5b68ee7ca92d217f9a6040d6.jpg",
+  },
+  {
+    name: "SENTEY",
+    image: "https://iconape.com/wp-content/png_logo_vector/sentey.png",
   },
 ]
 
