@@ -84,7 +84,7 @@ async function getNearestbranchOffice(lat, long) {
   let branchOffices = await getAllbranchOffices()
   let branchOfficesDistance = branchOffices.map((branchOffice) => {
     let distance = distanceCalculator(lat ,long,branchOffice.latitude,branchOffice.longitude)
-    return {branchOffice: branchOffice, distance : distance}
+    return {...branchOffice.dataValues, distance : distance}
   })
   return branchOfficesDistance;
 }
