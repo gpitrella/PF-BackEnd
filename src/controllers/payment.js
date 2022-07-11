@@ -4,7 +4,7 @@ const sgMail = require('@sendgrid/mail');
 sgMail.setApiKey("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");
 const CLIENT_URL = process.env.CLIENT_URL
 
-async function createPayment({email, items, idUser, idAddress, branchOfficeId}) {
+async function createPayment({email,items, idUser, status, idAddress, branchOfficeId,subject,text,html}) {
   
   const url = "https://api.mercadopago.com/checkout/preferences";
   
