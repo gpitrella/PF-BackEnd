@@ -8,10 +8,10 @@ module.exports = (sequelize) => {
             allowNull: false,
             defaultValue: 'pending'
         },
-        total:{
-            type: DataTypes.INTEGER,
+        totalpurchase: {
+            type:DataTypes.INTEGER,
             allowNull: false,
-            defaultValue: 1
+            defaultValue: 0
         },
         idMP: {
             type:DataTypes.STRING
