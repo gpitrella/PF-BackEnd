@@ -8,6 +8,7 @@ const {
   getByIdBranchOffice,
   updateBranchOffice,
   deleteBranchOffice,
+  getTokenMaps,
 } = require("../controllers/branchOffice.js");
 
 const router = Router();
