@@ -32,6 +32,9 @@ async function createPayment({email,items, idUser, status, idAddress, branchOffi
   let findAddress= await Useraddress.findAll({where:{id:idAddress}})
   let findSucursal = await Branch_office.findAll({where:{id:branchOfficeId}})
   
+  items.map((product) => {
+    newOrder.addProduct(product.id)
+  })
   newOrder.addUser(findUser)
   if(findAddress.length)newOrder.addUseraddress(findAddress)
   if(findSucursal.length)newOrder.addBranch_office(findSucursal)

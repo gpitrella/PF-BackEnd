@@ -97,8 +97,8 @@ async function createUser({name,email,admin,password,phone_number,photo}){
     }
 }
 
-async function updateUser(id,{name,email,admin,password,phone_number,photo}){
-        await User.update({name,email,admin,password},{where:{id:id}})
+async function updateUser(id,{name,email,admin,password,phone_number,photo,image}){
+        await User.update({name,email,admin,password,phone_number,photo,image},{where:{id:id}})
         return 'user update successfully'
 }
 
