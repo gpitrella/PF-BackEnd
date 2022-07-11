@@ -140,6 +140,23 @@ async function sumLastThreeMonth(){
   return lastthreemonthsales
 }
 
+async function getOrdersToday(){
+  let orderstoday = await Purchase_order.findAll({
+    where: {
+       createdAt: { 
+        [Op.between]: [TODAY_START, NOW]
+      },
+        
+    },
+    include:[
+    {association:'products', attributes:["id","name"], through: {attributes:[]}},
+    {association:'users', attributes:["id","name"], through:{attributes:[]}},
+    {association:'useraddresses', through:{attributes:[]}},
+    {model: Branch_office}
+  ]})
+  return orderstoday
+}
+
 module.exports={
     // postPurchase_order,
     getAllOrders,
@@ -151,5 +168,6 @@ module.exports={
     sumLastWeek,
     sumLastMonth,
     sumBeforeLastMonth,
-    sumLastThreeMonth
+    sumLastThreeMonth,
+    getOrdersToday
 }
