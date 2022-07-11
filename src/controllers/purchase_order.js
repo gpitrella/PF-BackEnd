@@ -42,11 +42,10 @@ async function updateStatus(id,status){
   let purchase_order = await Purchase_order.findByPk(id,{attributes:["status"],through: {attributes: []}})
   if(!purchase_order) throw new Error("there no exist a purchase order with that id");
   if(!['pending','processing','sending'].includes(purchase_order.dataValues.status)) throw new Error("it is no longer possible to update the purchase order");
-  
   await Purchase_order.update({status}, {where : { id }})
   let orderUser=await Purchase_order.findByPk(id,{ include: { all: true, nested: true }})
   let email = orderUser.dataValues.users[0].dataValues.email
-  console.log("email",email)
+  
   try{
     const msg={
       to: email,
@@ -56,9 +55,8 @@ async function updateStatus(id,status){
       html:`<h1>Your purchase order is being ${status}</h1>`
     }
     await sgMail.send(msg);
-
-  }catch(error){
-    console.log(error)
+    }catch(error){
+      console.log(error)
   }
   return `status was successfully updated to ${status}`
 }
@@ -163,6 +161,23 @@ async function sumLastThreeMonth(){
   return lastthreemonthsales
 }
 
+async function getOrdersToday(){
+  let orderstoday = await Purchase_order.findAll({
+    where: {
+       createdAt: { 
+        [Op.between]: [TODAY_START, NOW]
+      },
+        
+    },
+    include:[
+    {association:'products', attributes:["id","name"], through: {attributes:[]}},
+    {association:'users', attributes:["id","name"], through:{attributes:[]}},
+    {association:'useraddresses', through:{attributes:[]}},
+    {model: Branch_office}
+  ]})
+  return orderstoday
+}
+
 module.exports={
     // postPurchase_order,
     getAllOrders,
@@ -174,5 +189,6 @@ module.exports={
     sumLastWeek,
     sumLastMonth,
     sumBeforeLastMonth,
-    sumLastThreeMonth
+    sumLastThreeMonth,
+    getOrdersToday
 }
