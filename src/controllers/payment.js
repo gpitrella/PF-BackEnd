@@ -26,13 +26,13 @@ async function createPayment({email,items, idUser, totalpurchase, idAddress, bra
   let idMP = payment.data.init_point.slice(payment.data.init_point.indexOf('=')+1,payment.data.init_point.length)
   console.log("id",idMP)
   let newOrder = await Purchase_order.create({idMP, items, totalpurchase})
-  let findUser= await User.findAll({where:{id:idUser}})
-  let findAddress= await Useraddress.findAll({where:{id:idAddress}})
-  let findSucursal = await Branch_office.findAll({where:{id:branchOfficeId}})
+  let findUser= await User.findOne({where:{id:idUser}})
+  let findAddress= await Useraddress.findOne({where:{id:idAddress}})
+  let findSucursal = await Branch_office.findOne({where:{id:branchOfficeId}})
   
   await newOrder.addUser(findUser)
-  if(findAddress.length) await newOrder.addUseraddress(findAddress)
-  if(findSucursal.length) await newOrder.addBranch_office(findSucursal)
+  if(findAddress) await newOrder.addUseraddress(findAddress)
+  if(findSucursal) await newOrder.setBranch_office(findSucursal)
   for(product of items) await newOrder.addProduct(product.id)
 
   return payment.data.init_point;
