@@ -64,12 +64,27 @@ async function verifyBranchOfficeId(id) {
   return BranchOfficeInDb;
 }
 
+// async function getNearestbranchOffice(lat, long) {
+//   verifyLatAndLong(lat, long);
+//   let branchOffices = await getAllbranchOffices()
+//   let nearestbranchOffice;
+//   let distance = Infinity;
+//   for(branchOffice of branchOffices) {
+//     let distanceAux = distanceCalculator(lat ,long,branchOffice.latitude,branchOffice.longitude)
+//     if(distanceAux < distance ) {
+//       nearestbranchOffice = branchOffice
+//       distance = distanceAux
+//     }
+//   }
+//   return nearestbranchOffice;
+// }
+
 async function getNearestbranchOffice(lat, long) {
   verifyLatAndLong(lat, long);
   let branchOffices = await getAllbranchOffices()
   let branchOfficesDistance = branchOffices.map((branchOffice) => {
     let distance = distanceCalculator(lat ,long,branchOffice.latitude,branchOffice.longitude)
-    return {id: branchOffice.id, distance : distance}
+    return {branchOffice: branchOffice, distance : distance}
   })
   return branchOfficesDistance;
 }

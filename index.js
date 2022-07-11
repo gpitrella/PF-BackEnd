@@ -11,6 +11,6 @@ conn.sync({ force: false }).then(() => {
   server.listen(PORT, async () => {
     console.log(`Listening at port:${PORT} ...`); // eslint-disable-line no-console
     //await initDb();
-    // console.log('DATABASE COMPLETE MIGRATE...');
+    //console.log('DATABASE COMPLETE MIGRATE...');
   });
 });
