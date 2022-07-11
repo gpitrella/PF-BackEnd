@@ -5,7 +5,8 @@ module.exports = (sequelize) => {
     sequelize.define('purchase_order', {
         status:{
             type:DataTypes.ENUM('pending','processing','cancelled','sending','filled'),
-            allowNull: false
+            allowNull: false,
+            defaultValue: 'pending'
         },
         total:{
             type: DataTypes.INTEGER,
@@ -17,10 +18,5 @@ module.exports = (sequelize) => {
         },
         items: {
             type: DataTypes.ARRAY(DataTypes.JSON),
-        },
-        totalpurchase: {
-            type:DataTypes.INTEGER,
-            allowNull: false,
-            defaultValue: 0
         }
     })}
