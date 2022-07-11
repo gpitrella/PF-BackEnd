@@ -91,7 +91,7 @@ User.belongsToMany(Useraddress, { through: "user_address" });
 Useraddress.belongsToMany(User, { through: "user_address" });
 
 Useraddress.belongsTo(State);
-State.belongsToMany(Useraddress, { through: "address_state" }); // tendria que ser "belongsTo"
+State.belongsToMany(Useraddress, { through: "address_state" }); // tendria que ser "hasMany"
 
 Product.belongsToMany(Purchase_order, {through: "order_product"});
 Purchase_order.belongsToMany(Product, {through: "order_product"})
