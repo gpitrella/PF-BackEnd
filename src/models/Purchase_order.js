@@ -5,12 +5,8 @@ module.exports = (sequelize) => {
     sequelize.define('purchase_order', {
         status:{
             type:DataTypes.ENUM('pending','processing','cancelled','sending','filled'),
-            allowNull: false
-        },
-        total:{
-            type: DataTypes.INTEGER,
             allowNull: false,
-            defaultValue: 1
+            defaultValue: 'pending'
         },
         idMP: {
             type:DataTypes.STRING
