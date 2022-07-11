@@ -1,5 +1,5 @@
 //? Ecommerce Techmarket *****
-//const {initDb} = require('./initDb');
+const {initDb} = require('./initDb');
 const server = require('./src/app.js');
 const { conn } = require('./src/db.js');
 

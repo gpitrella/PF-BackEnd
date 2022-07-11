@@ -43,7 +43,7 @@ async function updateStatus(id,status){
 async function getAllOrders(){
     let orders = await Purchase_order.findAll({include:[
       {association:'products', attributes:["id","name"], through: {attributes:[]}},
-      {association:'users', attributes:["id","name"], through:{attributes:[]}},
+      {association:'users', attributes:["id","name","email"], through:{attributes:[]}},
       {association:'useraddresses', through:{attributes:[]}},
       {model: Branch_office}
     ]})
