@@ -1,5 +1,17 @@
 const { User, Purchase_order, Branch_office } = require("../db");
 const { getUserByid } = require("./user");
+const { Op } = require("sequelize");
+
+const TODAY_START = new Date().setHours(0,0,0,0)
+const NOW = new Date()
+let TODAY = new Date()
+const LAST_WEEK = TODAY.setDate(TODAY.getDate() - 7)
+TODAY = new Date()
+const LAST_MONTH = TODAY.setDate(TODAY.getDate() - 30)
+TODAY = new Date()
+const BEFORE_LAST_MONTH = TODAY.setDate(TODAY.getDate() - 60)
+TODAY = new Date()
+const LAST_THREE_MONTH = TODAY.setDate(TODAY.getDate() - 90)
 
 // async function postPurchase_order({ idProduct, idUser,total, description, idMP, status, idAddress, branchOfficeId, items}){
 //     let newOrder = await Purchase_order.create({ total, status, idMP, description, items})
@@ -45,9 +57,99 @@ async function usersOrders(id){
     return uOrders
 }
 
+async function countAllOrders(){
+  const {count} = await Purchase_order.findAndCountAll()
+  return count
+}
+
+async function sumAllOrders(){
+  const totalsales = await Purchase_order.sum('totalpurchase', {
+    where: {
+      status: 'filled'
+    }
+  })
+  return totalsales
+}
+
+async function sumAllToday(){
+  const totalsalestoday = await Purchase_order.sum('totalpurchase', {
+    where: {
+      status: 'filled',
+       createdAt: { 
+        [Op.between]: [TODAY_START, NOW]
+      },
+        
+    }
+  })
+  return totalsalestoday
+}
+
+async function sumLastWeek(){
+
+  const lastweeksales = await Purchase_order.sum('totalpurchase', {
+    where: {
+      status: 'filled',
+       createdAt: { 
+        [Op.between]: [LAST_WEEK, TODAY_START]
+      },
+        
+    }
+  })
+  return lastweeksales
+}
+
+async function sumLastMonth(){
+
+  const lastmonthsales = await Purchase_order.sum('totalpurchase', {
+    where: {
+      status: 'filled',
+       createdAt: { 
+        [Op.between]: [LAST_MONTH, TODAY_START]
+      },
+        
+    }
+  })
+  return lastmonthsales
+}
+
+async function sumBeforeLastMonth(){
+
+  const beforelastmonthsales = await Purchase_order.sum('totalpurchase', {
+    where: {
+      status: 'filled',
+       createdAt: { 
+        [Op.between]: [BEFORE_LAST_MONTH, LAST_MONTH]
+      },
+        
+    }
+  })
+  return beforelastmonthsales
+}
+
+async function sumLastThreeMonth(){
+
+  const lastthreemonthsales = await Purchase_order.sum('totalpurchase', {
+    where: {
+      status: 'filled',
+       createdAt: { 
+        [Op.between]: [LAST_THREE_MONTH, BEFORE_LAST_MONTH]
+      },
+        
+    }
+  })
+  return lastthreemonthsales
+}
+
 module.exports={
     // postPurchase_order,
     getAllOrders,
     updateStatus,
     usersOrders,
+    countAllOrders,
+    sumAllOrders,
+    sumAllToday,
+    sumLastWeek,
+    sumLastMonth,
+    sumBeforeLastMonth,
+    sumLastThreeMonth
 }
