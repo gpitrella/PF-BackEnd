@@ -67,16 +67,11 @@ async function verifyBranchOfficeId(id) {
 async function getNearestbranchOffice(lat, long) {
   verifyLatAndLong(lat, long);
   let branchOffices = await getAllbranchOffices()
-  let nearestbranchOffice;
-  let distance = Infinity;
-  for(branchOffice of branchOffices) {
-    let distanceAux = distanceCalculator(lat ,long,branchOffice.latitude,branchOffice.longitude)
-    if(distanceAux < distance ) {
-      nearestbranchOffice = branchOffice
-      distance = distanceAux
-    }
-  }
-  return nearestbranchOffice;
+  let branchOfficesDistance = branchOffices.map((branchOffice) => {
+    let distance = distanceCalculator(lat ,long,branchOffice.latitude,branchOffice.longitude)
+    return {...branchOffice.dataValues, distance : distance}
+  })
+  return branchOfficesDistance;
 }
 
 async function getAllbranchOffices() {
@@ -85,15 +80,11 @@ async function getAllbranchOffices() {
 }
 
 async function createBranchOffice(data) {
-  let { name, direction, latitude, longitude } = verifybBranchOfficeData(data);
+  data = verifybBranchOfficeData(data);
+  let { name, direction } = data
   await verifyDuplicateBranchOffice(name, direction);
 
-  var newBranchOffice = await Branch_office.create({
-    name,
-    direction,
-    latitude,
-    longitude,
-  });
+  var newBranchOffice = await Branch_office.create(data);
   return newBranchOffice;
 }
 
@@ -105,8 +96,8 @@ async function getByIdBranchOffice(id) {
 async function updateBranchOffice(id, data) {
   await verifyBranchOfficeId(id);
 
-  let { name, direction } = verifybBranchOfficeData(data);
-
+  data = verifybBranchOfficeData(data);
+  let { name, direction } = data 
   await verifyDuplicateBranchOffice(name, direction);
 
   await Branch_office.update(data,{where: { id }});

@@ -4,8 +4,7 @@ const { getUserByid } = require("./user");
 async function createReview(comment, score, idProduct, idUser) {
     if (!comment) throw new Error("you must provide a comment");
     if(!/^[1-5]$/.test(score)) throw new Error("you must provide a score must be a number between one and five");
-    if(!idProduct && !/^[0-9]*$/.test(score)) throw new Error("you must send a valid product id");
-
+    if(!idProduct && !/^[1-9][0-9]*$/.test(score)) throw new Error("you must send a valid product id");
     let productInDb = await Product.findByPk(idProduct)
     let userInDb = await getUserByid(idUser)
     let reviewInDb = await Review.findAll({include:[{model:User, where: { id : idUser }}, {model: Product, where: { id : idProduct }}]});

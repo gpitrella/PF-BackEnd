@@ -1,4 +1,4 @@
-const { Favorites, Review, User, Purchase_order, Product } = require("../db");
+const { Review, User, Purchase_order, Product } = require("../db");
 
 function deleteProperty(array, property) {
   array.forEach(a => delete a.dataValues[property])
@@ -17,20 +17,22 @@ async function verifyUserId(id) {
 
 async function getUserReviews(id) {
   await verifyUserId(id) 
-  let UserReviews = await Review.findAll({ include: [{model: User, through: { attributes: [] }, where: { id }}, {model: Product, through: { attributes: [] }}] });
+  let UserReviews = await Review.findAll({ include: [
+    {association:'users', through:{attributes:[]}, where:{id}},
+    {association:'products', through:{attributes:[]}}]});
   UserReviews = deleteProperty(UserReviews, "users")
   return UserReviews;
 }
 
 async function getUserFavorites(id) {
   await verifyUserId(id) 
-  let userFavorites = await Product.findAll({ include: [{model: Favorites, through: { attributes: [] }, where: { idUser: id }}] });
+  let userFavorites = await Product.findAll({ include: [{association:'favorites', through: { attributes: [] }, where: { idUser: id }}]});
   return userFavorites;
 }
 
 async function getUserPurchase_Orders(id) {
   await verifyUserId(id)
-  let UserPurchaseorders = await Purchase_order.findAll({ include: [{model: User, through: { attributes: [] }, where: { id }}, {model: Product, through: { attributes: [] }}] });
+  let UserPurchaseorders = await Purchase_order.findAll({ include: [{association:'users', through: { attributes: [] }, where: { id }}, {association:'products', through: { attributes: [] }}] });
   UserPurchaseorders = deleteProperty(UserPurchaseorders, "users")
   return UserPurchaseorders;
 }
