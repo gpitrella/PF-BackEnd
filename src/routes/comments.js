@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const axios = require("axios");
 
-const { createComment, getAllComments, createAnswer } = require('../controllers/comments.js');
+const { createComment, getAllComments, createAnswer, updateViewed } = require('../controllers/comments.js');
 
 const router = Router();
 
@@ -24,8 +24,9 @@ router.get('/', async(req,res)=>{
 
 router.put('/', async(req,res)=>{
     try {
-        let{idComment,answer} = req.body
-        res.json(await createAnswer(idComment,answer))
+        let{idComment, answer, viewed} = req.body
+        if(typeof(answer) === 'string') res.json(await createAnswer(idComment,answer))
+        if(typeof(viewed) === 'boolean') res.json(await updateViewed(idComment,viewed))
     } catch (error) {
         res.json(error.message)
     }

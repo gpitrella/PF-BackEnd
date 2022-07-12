@@ -42,6 +42,7 @@ async function updateStatus(id,status){
   let purchase_order = await Purchase_order.findByPk(id,{attributes:["status"],through: {attributes: []}})
   if(!purchase_order) throw new Error("there no exist a purchase order with that id");
   if(!['pending','processing','sending'].includes(purchase_order.dataValues.status)) throw new Error("it is no longer possible to update the purchase order");
+
   await Purchase_order.update({status}, {where : { id }})
   let orderUser=await Purchase_order.findByPk(id,{ include: { all: true, nested: true }})
   let email = orderUser.dataValues.users[0].dataValues.email

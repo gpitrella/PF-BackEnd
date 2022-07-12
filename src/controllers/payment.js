@@ -2,8 +2,8 @@ const { Product, User, Purchase_order, Product_order, Useraddress, Branch_office
 const axios = require("axios");
 const CLIENT_URL = process.env.CLIENT_URL
 
-async function createPayment({email,items, idUser, totalpurchase, idAddress, branchOfficeId}) {
-  
+async function createPayment({email, items, idUser, totalpurchase, idAddress, branchOfficeId}) {
+ 
   const url = "https://api.mercadopago.com/checkout/preferences";
   
   const body = {
@@ -38,6 +38,7 @@ async function createPayment({email,items, idUser, totalpurchase, idAddress, bra
   if(findSucursal) await newOrder.setBranch_office(findSucursal)
   for(product of items) await newOrder.addProduct(product.id)
 
+  
   return payment.data.init_point;
 }
 
