@@ -30,18 +30,13 @@ async function createPayment({email,items, idUser, totalpurchase, idAddress, bra
   let newOrder = await Purchase_order.create({idMP, items, totalpurchase})
 
   let findUser= await User.findOne({where:{id:idUser}})
-  console.log('findUser', findUser)
   let findAddress= await Useraddress.findOne({where:{id:idAddress}})
-  console.log('findAddress', findAddress);
   let findSucursal = await Branch_office.findOne({where:{id:branchOfficeId}})
-  console.log('findSucursal', findSucursal);
   
   await newOrder.addUser(findUser)
   if(findAddress) await newOrder.addUseraddress(findAddress)
   if(findSucursal) await newOrder.setBranch_office(findSucursal)
   for(product of items) await newOrder.addProduct(product.id)
-
-  console.log('Llegue hasta aca.');
 
   return payment.data.init_point;
 }
