@@ -26,8 +26,15 @@ async function createComment(comment, idProduct, idUser) {
     let rescomment = await Comments.update({answer}, {where:{ id: idComment }})
     return rescomment
   }
+
+  async function updateViewed(idComment,viewed){
+    let updateViewed = await Comments.update({viewed}, {where:{ id: idComment }})
+    return updateViewed
+  }
+
 module.exports = {
     createComment,
     getAllComments,
-    createAnswer
+    createAnswer,
+    updateViewed
   };

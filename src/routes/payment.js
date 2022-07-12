@@ -5,6 +5,7 @@ require('dotenv').config();
 
 const router = Router();
 
+//deberia ser un Post...  
   router.post("/", async  function (req, res) {
     let data=req.body
     try {

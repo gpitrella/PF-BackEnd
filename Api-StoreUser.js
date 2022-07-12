@@ -1,7 +1,6 @@
-const { Categories, Manufacturer, User, Product } = require("./src/db");
-const bcrypt = require('bcrypt');
+const axios = require("axios");
+const { Categories, Manufacturer } = require("./src/db");
 
-async function initDb(){
 const products = [
   {
     id: 1,
@@ -342,334 +341,11 @@ const products = [
     description:
       "AURICULAR NETMAK NM-COUNTER GAMER | 1 PLUG | PS4/XBOX/PC ROJO",
     
-    image: "https://www.mastecnologia.com.ar/images/productos/18804.png?1653275348",
+    image: "https://www.mastecnologia.com.ar/images/productos/12702.png?1654089450",
     category:"HEADPHONES",
     manufacturer:"NETMAK"
   },
-  {
-    name:
-      "MSI H510M-A PRO (1200) MOTHER95",
-    price: 3223,
-    description:
-      "MSI H510M-A PRO (1200) MOTHER95",
-    
-    image: "https://www.mastecnologia.com.ar/images/productos/11718.png?1654036644",
-    category:"MOTHERBOARD",
-    manufacturer:"MSI"
-  },
-  {
-    name:
-      "MOUSE GENIUS DX-120 USB95",
-    price: 23,
-    description:
-      "MOUSE GENIUS DX-120 USB95",
-    
-    image: "https://www.mastecnologia.com.ar/images/productos/17018.png?1652450347",
-    category:"MOUSE",
-    manufacturer:"GENIUS"
-  },
-  {
-    name:
-      "TECLADO+MOUSE LOGITECH MK235 INALAMBRICO WS95",
-    price: 4523,
-    description:
-      "TECLADO+MOUSE LOGITECH MK235 INALAMBRICO WS95",
-    
-    image: "https://www.mastecnologia.com.ar/images/productos/17765.png?1653275296",
-    category:"KEYBOARDS",
-    manufacturer:"LOGITECH"
-  },
-  {
-    name:
-      "TECLADO LOGITECH K400 PLUS TOUCHPAD WS95",
-    price: 5523,
-    description:
-      "TECLADO LOGITECH K400 PLUS TOUCHPAD WS95",
-    
-    image: "https://www.mastecnologia.com.ar/images/productos/17791.png?1652450395",
-    category:"KEYBOARDS",
-    manufacturer:"LOGITECH"
-  },
-  {
-    name:
-      "AURICULAR GAMER ST-CONQUER | 2 PLUG 95",
-    price: 5523,
-    description:
-      "AURICULAR GAMER ST-CONQUER | 2 PLUG 95",
-    
-    image: "https://www.mastecnologia.com.ar/images/productos/18836.png?1653275353",
-    category:"HEADPHONES",
-    manufacturer:"HYPERX"
-  },
-  {
-    name:
-      "GEFORCE NVIDIA PNY RTX2060 12GB DDR6 VCG206012DFPPB GFORCE 95",
-    price: 67823,
-    description:
-      "GEFORCE NVIDIA PNY RTX2060 12GB DDR6 VCG206012DFPPB GFORCE 95",
-    
-    image: "https://www.mastecnologia.com.ar/images/productos/12508.png?1653274955",
-    category:"GRAPHICS CARDS",
-    manufacturer:"XFX"
-  },
-  {
-    name:
-      "IMPRESORA EPSON L3210 (MF) MULTIFUNCION ECOTANK + COMBO TINTA",
-    price: 55523,
-    description:
-      "IMPRESORA EPSON L3210 (MF) MULTIFUNCION ECOTANK + COMBO TINTA",
-    
-    image: "https://www.mastecnologia.com.ar/images/productos/15645.png?1652450296",
-    category:"PRINTERS",
-    manufacturer:"EPSON"
-  },
-  {
-    name:
-      "SILLA GAMER NOGA STORMER TYPHON RGB ANJ-1175 NEGRA95",
-    price: 65523,
-    description:
-      "SILLA GAMER NOGA STORMER TYPHON RGB ANJ-1175 NEGRA95",
-    
-    image: "https://www.mastecnologia.com.ar/images/productos/97750.png?1653748859",
-    category: "GAMERS",
-    manufacturer: "HYPERX"
-  },
-  {
-    name:
-      "SILLA GAMER NETMAK NM-PHONTUM AZUL",
-    price: 65523,
-    description:
-      "SILLA GAMER NETMAK NM-PHONTUM AZUL",
-    
-    image: "https://www.mastecnologia.com.ar/images/productos/97756.png?1653275811",
-    category: "GAMERS",
-    manufacturer: "NETMAK"
-  },
-  {
-    name:
-      "KIT ALARMA MARSHALL GO PLUS PANEL MARSHALL GO+ 1 SENSOR INALAMBRICO + 1 SENSOR MAGNETICO",
-    price: 6523,
-    description:
-      "KIT ALARMA MARSHALL GO PLUS PANEL MARSHALL GO+ 1 SENSOR INALAMBRICO + 1 SENSOR MAGNETICO + CONTROL + BATERIA + SIRENA + ROTULA95",
-    
-    image: "https://www.mastecnologia.com.ar/images/productos/91279.png?1653275757",
-    category: "MODEM ROUTER",
-    manufacturer: "MARSHALL"
-  },
-  {
-    name:
-      "PEN DRIVE 32GB KINGSTON EXODIA 3.2 NARANJA95",
-    price: 6523,
-    description:
-      "PEN DRIVE 32GB KINGSTON EXODIA 3.2 NARANJA95",
-    
-    image: "https://www.mastecnologia.com.ar/images/productos/15734.png?1655225629",
-    category: "PC COMPONENTS",
-    manufacturer: "KINGSTON"
-  },
-  {
-    name:
-      "DDR4 4GB 2666 KINGSTON95",
-    price: 37,
-    description:
-      "DDR4 4GB 2666 KINGSTON95",
-    
-    image: "https://www.mastecnologia.com.ar/images/productos/13550.png?1653275029",
-    category: "MEMORY RAM",
-    manufacturer: "KINGSTON"
-  },
-  {
-    name:
-      "DDR4 16GB 3200 KINGSTON HYPERX FURY BEAST RGB95",
-    price: 132,
-    description:
-      "DDR4 16GB 3200 KINGSTON HYPERX FURY BEAST RGB95",
-    
-    image: "https://www.mastecnologia.com.ar/images/productos/13554.png?1653275030",
-    category: "MEMORY RAM",
-    manufacturer: "KINGSTON"
-  },
-  {
-    name:
-      "DDR4 32GB 3600 KINGSTON FURY RENEGADE RGB95",
-    price: 294,
-    description:
-      "DDR4 32GB 3600 KINGSTON FURY RENEGADE RGB95",
-    
-    image: "https://www.mastecnologia.com.ar/images/productos/13413.png?1653275012",
-    category: "MEMORY RAM",
-    manufacturer: "KINGSTON"
-  },
-  {
-    name:
-      "ASUS PRIME A520M-K (AM4) MOTHER95",
-    price: 97,
-    description:
-      "ASUS PRIME A520M-K (AM4) MOTHER95",
-    
-    image: "https://www.mastecnologia.com.ar/images/productos/11197.png?1653274893",
-    category: "MOTHERBOARD",
-    manufacturer: "ASUS"
-  },
-  {
-    name:
-      "GIGABYTE B550M DS3H 1.2 (AM4) MOTHER95",
-    price: 150,
-    description:
-      "GIGABYTE B550M DS3H 1.2 (AM4) MOTHER95",
-    
-    image: "https://www.mastecnologia.com.ar/images/productos/11143.png?1652450012",
-    category: "MOTHERBOARD",
-    manufacturer: "GIGABYTE"
-  },
-  {
-    name:
-      "GIGABYTE B660M DS3H DDR4 (1700) MOTHER95",
-    price: 236,
-    description:
-      "GIGABYTE B660M DS3H DDR4 (1700) MOTHER95",
-    
-    image: "https://www.mastecnologia.com.ar/images/productos/11153.png?1653274886",
-    category: "MOTHERBOARD",
-    manufacturer: "GIGABYTE"
-  },
-  {
-    name:
-      "GABINETE SENTEY Z20 4295-SF2 RGB95",
-    price: 188,
-    description:
-      "GABINETE SENTEY Z20 4295-SF2 RGB95",
-    
-    image: "https://www.mastecnologia.com.ar/images/productos/91025.png?1653275743",
-    category: "COMPUTER CASES",
-    manufacturer: "SENTEY"
-  },
-  {
-    name:
-      "GABINETE GAMER XFX GC-09HE - 2 COOLER 200MM + 1 120MM RGB95",
-    price: 195,
-    description:
-      "GABINETE GAMER XFX GC-09HE - 2 COOLER 200MM + 1 120MM RGB95",
-    
-    image: "https://www.mastecnologia.com.ar/images/productos/91107.png?1653275750",
-    category: "COMPUTER CASES",
-    manufacturer: "XFX"
-  },
-  {
-    name:
-      "GABINETE SENTEY K20 FULL 4297-SF RGB 95",
-    price: 165,
-    description:
-      "GABINETE SENTEY K20 FULL 4297-SF RGB 95",
-    
-    image: "https://www.mastecnologia.com.ar/images/productos/91024.png?1653275743",
-    category: "COMPUTER CASES",
-    manufacturer: "SENTEY"
-  },
-  {
-    name: "INTEL CORE I9 12900 (LGA 1700)95",
-    price: 776,
-    description:
-      "INTEL CORE I9 12900 (LGA 1700)95",
-    
-    image: "https://www.mastecnologia.com.ar/images/productos/10908.png?1654827704",
-    category: "CPU PROCESSORS",
-    manufacturer: "INTEL"
-  },
-  {
-    name: "GIGABYTE AMD RADEON RX6650 XT 8GB DDR6 GAMING OC 3X FANS GV-R665XTGAMING OC-8GD95",
-    price: 925,
-    description:
-      "GIGABYTE AMD RADEON RX6650 XT 8GB DDR6 GAMING OC 3X FANS GV-R665XTGAMING OC-8GD95",
-    
-    image: "https://www.mastecnologia.com.ar/images/productos/12504.png?1653748857",
-    category: "GRAPHICS CARDS",
-    manufacturer: "GIGABYTE"
-  },
-  {
-    name: "AMD ASROCK RX6500XT 4GB DDR6 OC PHANTON GAMING 90-GA3DZZ-00UANH95",
-    price: 463,
-    description:
-      "AMD ASROCK RX6500XT 4GB DDR6 OC PHANTON GAMING 90-GA3DZZ-00UANH95",
-    
-    image: "https://www.mastecnologia.com.ar/images/productos/12572.png?1653274971",
-    category: "GRAPHICS CARDS",
-    manufacturer: "AMD"
-  },
 ];
-
-const users = [
-  {
-      name: "Bettina",
-      email: "bettinaigamboa@gmail.com",
-      password: "123456",
-      admin: true,
-      isactive: true
-  },
-  {
-      name: "Enzo",
-      email: "enz997.ing.ind@gmail.com",
-      password: "123456",
-      admin: true,
-      isactive: true
-  },
-  {
-      name: "Lucas",
-      email: "lucassebastianbattaglia@gmail.com",
-      password: "123456",
-      admin: true,
-      isactive: true
-  },
-  {
-      name: "Nicolas",
-      email: "nicolasexeburgos@gmail.com",
-      password: "123456",
-      admin: true,
-      isactive: true
-  },
-  {
-      name: "FedeF",
-      email: "federicofaraz@gmail.com",
-      password: "123456",
-      admin: true,
-      isactive: true
-  },
-  {
-      name: "FedeR",
-      email: "romerof14@gmail.com",
-      password: "123456",
-      admin: true,
-      isactive: true
-  },
-  {
-      name: "Gabriel",
-      email: "gabrielpitrella@gmail.com",
-      password: "123456",
-      admin: true,
-      isactive: true
-  },
-  {
-      name: "Horacio",
-      email: "ahabitu@gmail.com",
-      password: "123456",
-      admin: true,
-      isactive: true
-  },
-  {
-      name: "Juan",
-      email: "juan@gmail.com",
-      password: "123456",
-      admin: false,
-      isactive: true
-  },
-  {
-      name: "Pedro",
-      email: "Pedro@gmail.com",
-      password: "123456",
-      admin: false,
-      isactive: true
-  },
-]
 
 const catego = [
   {
@@ -708,16 +384,7 @@ const catego = [
   {
     name: "GAMERS"
   },
-  {
-    name: "MEMORY RAM"
-  },
-  {
-    name: "MOTHERBOARD"
-  },
-  {
-    name: "COMPUTER CASES"
-  },
-]
+];
 
 const manu = [
   {
@@ -776,23 +443,31 @@ const manu = [
     image: "https://www.vector-logo.net/logo_preview/eps/g/Genius(167).png",
   },
   {
-    name: "ASUS",
+    name: "amd",
+    image: "https://cdn4.iconfinder.com/data/icons/logos-and-brands/512/15_Amd_logo_logos-512.png",
+  },
+  {
+    name: "asus",
     image: "https://www.mastecnologia.com.ar/assets/images/brands/asus.png",
   },
   {
-    name: "SONY",
+    name: "hp",
+    image: "https://cdn4.iconfinder.com/data/icons/flat-brand-logo-2/512/hp-256.png",
+  },
+  {
+    name: "sony",
     image: "https://cdn4.iconfinder.com/data/icons/flat-brand-logo-2/512/sony-256.png",
   },
   {
-    name: "LG",
+    name: "lg",
     image: "https://cdn4.iconfinder.com/data/icons/flat-brand-logo-2/512/lg-256.png",
   },
   {
-    name: "SAMSUNG",
+    name: "samsung",
     image: "https://cdn4.iconfinder.com/data/icons/flat-brand-logo-2/512/samsung-128.png",
   },
   {
-    name: "IBM",
+    name: "ibm",
     image: "https://logodownload.org/wp-content/uploads/2014/04/ibm-logo-0.png",
   },
   {
@@ -800,30 +475,97 @@ const manu = [
     image: "https://www.brandemia.org/wp-content/uploads/2011/04/acer1.jpg",
   },
   {
-    name: "TVR",
+    name: "tenda",
+    image: "https://www.mastecnologia.com.ar/assets/images/brands/tenda.png",
+  },
+  {
+    name: "glc",
+    image: "https://www.mastecnologia.com.ar/assets/images/brands/glc.png",
+  },
+  {
+    name: "kingston",
+    image: "https://www.mastecnologia.com.ar/assets/images/brands/kingston.jpg",
+  },
+  {
+    name: "western digital",
+    image: "https://www.mastecnologia.com.ar/assets/images/brands/wd.jpg",
+  },
+  {
+    name: "dahua",
+    image: "https://www.mastecnologia.com.ar/assets/images/brands/dahua.png",
+  },
+  {
+    name: "tvr",
     image: "https://www.mastecnologia.com.ar/assets/images/brands/trv.png",
   },
   {
-    name: "NVIDIA",
+    name: "nvidia",
     image: "https://www.mastecnologia.com.ar/assets/images/brands/nvidia.png",
   },
   {
-    name: "RADEON",
+    name: "radeon",
     image: "https://www.mastecnologia.com.ar/assets/images/brands/radeon.png",
   },
   {
-    name: "LENOVO",
+    name: "gigabyte",
+    image: "https://www.mastecnologia.com.ar/assets/images/brands/gigabyte.png",
+  },
+  {
+    name: "lenovo",
     image: "https://www.tecnologia-informatica.com/wp-content/uploads/2019/02/marcas-de-computadoras-3.jpeg",
   },
   {
-    name: "DELL",
+    name: "dell",
     image: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Dell_Logo.svg/300px-Dell_Logo.svg.png",
   },
   {
-    name: "NOX",
+    name: "nox",
     image: "http://www.padelspain.net/userfiles/Entrevista_Angel_Ballve_NOX_La_voz_del_padel_fuera_buena.jpg",
   },
-  
+  {
+    name: "AMD",
+    image: "https://www.mastecnologia.com.ar/assets/images/brands/amd.png",
+  },
+  {
+    name: "INTEL",
+    image: "https://www.mastecnologia.com.ar/assets/images/brands/intel.png",
+  },
+  {
+    name: "TENDA",
+    image: "https://www.mastecnologia.com.ar/assets/images/brands/tenda.png",
+  },
+  {
+    name: "GLC",
+    image: "https://www.mastecnologia.com.ar/assets/images/brands/glc.png",
+  },
+  {
+    name: "TPLINK",
+    image: "https://www.mastecnologia.com.ar/assets/images/brands/tplink.png",
+  },
+  {
+    name: "KINGSTON",
+    image: "https://www.mastecnologia.com.ar/assets/images/brands/kingston.jpg",
+  },
+  {
+    name: "HP",
+    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/Logo_HP.PNG/640px-Logo_HP.PNG",
+  },
+  {
+    name: "GIGABYTE",
+    image: "https://1000marcas.net/wp-content/uploads/2020/02/Logo-Gigabyte.png",
+  },
+  {
+    name: "HYPERX",
+    image: "https://iconape.com/wp-content/png_logo_vector/hyperx.png",
+  },
+  {
+    name: "XFX",
+    image: "https://www.logolynx.com/images/logolynx/b3/b35406e70030781a1dd16734e9f1c802.jpeg",
+  },
+  {
+    name: "DAHUA",
+    image: "https://www.camaras-termograficas.org/wp-content/uploads/2021/03/camaras-termicas-dahua.jpg",
+  },
   {
     name: "SANDISK",
     image: "https://www.qloud.ar/SITES/IMG/celsus-store-05-2022/262_13-05-2022-02-05-22-sandisk.jpg",
@@ -835,80 +577,43 @@ const manu = [
     name: "LOGITECH",
     image: "https://ih1.redbubble.net/image.2253355026.1487/st,small,507x507-pad,600x600,f8f8f8.jpg",
   },
-  {
-    name: "MSI",
-    image: "https://guide-images.cdn.ifixit.com/igi/2T1loyBcOBV1hKNu.large",
-  },
-  {
-    name: "EPSON",
-    image: "https://i.pinimg.com/originals/33/77/64/3377649c5b68ee7ca92d217f9a6040d6.jpg",
-  },
-  {
-    name: "WESTERN DIGITAL",
-    image: "https://i.pinimg.com/originals/33/77/64/3377649c5b68ee7ca92d217f9a6040d6.jpg",
-  },
-  {
-    name: "SENTEY",
-    image: "https://iconape.com/wp-content/png_logo_vector/sentey.png",
-  },
 ]
 
-const createUsers = async () => {
-  for (let i = 0; i < users.length; i++) {
-        
-    let passwordcrypt = bcrypt.hashSync(users[i].password, Number.parseInt(10));
-        // Crear un usuario
-        await User.create({
-            name: users[i].name,
-            email: users[i].email,
-            password: passwordcrypt,
-            admin: users[i].admin,
-            isactive: users[i].isactive
-        })
-        console.log(`Usuario: ${users[i].name} - PASS:${users[i].password} CREADO...`)
-  }
-
-}
-
 const createProducts = async (name, price, description, image, category, manufacturer) => {
-  let newProduct = await Product.create({
-        name: name,
-        price: price,
-        discount: 10,
-        stock: 150,
-        description: description,
-        image: image
-  })
-  if (category) {category = category.toUpperCase();
-    let categoryDb = await Categories.findAll({ where: { name: category } });
-    await newProduct.addCategories(categoryDb);}
-      
-    if (manufacturer) {manufacturer = manufacturer.toUpperCase();
-    let manufacturerDb = await Manufacturer.findAll({where: { name: manufacturer },});
-    await newProduct.addManufacturer(manufacturerDb);}
-   
+  await axios
+    .post("http://localhost:3001/api/product/", {
+      name: name,
+      price: price,
+      discount: 10,
+      stock: 15,
+      description: description,
+      image: image,
+      category : category,
+      manufacturer : manufacturer
+    })
+    .then((response) => console.log(response.data))
+    .catch((e) => console.log(e.response.data));
 };
 
 createCategories = async () => {
   for(let i = 0; i < catego.length; i++){
-    await Categories.create({
-                    name: catego[i].name
-                    })
+    await axios
+      .post(`http://localhost:3001/api/categories/`,  catego[i] )
+      .then((response) => console.log(response.data))
+      .catch((e) => console.log(e.response.data));
   }
 };
 
 createManufacturers = async () => {
   for(let i = 0; i < manu.length; i++){
-    await Manufacturer.create({
-                      name: manu[i].name,
-                      image: manu[i].image
-                    })
+    await axios
+      .post(`http://localhost:3001/api/manufacturer/`,  manu[i] )
+      .then((response) => console.log(response.data))
+      .catch((e) => console.log(e.response.data));
   }
 };
 
-
-  await createUsers();
-  console.log('USUARIOS CREADOS');
+crearDB = async () => {
   await createManufacturers();
   console.log("termine manu")
   await createCategories();
@@ -923,7 +628,6 @@ createManufacturers = async () => {
     await createProducts(name, price, descrpition, image, category, manufacturer);
   }
     console.log("termine products")
-}
-module.exports={
-  initDb
-}
+};
+
+crearDB();

@@ -7,9 +7,9 @@ async function createReview(comment, score, idProduct, idUser) {
     if(!idProduct && !/^[1-9][0-9]*$/.test(score)) throw new Error("you must send a valid product id");
     let productInDb = await Product.findByPk(idProduct)
     let userInDb = await getUserByid(idUser)
-
     let reviewInDb = await Review.findAll({include:[{model:User, where: { id : idUser }}, {model: Product, where: { id : idProduct }}]});
     let purchase_orderInDb = await Purchase_order.findAll({include:[{model:User, where: { id : idUser }}, {model: Product, where: { id : idProduct }}]});
+    console.log(purchase_orderInDb)
     if(reviewInDb.length >= purchase_orderInDb.length) throw new Error('you have already added a review for each purchase')
 
     let newReview = await Review.create({comment :comment.toUpperCase(), score });
