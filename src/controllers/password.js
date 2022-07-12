@@ -2,6 +2,10 @@ const { User } = require("../db");
 const authConfig = require('../auth');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+require('dotenv').config();
+const sgMail = require('@sendgrid/mail');
+const API_KEY = process.env.SENDGRID_API_KEY
+sgMail.setApiKey(API_KEY)
 
 async function recoverPassword(email){
     let userInDb = await User.findOne({where:{email}})
@@ -10,7 +14,21 @@ async function recoverPassword(email){
     let token = jwt.sign({ user: userInDb }, authConfig.secret, {expiresIn: authConfig.expires});
     console.log(token)
 
-    // mandar mail bonito para que recupere su contra
+    try{
+        const msg={
+          to: email,
+          from: "techmarketpf@gmail.com",
+          subject:"Recover Password",
+          text:"this email was requested to change your password, please do not share with anyone, if you have not requested it, you do not need to do anything",
+          html:`<a href="https://www.w3schools.com/">Visit W3Schools.com!</a>`
+        }
+        await sgMail.send(msg);
+        }catch(error){
+          console.log(error)
+      }
+
+
+
     return "We have sent an email to your mailbox so that you can update your password"
 }
 
