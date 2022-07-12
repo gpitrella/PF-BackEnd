@@ -73,7 +73,7 @@ module.exports = {
             name: req.body.name,
             email: req.body.email,
             password: password
-        }).then(user => {
+        }).then(async user => {
 
             // Creamos el token
             let token = jwt.sign({ user: user }, authConfig.secret, {
@@ -83,8 +83,8 @@ module.exports = {
                 const msg={
                   to: req.body.email,
                   from: "techmarketpf@gmail.com",
-                  subject:"Purchese Order",
-                  text:"Your purchase order is being processed",
+                  subject:"Successful Registration",
+                  text:"Welcome, you have successfully registered",
                   html:`<h1>Welcome ${req.body.name} to Techmarket</h1><img src=${image} alt="" />`
                 }
                 await sgMail.send(msg);
