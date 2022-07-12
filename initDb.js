@@ -845,7 +845,7 @@ const manu = [
   },
   {
     name: "WESTERN DIGITAL",
-    image: "https://giiga.com.ar/wp-content/uploads/2019/03/western-digital-logo-1.jpg",
+    image: "https://i.pinimg.com/originals/33/77/64/3377649c5b68ee7ca92d217f9a6040d6.jpg",
   },
   {
     name: "SENTEY",

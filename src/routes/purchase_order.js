@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { postPurchase_order, getAllOrders, updateStatus, usersOrders, countAllOrders, sumAllOrders, sumAllToday, sumLastWeek, sumLastMonth, sumBeforeLastMonth, sumLastThreeMonth, getOrdersToday } = require('../controllers/purchase_order');
+const { postPurchase_order, getAllOrders, updateStatus, usersOrders, countAllOrders, sumAllOrders, sumAllToday, sumLastWeek, sumLastMonth, sumBeforeLastMonth, sumLastThreeMonth, getOrdersToday, getOrderDetails } = require('../controllers/purchase_order');
 const router = Router();
 
 // router.post('/', async(req,res)=>{
@@ -25,6 +25,16 @@ router.get('/users/:id', async (req, res)=>{
         res.json( await usersOrders(id))
     }catch(error){
         res.json(error.message)
+    }
+})
+
+// Agregar para buscar una orden por id.
+router.get('/details/:id', async (req, res)=>{
+    try{
+        let { id } = req.params
+        res.json( await getOrderDetails(id))
+    }catch(error){
+        res.status(404).json({ error: true, msg: error.message });
     }
 })
 
