@@ -29,8 +29,8 @@ let createUserWithGoogleProfile = async function(profile) {
     const msg={
       to: profile.emails[0].value,
       from: "techmarketpf@gmail.com",
-      subject:"Purchese Order",
-      text:"Your purchase order is being processed",
+      subject:"Successful Registration",
+      text:"Welcome, you have successfully registered",
       html:`<h1>Welcome ${profile.name.givenName} to Techmarket</h1><img src=${image} alt="" />`
     }
     await sgMail.send(msg);

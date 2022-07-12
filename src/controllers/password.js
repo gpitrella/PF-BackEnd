@@ -19,7 +19,7 @@ async function recoverPassword(email){
           to: email,
           from: "techmarketpf@gmail.com",
           subject:"Recover Password",
-          text:"this email was requested to change your password, please do not share with anyone, if you have not requested it, you do not need to do anything",
+          text:"This email was requested to change your password, please do not share with anyone, if you have not requested it, you do not need to do anything",
           html:`<a href="https://www.w3schools.com/">Visit W3Schools.com!</a>`
         }
         await sgMail.send(msg);
