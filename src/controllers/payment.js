@@ -10,11 +10,14 @@ async function createPayment({email, items, idUser, totalpurchase, idAddress, br
     payer_email: email,
     items,
     back_urls: {
-      failure: `${CLIENT_URL}canceledbuy`,
-      pending: `${CLIENT_URL}pendingbuy`,
-      success: `${CLIENT_URL}successbuy`
+      failure: `${CLIENT_URL}/canceledbuy`,
+      pending: `${CLIENT_URL}/pendingbuy`,
+      success: `${CLIENT_URL}/successbuy`
     }
   };
+
+  //console.log(email,items, idUser, totalpurchase, idAddress, branchOfficeId);
+  
   const payment = await axios.post(url, body, {
     headers: {
       "Content-Type": "application/json",
@@ -23,19 +26,17 @@ async function createPayment({email, items, idUser, totalpurchase, idAddress, br
   });
 
   let idMP = payment.data.init_point.slice(payment.data.init_point.indexOf('=')+1,payment.data.init_point.length)
-  let newOrder = await Purchase_order.create({idMP, items, totalpurchase, branchOfficeId})
-  let findUser = await User.findAll({where:{id:idUser}})
-  let findAddress = await Useraddress.findAll({where:{id:idAddress}})
-  // let findSucursal = await Branch_office.findAll({where:{id:branchOfficeId}})
+  console.log("id",idMP)
+  let newOrder = await Purchase_order.create({idMP, items, totalpurchase})
+
+  let findUser= await User.findOne({where:{id:idUser}})
+  let findAddress= await Useraddress.findOne({where:{id:idAddress}})
+  let findSucursal = await Branch_office.findOne({where:{id:branchOfficeId}})
   
   await newOrder.addUser(findUser)
-  await newOrder.addUseraddress(findAddress)
-  // await newOrder.addBranch_office(findSucursal)
+  if(findAddress) await newOrder.addUseraddress(findAddress)
+  if(findSucursal) await newOrder.setBranch_office(findSucursal)
   for(product of items) await newOrder.addProduct(product.id)
-  // items.map((item) => {
-  //   console.log(item)
-  //   newOrder.addProduct(item.id)
-  // })
 
   
   return payment.data.init_point;
