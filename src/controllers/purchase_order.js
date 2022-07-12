@@ -1,6 +1,12 @@
 const { User, Purchase_order, Branch_office } = require("../db");
 const { getUserByid } = require("./user");
 const { Op } = require("sequelize");
+const image = "https://res.cloudinary.com/techmarket/image/upload/v1657452330/rwbzsixizmehnudxgtg0.gif"
+
+require('dotenv').config();
+const sgMail = require('@sendgrid/mail');
+const API_KEY = process.env.SENDGRID_API_KEY
+sgMail.setApiKey(API_KEY)
 
 const TODAY_START = new Date().setHours(0,0,0,0)
 const NOW = new Date()
@@ -30,13 +36,28 @@ const LAST_THREE_MONTH = TODAY.setDate(TODAY.getDate() - 90)
 
 async function updateStatus(id,status){
   if(!/^[1-9][0-9]*$/.test(id)) throw new Error("you must provide a valid id");
-  if(!['processing','cancelled','sending','filled'].includes(status)) throw new Error("you must provide a valid status");
+  if(!['pending','processing','cancelled','sending','filled'].includes(status)) throw new Error("you must provide a valid status");
 
+  
   let purchase_order = await Purchase_order.findByPk(id,{attributes:["status"],through: {attributes: []}})
   if(!purchase_order) throw new Error("there no exist a purchase order with that id");
   if(!['pending','processing','sending'].includes(purchase_order.dataValues.status)) throw new Error("it is no longer possible to update the purchase order");
-
   await Purchase_order.update({status}, {where : { id }})
+  let orderUser=await Purchase_order.findByPk(id,{ include: { all: true, nested: true }})
+  let email = orderUser.dataValues.users[0].dataValues.email
+  
+  try{
+    const msg={
+      to: email,
+      from: "techmarketpf@gmail.com",
+      subject:"Purchese Order",
+      text:"Your purchase order is being processed",
+      html:`<h1>Your purchase order is being ${status}</h1>`
+    }
+    await sgMail.send(msg);
+    }catch(error){
+      console.log(error)
+  }
   return `status was successfully updated to ${status}`
 }
 
