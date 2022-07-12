@@ -10,11 +10,13 @@ async function createPayment({email,items, idUser, totalpurchase, idAddress, bra
     payer_email: email,
     items,
     back_urls: {
-      failure: `${CLIENT_URL}canceledbuy`,
-      pending: `${CLIENT_URL}pendingbuy`,
-      success: `${CLIENT_URL}successbuy`
+      failure: `${CLIENT_URL}/canceledbuy`,
+      pending: `${CLIENT_URL}/pendingbuy`,
+      success: `${CLIENT_URL}/successbuy`
     }
   };
+
+  //console.log(email,items, idUser, totalpurchase, idAddress, branchOfficeId);
   
   const payment = await axios.post(url, body, {
     headers: {
