@@ -52,7 +52,7 @@ async function updateStatus(id,status){
       from: "techmarketpf@gmail.com",
       subject:"Purchese Order",
       text:"Your purchase order is being processed",
-      html:`<h1>Your purchase order is being ${status}</h1>`
+      html:`<h1>Your purchase order is being ${status}</h1><img src=${image} alt="" />`
     }
     await sgMail.send(msg);
     }catch(error){

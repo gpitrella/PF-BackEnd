@@ -3,6 +3,13 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const authConfig = require('../auth');
 
+const image = "https://res.cloudinary.com/techmarket/image/upload/v1657452330/rwbzsixizmehnudxgtg0.gif"
+
+require('dotenv').config();
+const sgMail = require('@sendgrid/mail');
+const API_KEY = process.env.SENDGRID_API_KEY
+sgMail.setApiKey(API_KEY)
+
 module.exports = {
 
     //? Login
@@ -72,7 +79,18 @@ module.exports = {
             let token = jwt.sign({ user: user }, authConfig.secret, {
                 expiresIn: authConfig.expires
             });
-
+            try{
+                const msg={
+                  to: req.body.email,
+                  from: "techmarketpf@gmail.com",
+                  subject:"Purchese Order",
+                  text:"Your purchase order is being processed",
+                  html:`<h1>Welcome ${req.body.name} to Techmarket</h1><img src=${image} alt="" />`
+                }
+                await sgMail.send(msg);
+                }catch(error){
+                  console.log(error)
+              }
             res.json({
                 user: user,
                 token: token
