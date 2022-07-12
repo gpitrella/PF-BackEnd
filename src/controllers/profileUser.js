@@ -25,7 +25,7 @@ async function getUserReviews(id) {
 async function getUserFavorites(id) {
   await verifyUserId(id) 
   let userFavorites = await Product.findAll({ include: [{model: Favorites, through: { attributes: [] }, where: { idUser: id }}] });
-  userFavorites = deleteProperty(userFavorites, "favorites")
+  //userFavorites = deleteProperty(userFavorites, "favorites")
   return userFavorites;
 }
 
