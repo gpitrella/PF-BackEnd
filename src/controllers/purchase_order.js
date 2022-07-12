@@ -50,6 +50,22 @@ async function getAllOrders(){
     return orders
 }
 
+// Agregar para buscar una orden por id.
+async function getOrderDetails(id) {
+  let order = await Purchase_order.findOne({
+    where: { id: id },
+    include: [
+      {association:'products', attributes:["id","name"], through: {attributes:[]}},
+      {association:'users', attributes:["id","name","email"], through:{attributes:[]}},
+      {association:'useraddresses', through:{attributes:[]}},
+      {model: Branch_office}
+    ]});
+
+  if (!order) throw new Error("there no exist a purchase order with that id");
+
+  return order;
+}
+
 async function usersOrders(id){
     let uOrders = await User.findByPk(id,{include:
       {association:'purchase_orders', through:{attributes:[]}},
@@ -169,5 +185,6 @@ module.exports={
     sumLastMonth,
     sumBeforeLastMonth,
     sumLastThreeMonth,
-    getOrdersToday
+    getOrdersToday,
+    getOrderDetails // Agregar para buscar una orden por id.
 }
