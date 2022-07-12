@@ -3,6 +3,13 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const authConfig = require('../auth');
 
+const image = "https://res.cloudinary.com/techmarket/image/upload/v1657452330/rwbzsixizmehnudxgtg0.gif"
+
+require('dotenv').config();
+const sgMail = require('@sendgrid/mail');
+const API_KEY = process.env.SENDGRID_API_KEY
+sgMail.setApiKey(API_KEY)
+
 let loginWithGoogle = async function(profile) {
   let userFound = await User.findOne({ where: { email: profile.emails[0].value } });
   let userToReturn = !userFound ? await createUserWithGoogleProfile(profile) : { ...userFound.dataValues };
@@ -18,6 +25,18 @@ let createUserWithGoogleProfile = async function(profile) {
     password: password,
     image: profile.photos[0].value,
   });
+  try{
+    const msg={
+      to: profile.emails[0].value,
+      from: "techmarketpf@gmail.com",
+      subject:"Purchese Order",
+      text:"Your purchase order is being processed",
+      html:`<h1>Welcome ${profile.name.givenName} to Techmarket</h1><img src=${image} alt="" />`
+    }
+    await sgMail.send(msg);
+    }catch(error){
+      console.log(error)
+  }
   return newUser;
 }
 
