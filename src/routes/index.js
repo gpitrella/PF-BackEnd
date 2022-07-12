@@ -11,6 +11,10 @@ const reviewRoutes = require("./review");
 const branchOfficeRoutes = require("./branchOffice");
 const useraddressRoutes = require("./useraddress")
 const favoriteRoutes = require("./favorite")
+const profileUserRoutes = require("./profileUser")
+const purchase_orderRoutes = require("./purchase_order")
+const passwordRoutes = require("./password")
+const ApiTokenRoutes = require("./ApiToken")
 // Middlewares
 const auth = require('../middlewares/auth');
 
@@ -48,5 +52,9 @@ router.use('/api/branchOffice', branchOfficeRoutes)
 router.use('/api/favorite', favoriteRoutes)
 router.use('/api/address', useraddressRoutes)
 router.use('/api/payment', paymentRoutes)
+router.use('/api/ProfileUser', profileUserRoutes)
+router.use('/api/orders',purchase_orderRoutes)
+router.use('/api/password',passwordRoutes)
+router.use('/api/ApiToken',ApiTokenRoutes)
 
 module.exports = router;

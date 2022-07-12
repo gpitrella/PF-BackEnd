@@ -1,0 +1,18 @@
+const sgMail = require('@sendgrid/mail');
+sgMail.setApiKey(SENDGRID_API_KEY);
+
+ const msg = {
+    to,
+    from: 'techmarketpf@gmail.com',
+    subject,
+    text,
+    html,
+  };
+
+  try {
+    await sgMail.send(msg);
+  } catch (err) {
+    return res.status(err.code).send(err.message);
+  }
+
+

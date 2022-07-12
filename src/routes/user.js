@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { getUsers, createUser, updateUser, deleteUser, updateStatus, getUserByid } = require('../controllers/user');
+const { getUsers, createUser, updateUser, deleteUser, updateStatus, getUserByid, changeRole } = require('../controllers/user');
 const router = Router();
 
 router.get('/',async(req,res)=>{
@@ -38,6 +38,16 @@ router.put('/:id', async(req,res)=>{
         }else{
             res.json(await updateUser(id, data))
         }
+    }catch(error){
+        res.json(error.message)
+    }
+})
+
+router.put('/role/:id',async(req,res)=>{
+    try{
+        let{id}=req.params;
+        let{admin}=req.body;
+        res.json(await changeRole(id,admin))
     }catch(error){
         res.json(error.message)
     }

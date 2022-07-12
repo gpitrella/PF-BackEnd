@@ -1,109 +1,56 @@
-const {User, Useraddress, Comments, Favorites, Review} = require("../db");
+const { User } = require("../db");
 
 async function getUsers(){
-    let user = await User.findAll({
-        include:[{
-            model: Useraddress,
-            through: {
-            attributes: [],
-            },
-        },
-        {
-            model: Comments,
-            through: {
-              attributes: [],
-            },
-        },
+    let user = await User.findAll({include:[
+        { association: 'useraddresses', through:{attributes: []}},
+        { association: 'comments', through:{attributes: []}}
     ]})
-    if(user.length){
-        return user
-    }else{
-        throw new Error("There are no users")
-    }
+    if(!user.length) throw new Error("There are no users")
+    return user
 }
 
 async function getUsersFull(){
-    let user = await User.findAll({
-        include:[{
-            model: Useraddress,
-            through: {
-            attributes: [],
-            },
-        },
-        {
-            model: Comments,
-            through: {
-              attributes: [],
-            },
-        },
-        {
-            model: Favorites,
-            through: {
-              attributes: [],
-            },
-        },
-        {
-            model: Review,
-            through: {
-              attributes: [],
-            },
-        }
+    let user = await User.findAll({include:[
+        { association: 'useraddresses', through:{attributes: []}},
+        { association: 'comments', through:{attributes: []}},
+        { association: 'favorites', through:{attributes: []}},
+        { association: 'reviews', through:{attributes: []}},
     ]})
-    if(user.length){
-        return user
-    }else{
-        throw new Error("There are no users")
-    }
+    if(!user.length) throw new Error("There are no users")
+    return user
 }
 
 async function getUserByid(id){
     let userId = await User.findByPk(id, {include:[
-    {
-        model: Useraddress,
-        through: {
-        attributes: [],
-        },
-    },
-    {
-        model: Comments,
-        through: {
-          attributes: [],
-        },
-    },
-    {
-        model: Favorites,
-        through: {
-          attributes: [],
-        },
-    },
-    {
-        model: Review,
-        through: {
-          attributes: [],
-        },
-    }
+        { association: 'useraddresses', through:{attributes: []}},
+        { association: 'comments', through:{attributes: []}},
+        { association: 'favorites', through:{attributes: []}},
+        { association: 'reviews', through:{attributes: []}},
 ]})
     return userId
 }
 
-async function createUser({name,email,admin,password}){
+async function createUser({name,email,admin,password,phone_number,photo}){
     let findInDb = await User.findOne({where:{email:email}}) 
-    if(!findInDb) {
-        await User.create({name,email,admin,password})
-        return 'user created successfully'
-    }else{
-        throw new Error('There is already a user with this email.User already exist')
-    }
+    if(findInDb) throw new Error('There is already a user with this email.User already exist')
+
+    await User.create({name,email,admin,password})
+    return 'user created successfully'
 }
 
-async function updateUser(id,{name,email,admin,password}){
-        await User.update({name,email,admin,password},{where:{id:id}})
+async function updateUser(id,{name,email,admin,password,phone_number,photo,image}){
+        await User.update({name,email,admin,password,phone_number,photo,image},{where:{id:id}})
         return 'user update successfully'
 }
 
 async function updateStatus(id,isactive){
     await User.update({isactive},{where:{id:id}})
     return 'status update successfully'
+}
+
+async function changeRole(id,admin){
+        await User.update({admin:admin},{where:{id:id}})
+    return 'Role update successfully'
 }
 
 async function deleteUser(id){
@@ -119,5 +66,6 @@ module.exports={
     updateUser,
     updateStatus,
     deleteUser,
-    getUserByid
+    getUserByid,
+    changeRole
 }

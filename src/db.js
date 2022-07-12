@@ -2,8 +2,8 @@ require("dotenv").config();
 const { Sequelize } = require("sequelize");
 const fs = require("fs");
 const path = require("path");
-
 const { DATABASE_URL } = process.env;
+//const { DB_USER, DB_PASSWORD, DB_HOST } = process.env;
 
 const sequelize = new Sequelize(DATABASE_URL, {
   logging: false, // set to console.log to see the raw SQL queries
@@ -55,6 +55,7 @@ const {
   Favorites,
   Role,
   Branch_office,
+  Product_order
 } = sequelize.models;
 
 // Associations
@@ -90,13 +91,19 @@ User.belongsToMany(Useraddress, { through: "user_address" });
 Useraddress.belongsToMany(User, { through: "user_address" });
 
 Useraddress.belongsTo(State);
-State.belongsToMany(Useraddress, { through: "address_state" });
+State.belongsToMany(Useraddress, { through: "address_state" }); // tendria que ser "hasMany"
 
-Product.belongsToMany(Purchase_order, {through: "product_order"});
-Purchase_order.belongsToMany(Product, {through: "product_order"})
+Product.belongsToMany(Purchase_order, {through: "order_product"});
+Purchase_order.belongsToMany(Product, {through: "order_product"})
 
-User.belongsToMany(Purchase_order,{through:"user_order"})
-Purchase_order.belongsToMany(User, {through:"user_order"})
+User.belongsToMany(Purchase_order,{through:"user_order"});
+Purchase_order.belongsToMany(User, {through:"user_order"});
+
+Branch_office.hasMany(Purchase_order);
+Purchase_order.belongsTo(Branch_office);
+
+Purchase_order.belongsToMany(Useraddress, {through:"addresUser_order"})
+Useraddress.belongsToMany(Purchase_order,{through:"addresUser_order"})
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');

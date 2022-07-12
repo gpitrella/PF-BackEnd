@@ -1,8 +1,28 @@
-const { Branch_office } = require("../db");
+const { Branch_office, Purchase_order } = require("../db");
 const { Op } = require("sequelize");
 const { Sequelize } = require("sequelize");
+const { API_TOKEN } = process.env;
 
-const excludeTimeStamps = {attributes: {exclude: ['updatedAt','createdAt']}}
+function distanceCalculator(userLat ,userLong, branchLat, branchLong) {
+  var degtorad = 0.01745329;
+  var radtodeg = 57.29577951;
+  var lat1h = userLat;
+  var lat2h = branchLat;
+  var long1h = userLong;
+  var long2h = branchLong;
+  var lat1 = parseFloat(lat1h);
+  var lat2 = parseFloat(lat2h);
+  var long1 = parseFloat(long1h);
+  var long2 = parseFloat(long2h);
+  var dlong = (long1 - long2);
+  var dvalue = (Math.sin(lat1 * degtorad) * Math.sin(lat2 * degtorad))
+   + (Math.cos(lat1 * degtorad) * Math.cos(lat2 * degtorad)
+   * Math.cos(dlong * degtorad));
+  var dd = Math.acos(dvalue) * radtodeg;
+  var km = (dd * 111.302);
+  var distance = (km * 100)/100;
+  return distance
+}
 
 function verifybBranchOfficeData(data) {
   let { name, direction, latitude, longitude } = data;
@@ -11,8 +31,8 @@ function verifybBranchOfficeData(data) {
   if (!direction) throw new Error("you must enter a direction");
   verifyLatAndLong(latitude, longitude);
 
-  data.name = data.name.toUpperCase()
-  data.direction = data.direction.toUpperCase()
+  data.name = name.toUpperCase()
+  data.direction = direction.toUpperCase()
   return data;
 }
 
@@ -37,7 +57,7 @@ async function verifyBranchOfficeId(id) {
   if (!id) throw new Error("you must provide a branch office id");
   if(!/^[0-9]*$/.test(id)) throw new Error("the id must be a number");
 
-  let BranchOfficeInDb = await Branch_office.findByPk(id, excludeTimeStamps);
+  let BranchOfficeInDb = await Branch_office.findByPk(id);
 
   if (!BranchOfficeInDb)
     throw new Error("the id does not correspond to an existing branch office");
@@ -47,69 +67,25 @@ async function verifyBranchOfficeId(id) {
 
 async function getNearestbranchOffice(lat, long) {
   verifyLatAndLong(lat, long);
-
-  function calculator() {
-  var degtorad = 0.01745329;
-  var radtodeg = 57.29577951;
-  var lat1h = document.pasa.lat1.value;
-  var lat2h = document.pasa.lat2.value;
-  var long1h = document.pasa.long1.value;
-  var long2h = document.pasa.long2.value;
-  var lat1 = parseFloat(lat1h);
-  var lat2 = parseFloat(lat2h);
-  var long1 = parseFloat(long1h);
-  var long2 = parseFloat(long2h);
-  if ((lat1h.lastIndexOf("S"))!=-1 || (lat1h.lastIndexOf("s"))!=-1)
-    lat1 = (lat1 * (-1));
-  if ((lat1h.lastIndexOf("W"))!=-1 || (lat1h.lastIndexOf("w"))!=-1)
-    lat1 = (lat1 * (-1));
-  if((lat2h.lastIndexOf("S"))!=-1 || (lat2h.lastIndexOf("s"))!=-1)
-    lat2 = (lat2 * (-1));
-  if((lat2h.lastIndexOf("W")!=-1) || (lat2h.lastIndexOf("w"))!=-1)
-    lat2 = (lat2 * (-1));
-  if((long1h.lastIndexOf("S")!=-1) || (long1h.lastIndexOf("s"))!=-1)
-    long1 = (long1 * (-1));
-  if((long1h.lastIndexOf("W")!=-1) || (long1h.lastIndexOf("w"))!=-1)
-    long1 = (long1 * (-1));
-  if((long2h.lastIndexOf("S")!=-1) || (long2h.lastIndexOf("s"))!=-1)
-    long2 = (long2 * (-1));
-  if((long2h.lastIndexOf("W")!=-1) || (long2h.lastIndexOf("w"))!=-1)
-    long2 = (long2 * (-1));
-  var dlong = (long1 - long2);
-  var dvalue = (Math.sin(lat1 * degtorad) * Math.sin(lat2 * degtorad))
-   + (Math.cos(lat1 * degtorad) * Math.cos(lat2 * degtorad)
-   * Math.cos(dlong * degtorad));
-  var dd = Math.acos(dvalue) * radtodeg;
-  var miles = (dd * 69.16);
-  miles = (miles * 100)/100;
-  var km = (dd * 111.302);
-  km = (km * 100)/100;
-  document.pasa.result.value = FormatNumber(miles, 2);
-  document.pasa.result2.value = FormatNumber(km, 2);
- }
-
-  let nearestbranchOffice = (await Branch_office.findAll(excludeTimeStamps,{ order: Sequelize.literal('random()'), limit: 1 }))[0];
-  return nearestbranchOffice;
+  let branchOffices = await getAllbranchOffices()
+  let branchOfficesDistance = branchOffices.map((branchOffice) => {
+    let distance = distanceCalculator(lat ,long,branchOffice.latitude,branchOffice.longitude)
+    return {...branchOffice.dataValues, distance : distance}
+  })
+  return branchOfficesDistance;
 }
 
 async function getAllbranchOffices() {
-  let branchOffices = await Branch_office.findAll(excludeTimeStamps);
+  let branchOffices = await Branch_office.findAll();
   return branchOffices;
 }
 
 async function createBranchOffice(data) {
-  let { name, direction, latitude, longitude } = verifybBranchOfficeData(data);
+  data = verifybBranchOfficeData(data);
+  let { name, direction } = data
   await verifyDuplicateBranchOffice(name, direction);
 
-  var newBranchOffice = await Branch_office.create({
-    name,
-    direction,
-    latitude,
-    longitude,
-  });
-  
-  delete newBranchOffice.dataValues.createdAt;
-  delete newBranchOffice.dataValues.updatedAt;
+  var newBranchOffice = await Branch_office.create(data);
   return newBranchOffice;
 }
 
@@ -121,24 +97,25 @@ async function getByIdBranchOffice(id) {
 async function updateBranchOffice(id, data) {
   await verifyBranchOfficeId(id);
 
-  let { name, direction, latitude, longitude } = verifybBranchOfficeData(data);
-
+  data = verifybBranchOfficeData(data);
+  let { name, direction } = data 
   await verifyDuplicateBranchOffice(name, direction);
 
-  await Branch_office.update(
-    { name, direction, latitude, longitude },
-    { where: { id } }
-  );
+  await Branch_office.update(data,{where: { id }});
   return "the branch office was changed";
 }
 
 async function deleteBranchOffice(id) {
   await verifyBranchOfficeId(id);
-  //cuando se una con las ordendes de pago, habria que verificar que no tuviera ninguna antes de eliminarla
+  let purchase_Orders = await Purchase_order.findOne({where: {branchOfficeId: id }})
+  if(purchase_Orders) throw new Error('this branch has purchase orders, please relocate them to be able to delete the branch')
   await Branch_office.destroy({ where: { id } });
   return "the branch office was removed";
 }
 
+async function getTokenMaps(){
+  return API_TOKEN
+}
 module.exports = {
   getNearestbranchOffice,
   getAllbranchOffices,
@@ -146,4 +123,5 @@ module.exports = {
   getByIdBranchOffice,
   updateBranchOffice,
   deleteBranchOffice,
+  getTokenMaps
 };
