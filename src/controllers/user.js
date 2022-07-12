@@ -48,6 +48,11 @@ async function updateStatus(id,isactive){
     return 'status update successfully'
 }
 
+async function changeRole(id,admin){
+        await User.update({admin:admin},{where:{id:id}})
+    return 'Role update successfully'
+}
+
 async function deleteUser(id){
     await User.destroy({where:{id:id}})
     return 'User was remove'
@@ -61,5 +66,6 @@ module.exports={
     updateUser,
     updateStatus,
     deleteUser,
-    getUserByid
+    getUserByid,
+    changeRole
 }
