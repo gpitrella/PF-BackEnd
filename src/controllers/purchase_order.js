@@ -44,6 +44,11 @@ async function updateStatus(id,status){
   if(!['pending','processing','sending'].includes(purchase_order.dataValues.status)) throw new Error("it is no longer possible to update the purchase order");
 
   await Purchase_order.update({status}, {where : { id }})
+  
+  return `status was successfully updated to ${status}`
+}
+
+async function sendMail(id,status){
   let orderUser=await Purchase_order.findByPk(id,{ include: { all: true, nested: true }})
   let email = orderUser.dataValues.users[0].dataValues.email
   
@@ -55,13 +60,11 @@ async function updateStatus(id,status){
       text:"Your purchase order is being processed",
       html:`<h1>Your purchase order is being ${status}</h1><img src=${image} alt="" />`
     }
-    sgMail.send(msg);
+    await sgMail.send(msg);
     }catch(error){
       console.log(error)
   }
-  return `status was successfully updated to ${status}`
 }
-
 async function getAllOrders(){
     let orders = await Purchase_order.findAll({include:[
       {association:'products', attributes:["id","name"], through: {attributes:[]}},
@@ -208,5 +211,6 @@ module.exports={
     sumBeforeLastMonth,
     sumLastThreeMonth,
     getOrdersToday,
-    getOrderDetails // Agregar para buscar una orden por id.
+    getOrderDetails,
+    sendMail
 }
