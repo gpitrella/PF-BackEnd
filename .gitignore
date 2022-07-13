@@ -112,4 +112,5 @@ probarBack.js
 model.js
 Api-Store.js
 Api-Users.js
+Api-StoreUser.js
 .gitignore
