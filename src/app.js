@@ -33,7 +33,7 @@ server.use('/', routes);
 
 // config session and passport
 server.use(
-  cookieSession({ name: "session", keys: ["123456"], maxAge: 1000 * 60 * 60 * 24 })
+  cookieSession({ name: "session", keys: ["123456"], maxAge: 1000 * 60 * 60 * 24, sameSite: "none" })
 ); // session x 24 horas
 
 server.use(passport.initialize());
