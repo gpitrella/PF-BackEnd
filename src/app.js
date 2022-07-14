@@ -42,7 +42,7 @@ server.use(passport.session());
 server.use(
   cors({
     origin: process.env.CLIENT_URL,
-    methods: "GET,POST,PUT,DELETE",
+    methods: "GET,POST,OPTIONS,PUT,DELETE",
     credentials: true,
   })
 );
