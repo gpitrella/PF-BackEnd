@@ -33,7 +33,7 @@ server.use('/', routes);
 
 // config session and passport
 server.use(
-  cookieSession({ name: "session", keys: ["123456"], maxAge: 1000 * 60 * 60 * 24, sameSite: "none" })
+  cookieSession({ name: "session", keys: ["123456"], maxAge: 1000 * 60 * 60 * 24})
 ); // session x 24 horas
 
 server.use(passport.initialize());
@@ -42,7 +42,7 @@ server.use(passport.session());
 server.use(
   cors({
     origin: process.env.CLIENT_URL,
-    methods: "GET,POST,OPTIONS,PUT,DELETE",
+    methods: "GET,POST,PUT,DELETE",
     credentials: true,
   })
 );
