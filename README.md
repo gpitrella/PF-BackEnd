@@ -7,4 +7,7 @@ Tecnologías utilizadas:
 - Postgres SQL
 - JavaScript
 - Express
+- Git/GitHub
 - GitFlow
+- Passport
+
